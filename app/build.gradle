@@ -7,6 +7,12 @@ android {
     namespace 'com.commit.egusajo'
     compileSdk 33
 
+
+    buildFeatures{
+        viewBinding=true 
+        dataBinding=true
+    }
+
     defaultConfig {
         applicationId "com.commit.egusajo"
         minSdk 27
