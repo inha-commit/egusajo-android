@@ -1,7 +1,7 @@
 ---
 name: Android issue template
 about: Describe this issue template's purpose here.
-title: "[Domain] Work"
+title: "[View] Work"
 labels: ''
 assignees: plashdof
 
