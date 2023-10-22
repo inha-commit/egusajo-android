@@ -9,10 +9,14 @@ android {
     namespace 'com.commit.egusajo'
     compileSdk 33
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 
     buildFeatures{
         viewBinding=true
         dataBinding=true
+        buildConfig=true
     }
 
     defaultConfig {
@@ -23,6 +27,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "KAKAO_API_KEY", properties['kakaoApiKey']
+        buildConfigField "String", "BASE_URL", properties['baseUrl']
+
     }
 
     buildTypes {
