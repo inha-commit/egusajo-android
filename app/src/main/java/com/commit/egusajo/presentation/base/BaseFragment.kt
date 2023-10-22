@@ -1,4 +1,4 @@
-package com.commit.egusajo.ui.base
+package com.commit.egusajo.presentation.base
 
 import android.content.Context
 import android.os.Bundle
@@ -10,12 +10,15 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.commit.egusajo.util.LoadingDialog
 
 abstract class BaseFragment<B : ViewDataBinding>(
     @LayoutRes private val layoutRes: Int
 ) : Fragment() {
     private var _binding: B? = null
     protected val binding get() = _binding!!
+
+    private lateinit var loadingDialog : LoadingDialog
 
 
     override fun onCreateView(
@@ -28,6 +31,16 @@ abstract class BaseFragment<B : ViewDataBinding>(
         return binding.root
     }
 
+    fun showLoading(context : Context){
+        loadingDialog = LoadingDialog(context)
+        loadingDialog.show()
+    }
+
+    fun dismissLoading(){
+        if(loadingDialog.isShowing){
+            loadingDialog.dismiss()
+        }
+    }
 
     fun showCustomToast(message: String) {
         val toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)
