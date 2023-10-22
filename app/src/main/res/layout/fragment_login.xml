@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="view"
+            type="com.commit.egusajo.presentation.ui.intro.login.LoginFragment" />
 
     </data>
 
@@ -28,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:src="@drawable/icon_kakao"
+            android:onClick="@{() -> view.kakaoLogin()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo" />

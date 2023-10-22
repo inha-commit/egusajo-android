@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.commit.egusajo.BuildConfig
 import com.commit.egusajo.util.Constants.TAG
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
@@ -36,7 +37,7 @@ class App : Application() {
 
     private fun initKakaoLogin(){
         Log.d(TAG, "keyhash : ${Utility.getKeyHash(this)}")
-        KakaoSdk.init(this, "네이티브 앱 키")
+        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
     }
 
 }
