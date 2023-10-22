@@ -1,4 +1,4 @@
-package com.commit.egusajo.ui.main
+package com.commit.egusajo.presentation.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

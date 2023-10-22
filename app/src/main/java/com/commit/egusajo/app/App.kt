@@ -1,4 +1,4 @@
-package com.commit.egusajo
+package com.commit.egusajo.app
 
 import android.app.Application
 import android.content.Context

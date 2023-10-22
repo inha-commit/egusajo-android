@@ -1,6 +1,6 @@
 package com.commit.egusajo.config
 
-import com.commit.egusajo.App.Companion.sharedPreferences
+import com.commit.egusajo.app.App.Companion.sharedPreferences
 import com.commit.egusajo.util.Constants.X_ACCESS_TOKEN
 import okhttp3.Interceptor
 import okhttp3.Request
