@@ -3,6 +3,7 @@ package com.commit.egusajo.presentation.ui.intro.login
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentLoginBinding
 import com.commit.egusajo.presentation.base.BaseFragment
@@ -16,10 +17,33 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
+    private val viewModel: LoginViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.view = this
+        initObserver()
+    }
 
+    private fun initObserver() {
+        repeatOnStarted {
+            viewModel.uiState.collect {
+                when (it.loginState) {
+                    is LoginState.Success -> {
+                        // main activity로 이동
+                    }
+
+                    is LoginState.NoMember -> {
+                        // signup fragment로 이동
+                    }
+
+                    is LoginState.Error -> {
+                        showCustomToast(it.loginState.msg)
+                    }
+
+                    else -> {}
+                }
+            }
+        }
     }
 
     fun kakaoLogin() {
@@ -77,6 +101,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 Log.e(TAG, "사용자 정보 요청 실패 $error")
             } else if (user != null) {
                 Log.d(TAG, "사용자 정보 요청 성공 : $user")
+                viewModel.startLogin(user.id.toString())
 
             }
         }
