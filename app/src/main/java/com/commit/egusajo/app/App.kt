@@ -3,6 +3,11 @@ package com.commit.egusajo.app
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import com.commit.egusajo.BuildConfig
+import com.commit.egusajo.util.Constants.TAG
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -27,6 +32,12 @@ class App : Application() {
         super.onCreate()
         sharedPreferences =
             applicationContext.getSharedPreferences("APP", MODE_PRIVATE)
+        initKakaoLogin()
+    }
+
+    private fun initKakaoLogin(){
+        Log.d(TAG, "keyhash : ${Utility.getKeyHash(this)}")
+        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
     }
 
 }
