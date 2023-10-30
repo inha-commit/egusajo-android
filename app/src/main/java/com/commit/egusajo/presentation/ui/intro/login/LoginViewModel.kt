@@ -2,9 +2,11 @@ package com.commit.egusajo.presentation.ui.intro.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.app.App
 import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.model.LoginRequest
 import com.commit.egusajo.data.repository.IntroRepository
+import com.commit.egusajo.util.Constants
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,6 +47,13 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
             )
 
             if (response.isSuccessful) {
+                response.body()?.let {
+                    App.sharedPreferences.edit()
+                        .putString(Constants.X_ACCESS_TOKEN, "Bearer " + it.accessToken)
+                        .putString(Constants.X_REFRESH_TOKEN, it.refreshToken)
+                        .apply()
+                }
+
                 _uiState.update { state ->
                     state.copy(
                         loginState = LoginState.Success
