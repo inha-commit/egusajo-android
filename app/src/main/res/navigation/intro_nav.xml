@@ -9,6 +9,15 @@
         android:name="com.commit.egusajo.presentation.ui.intro.login.LoginFragment"
         android:label="Login">
 
+        <action
+            android:id="@+id/action_login_fragment_to_signup_fragment"
+            app:destination="@id/signup_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signup_fragment"
+        android:name="com.commit.egusajo.presentation.ui.intro.signup.SignupFragment"
+        android:label="Signup">
     </fragment>
 
 </navigation>

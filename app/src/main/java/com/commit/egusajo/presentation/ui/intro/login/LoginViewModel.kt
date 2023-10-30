@@ -55,7 +55,6 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
                     Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
                 when (error.statusCode) {
 
-                    // todo code값으로 분기처리 다시
                     401 -> _uiState.update { state ->
                         state.copy(
                             loginState = LoginState.Error(error.message)
