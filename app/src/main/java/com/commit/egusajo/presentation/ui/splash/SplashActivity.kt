@@ -9,9 +9,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AlertDialog
+import com.commit.egusajo.app.App
 import com.commit.egusajo.databinding.ActivitySplashBinding
 import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.presentation.ui.intro.IntroActivity
+import com.commit.egusajo.presentation.ui.main.MainActivity
+import com.commit.egusajo.util.Constants.X_ACCESS_TOKEN
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
@@ -43,8 +46,15 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
             } else {
                 // 네트워크 검사 끝났으면 LoadingDialog 내리기
                 dismissLoading()
-                startActivity(Intent(this, IntroActivity::class.java))
-                finish()
+                val jwt: String? = App.sharedPreferences.getString(X_ACCESS_TOKEN, null)
+                jwt?.let {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                } ?: run {
+                    // 로컬에 저장된 토큰 없는경우
+                    startActivity(Intent(this, IntroActivity::class.java))
+                    finish()
+                }
             }
         }, 1500)
     }

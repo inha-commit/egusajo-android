@@ -1,7 +1,8 @@
 package com.commit.egusajo.app.di
 
 import com.commit.egusajo.BuildConfig
-import com.commit.egusajo.config.RetrofitInterceptor
+import com.commit.egusajo.config.AccessTokenInterceptor
+import com.commit.egusajo.config.BearerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,7 +47,8 @@ class NetworkModule {
             .readTimeout(30000, TimeUnit.MILLISECONDS)
             .connectTimeout(30000, TimeUnit.MILLISECONDS)
             .addInterceptor(httpLoggingInterceptor)
-            .addNetworkInterceptor(RetrofitInterceptor())
+            .addNetworkInterceptor(AccessTokenInterceptor())
+            .addInterceptor(BearerInterceptor())
             .build()
     }
 

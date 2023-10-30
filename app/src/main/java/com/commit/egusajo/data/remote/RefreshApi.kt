@@ -1,0 +1,15 @@
+package com.commit.egusajo.data.remote
+
+import com.commit.egusajo.data.model.RefreshResponse
+import retrofit2.Response
+import retrofit2.http.Header
+import retrofit2.http.POST
+
+interface RefreshApi {
+
+    @POST("/auth/refresh")
+    suspend fun refreshToken(
+        @Header("refresh_token") refreshToken: String
+    ): Response<RefreshResponse>
+
+}

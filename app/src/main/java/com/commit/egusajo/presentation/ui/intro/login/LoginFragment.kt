@@ -3,10 +3,15 @@ package com.commit.egusajo.presentation.ui.intro.login
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentLoginBinding
 import com.commit.egusajo.presentation.base.BaseFragment
+import com.commit.egusajo.presentation.ui.intro.IntroViewModel
+import com.commit.egusajo.presentation.ui.intro.SnsId
 import com.commit.egusajo.util.Constants.TAG
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -18,6 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val viewModel: LoginViewModel by viewModels()
+    private val parentViewModel: IntroViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.view = this
@@ -28,18 +35,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         repeatOnStarted {
             viewModel.uiState.collect {
                 when (it.loginState) {
-                    is LoginState.Success -> {
-                        // main activity로 이동
-                    }
-
-                    is LoginState.NoMember -> {
-                        // signup fragment로 이동
-                    }
-
-                    is LoginState.Error -> {
-                        showCustomToast(it.loginState.msg)
-                    }
-
+                    is LoginState.Success -> parentViewModel.goToMainActivity()
+                    is LoginState.NoMember -> findNavController().toSignup()
+                    is LoginState.Error -> showCustomToast(it.loginState.msg)
                     else -> {}
                 }
             }
@@ -101,6 +99,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 Log.e(TAG, "사용자 정보 요청 실패 $error")
             } else if (user != null) {
                 Log.d(TAG, "사용자 정보 요청 성공 : $user")
+                SnsId.snsId = user.id.toString()
                 viewModel.startLogin(user.id.toString())
 
             }
@@ -108,5 +107,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     }
 
+    private fun NavController.toSignup() {
+        val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+        this.navigate(action)
+    }
 
 }
