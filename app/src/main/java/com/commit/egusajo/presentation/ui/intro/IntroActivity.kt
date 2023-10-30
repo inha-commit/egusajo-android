@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,7 +20,6 @@ import com.commit.egusajo.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
@@ -49,11 +47,17 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::i
         initObserver()
     }
 
-    private fun initObserver(){
+    private fun initObserver() {
         repeatOnStarted {
-            viewModel.events.collect{
-                when(it){
-                    is IntroEvents.GoToMainActivity -> startActivity(Intent(this@IntroActivity,MainActivity::class.java))
+            viewModel.events.collect {
+                when (it) {
+                    is IntroEvents.GoToMainActivity -> startActivity(
+                        Intent(
+                            this@IntroActivity,
+                            MainActivity::class.java
+                        )
+                    )
+
                     is IntroEvents.GoToGallery -> onCheckPermissions()
                 }
             }
@@ -114,15 +118,13 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::i
 
             if (result.resultCode == Activity.RESULT_OK) {
                 val uri = result.data?.data
-                uri?.let{
-                    val file = File(getRealPathFromUri(it, this)?:"")
+                uri?.let {
+                    val file = File(getRealPathFromUri(it, this) ?: "")
                     val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
                     val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
                     viewModel.imageToUrl(body)
                 }
-
-//                viewModel.setProfile(uri.toString())
             }
         }
 

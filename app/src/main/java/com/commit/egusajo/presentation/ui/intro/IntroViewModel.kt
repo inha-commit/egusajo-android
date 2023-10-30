@@ -45,7 +45,7 @@ class IntroViewModel @Inject constructor(
 
     fun setProfile(url: String) {
         viewModelScope.launch {
-            _profileImg.value = url
+
         }
     }
 
@@ -54,7 +54,9 @@ class IntroViewModel @Inject constructor(
             val response = imageRepository.imageToUrl(listOf(file), "users")
 
             if (response.isSuccessful) {
-
+                response.body()?.let {
+                    _profileImg.value = it[0]
+                }
             } else {
 
             }
