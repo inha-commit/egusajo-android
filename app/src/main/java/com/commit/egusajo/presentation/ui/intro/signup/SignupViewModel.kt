@@ -7,6 +7,7 @@ import com.commit.egusajo.app.App.Companion.sharedPreferences
 import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.model.NickCheckRequest
 import com.commit.egusajo.data.model.SignupRequest
+import com.commit.egusajo.data.repository.ImageRepository
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.presentation.ui.intro.SnsId
 import com.commit.egusajo.util.Constants.TAG
@@ -39,7 +40,9 @@ sealed class SignupState {
 }
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val introRepository: IntroRepository) :
+class SignupViewModel @Inject constructor(
+    private val introRepository: IntroRepository
+) :
     ViewModel() {
 
     private val _uiState = MutableStateFlow(SignupUiState())
