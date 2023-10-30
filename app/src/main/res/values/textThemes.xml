@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="TextMediumGrey3" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/es_grey3</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextLargeBlackBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextMediumGrey8" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/es_grey8</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    
+</resources>
