@@ -25,6 +25,7 @@ class SignupViewModel @Inject constructor(private val introRepository: IntroRepo
     val name = MutableStateFlow("")
     val nick = MutableStateFlow("")
     val birth = MutableStateFlow("")
+    val profileUrl = MutableStateFlow("")
 
     init {
         checkNick()
@@ -72,6 +73,10 @@ class SignupViewModel @Inject constructor(private val introRepository: IntroRepo
             }
 
         }
+    }
+
+    fun setProfileImg(url: String) {
+        profileUrl.value = url
     }
 
 }

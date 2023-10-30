@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.intro.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.commit.egusajo.R
@@ -21,6 +22,18 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
 
         binding.pvm = parentViewModel
         binding.vm = viewModel
+        initObserver()
+    }
+
+    private fun initObserver(){
+
+        repeatOnStarted {
+            parentViewModel.profileImg.collect{
+                if(it.isNotBlank()){
+                    viewModel.setProfileImg(it)
+                }
+            }
+        }
     }
 
 }
