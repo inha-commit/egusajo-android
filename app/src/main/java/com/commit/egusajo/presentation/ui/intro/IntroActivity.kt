@@ -2,10 +2,8 @@ package com.commit.egusajo.presentation.ui.intro
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,11 +15,8 @@ import com.commit.egusajo.databinding.ActivityIntroBinding
 import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.presentation.ui.main.MainActivity
 import com.commit.egusajo.util.Constants
+import com.commit.egusajo.util.toMultiPart
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 
 @AndroidEntryPoint
 class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::inflate) {
@@ -119,29 +114,8 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::i
             if (result.resultCode == Activity.RESULT_OK) {
                 val uri = result.data?.data
                 uri?.let {
-                    val file = File(getRealPathFromUri(it, this) ?: "")
-                    val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-                    val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-                    viewModel.imageToUrl(body)
+                    viewModel.imageToUrl(it.toMultiPart(this))
                 }
             }
         }
-
-    // 절대경로 변환
-    private fun getRealPathFromUri(uri: Uri, context: Context): String? {
-        var filePath: String? = null
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = context.contentResolver.query(uri, projection, null, null, null)
-        cursor?.let {
-            if (it.moveToFirst()) {
-                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                filePath = it.getString(columnIndex)
-            }
-            it.close()
-        }
-        return filePath
-    }
-
-
 }

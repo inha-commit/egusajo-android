@@ -43,12 +43,6 @@ class IntroViewModel @Inject constructor(
         }
     }
 
-    fun setProfile(url: String) {
-        viewModelScope.launch {
-
-        }
-    }
-
     fun imageToUrl(file: MultipartBody.Part) {
         viewModelScope.launch {
             val response = imageRepository.imageToUrl(listOf(file), "users")
@@ -57,8 +51,6 @@ class IntroViewModel @Inject constructor(
                 response.body()?.let {
                     _profileImg.value = it[0]
                 }
-            } else {
-
             }
         }
 
