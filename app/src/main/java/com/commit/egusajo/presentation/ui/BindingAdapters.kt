@@ -25,7 +25,7 @@ fun bindWarningText(view: TextView, state: SignupState) {
             view.visibility = View.VISIBLE
             view.text = state.msg
         }
-        is SignupState.Success -> view.visibility = View.INVISIBLE
+        is SignupState.Success -> view.visibility = View.GONE
         else -> {}
     }
 }
