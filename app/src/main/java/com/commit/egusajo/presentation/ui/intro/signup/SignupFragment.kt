@@ -34,6 +34,16 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
                 }
             }
         }
+
+        repeatOnStarted {
+            viewModel.uiState.collect{
+                when(it.signUp){
+                    is SignupState.Success -> parentViewModel.goToMainActivity()
+                    is SignupState.Error -> showCustomToast(it.signUp.msg)
+                    else -> {}
+                }
+            }
+        }
     }
 
 }
