@@ -37,6 +37,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
             android:onClick="@{() -> pvm.goToGallery()}"
+            app:imgUrl="@{vm.profileUrl}"
             android:src="@drawable/icon_profile"
             app:civ_border_color="@color/es_grey3"
             app:civ_border_width="1dp"
