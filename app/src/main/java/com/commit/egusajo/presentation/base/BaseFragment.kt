@@ -58,9 +58,12 @@ abstract class BaseFragment<B : ViewDataBinding>(
 
     fun showBirthdayPicker(
         context: Context,
-        onConfirmBtnClickListener: (String) -> Unit
+        curYear: Int,
+        curMonth: Int,
+        curDay: Int,
+        onConfirmBtnClickListener: (Int, Int, Int) -> Unit
     ){
-        birthdayPicker = BirthdayPickerDialog(context, onConfirmBtnClickListener)
+        birthdayPicker = BirthdayPickerDialog(context, curYear, curMonth, curDay, onConfirmBtnClickListener)
         birthdayPicker.show()
     }
 

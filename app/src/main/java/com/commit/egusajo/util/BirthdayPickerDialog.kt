@@ -4,15 +4,16 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import com.commit.egusajo.databinding.DialogBirthdayDatepickerBinding
-import java.time.LocalDate
 
 class BirthdayPickerDialog(
     context: Context,
-    private val onConfirmBtnClickListener: (birthday: String) -> Unit
+    private val curYear: Int,
+    private val curMonth: Int,
+    private val curDay: Int,
+    private val onConfirmBtnClickListener: (year: Int, month: Int, day: Int) -> Unit
 ) : Dialog(context) {
 
     private lateinit var binding: DialogBirthdayDatepickerBinding
-    private val today = LocalDate.now()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,13 +24,13 @@ class BirthdayPickerDialog(
         with(binding) {
             pickerMonth.minValue = 1
             pickerMonth.maxValue = 12
-            pickerMonth.value = today.monthValue
+            pickerMonth.value = curMonth
             pickerYear.minValue = 1900
             pickerYear.maxValue = 2099
-            pickerYear.value = today.year
+            pickerYear.value = curYear
             pickerDay.minValue = 1
             pickerDay.maxValue = 31
-            pickerDay.value = today.dayOfMonth
+            pickerDay.value = curDay
         }
 
         setListener()
@@ -42,8 +43,9 @@ class BirthdayPickerDialog(
 
         binding.btnConfirm.setOnClickListener {
             onConfirmBtnClickListener(
-                binding.pickerYear.value.toString() + if (binding.pickerMonth.value < 10) "0${binding.pickerMonth.value}" else binding.pickerMonth.value.toString()
-                        + if (binding.pickerDay.value < 10) "0${binding.pickerDay.value}" else binding.pickerDay.value.toString()
+                binding.pickerYear.value,
+                binding.pickerMonth.value,
+                binding.pickerDay.value
             )
             dismiss()
         }
