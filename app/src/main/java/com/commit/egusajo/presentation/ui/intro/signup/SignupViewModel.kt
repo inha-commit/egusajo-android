@@ -14,9 +14,12 @@ import com.commit.egusajo.util.Constants.X_ACCESS_TOKEN
 import com.commit.egusajo.util.Constants.X_REFRESH_TOKEN
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -38,32 +41,38 @@ sealed class SignupState {
     data class Error(val msg: String) : SignupState()
 }
 
+sealed class SignupEvents {
+    data class ShowBirthPicker(val curYear: Int, val curMonth: Int, val curDay: Int) : SignupEvents()
+}
+
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val introRepository: IntroRepository
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SignupUiState())
     val uiState: StateFlow<SignupUiState> = _uiState.asStateFlow()
 
+    private val _events = MutableSharedFlow<SignupEvents>()
+    val events: SharedFlow<SignupEvents> = _events.asSharedFlow()
+
     val name = MutableStateFlow("")
     val nick = MutableStateFlow("")
-    val birth = MutableStateFlow("")
+    val birthString = MutableStateFlow("")
     private var profileUrl = ""
+
+    private var curYear = 2023
+    private var curMonth = 11
+    private var curDay = 1
 
     init {
         checkNick()
     }
 
-    val isDataReady = combine(name, nick, birth) { name, nick, birth ->
-        name.isNotBlank()
-                && nick.isNotBlank()
-                && birth.isNotBlank()
+    val isDataReady = combine(name, nick, birthString) { name, nick, birth ->
+        name.isNotBlank() && nick.isNotBlank() && birth.isNotBlank()
     }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        false
+        viewModelScope, SharingStarted.WhileSubscribed(), false
     )
 
     private fun checkNick() {
@@ -105,23 +114,16 @@ class SignupViewModel @Inject constructor(
     fun signup() {
 
         viewModelScope.launch {
-            val response =
-                introRepository.signup(
-                    SignupRequest(
-                        snsId = SnsId.snsId,
-                        nickname = nick.value,
-                        birthday = birth.value,
-                        profileImageSrc = profileUrl.ifBlank { null }
-                    )
-                )
+            val response = introRepository.signup(SignupRequest(snsId = SnsId.snsId,
+                nickname = nick.value,
+                birthday = birthString.value,
+                profileImageSrc = profileUrl.ifBlank { null }))
 
             if (response.isSuccessful) {
 
                 response.body()?.let {
-                    sharedPreferences.edit()
-                        .putString(X_ACCESS_TOKEN, "Bearer " + it.accessToken)
-                        .putString(X_REFRESH_TOKEN, it.refreshToken)
-                        .apply()
+                    sharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer " + it.accessToken)
+                        .putString(X_REFRESH_TOKEN, it.refreshToken).apply()
                 }
 
                 _uiState.update { state ->
@@ -158,6 +160,20 @@ class SignupViewModel @Inject constructor(
 
     fun setProfileImg(url: String) {
         profileUrl = url
+    }
+
+    fun showBirthPicker() {
+        viewModelScope.launch {
+            _events.emit(SignupEvents.ShowBirthPicker(curYear, curMonth, curDay))
+        }
+    }
+
+    fun setBirthday(year: Int, month: Int, day: Int) {
+        curYear = year
+        curMonth = month
+        curDay = day
+        birthString.value = "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
+        Log.d(TAG,birthString.value)
     }
 
 }

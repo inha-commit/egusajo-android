@@ -3,7 +3,6 @@ package com.commit.egusajo.presentation.ui.intro.signup
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,22 +24,23 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
 
         binding.pvm = parentViewModel
         binding.vm = viewModel
-        initObserver()
+        initStateObserver()
+        initEventsObserver()
     }
 
-    private fun initObserver(){
+    private fun initStateObserver() {
 
         repeatOnStarted {
-            parentViewModel.profileImg.collect{
-                if(it.isNotBlank()){
+            parentViewModel.profileImg.collect {
+                if (it.isNotBlank()) {
                     viewModel.setProfileImg(it)
                 }
             }
         }
 
         repeatOnStarted {
-            viewModel.uiState.collect{
-                when(it.signUp){
+            viewModel.uiState.collect {
+                when (it.signUp) {
                     is SignupState.Success -> parentViewModel.goToMainActivity()
                     is SignupState.Error -> showCustomToast(it.signUp.msg)
                     else -> {}
@@ -48,11 +48,27 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
             }
         }
     }
+
+    private fun initEventsObserver(){
+        repeatOnStarted {
+            viewModel.events.collect{
+                when(it){
+                    is SignupEvents.ShowBirthPicker -> showPicker(it.curYear, it.curMonth, it.curDay)
+                }
+            }
+        }
+    }
+
+    private fun showPicker(curYear:Int, curMonth:Int, curDay:Int){
+        showBirthdayPicker(requireContext(), curYear, curMonth, curDay){ year, month, day ->
+            viewModel.setBirthday(year,month,day)
+        }
+    }
 }
 
 @BindingAdapter("profileImgUrl")
 fun bindProfileImg(imageView: ImageView, url: String) {
-    if(url.isNotBlank()){
+    if (url.isNotBlank()) {
         Glide.with(imageView.context)
             .load(url)
             .error(R.drawable.icon_profile)
