@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.commit.egusajo.util.BirthdayPickerDialog
 import com.commit.egusajo.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ abstract class BaseFragment<B : ViewDataBinding>(
     protected val binding get() = _binding!!
 
     private lateinit var loadingDialog : LoadingDialog
+    private lateinit var birthdayPicker : BirthdayPickerDialog
 
 
     override fun onCreateView(
@@ -51,6 +53,23 @@ abstract class BaseFragment<B : ViewDataBinding>(
     fun dismissLoading(){
         if(loadingDialog.isShowing){
             loadingDialog.dismiss()
+        }
+    }
+
+    fun showBirthdayPicker(
+        context: Context,
+        curYear: Int,
+        curMonth: Int,
+        curDay: Int,
+        onConfirmBtnClickListener: (Int, Int, Int) -> Unit
+    ){
+        birthdayPicker = BirthdayPickerDialog(context, curYear, curMonth, curDay, onConfirmBtnClickListener)
+        birthdayPicker.show()
+    }
+
+    fun dismissBirthdayPicker(){
+        if(birthdayPicker.isShowing){
+            birthdayPicker.dismiss()
         }
     }
 

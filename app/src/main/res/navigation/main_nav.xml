@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_nav">
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.commit.egusajo.presentation.ui.home.HomeFragment"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/fundFragment"
+        android:name="com.commit.egusajo.presentation.ui.fund.FundFragment"
+        android:label="Fund" />
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.MypageFragment"
+        android:label="MyPage" />
 
 </navigation>

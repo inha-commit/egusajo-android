@@ -1,14 +1,10 @@
 package com.commit.egusajo.presentation.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.commit.egusajo.R
+import com.commit.egusajo.databinding.ActivityMainBinding
+import com.commit.egusajo.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
+
 }
