@@ -127,8 +127,10 @@ class SignupViewModel @Inject constructor(
             if (response.isSuccessful) {
 
                 response.body()?.let {
-                    sharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer " + it.accessToken)
-                        .putString(X_REFRESH_TOKEN, it.refreshToken).apply()
+                    sharedPreferences.edit()
+                        .putString(X_ACCESS_TOKEN, it.accessToken)
+                        .putString(X_REFRESH_TOKEN, it.refreshToken)
+                        .apply()
                 }
 
                 _uiState.update { state ->

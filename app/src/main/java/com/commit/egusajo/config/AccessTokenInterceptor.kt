@@ -14,7 +14,7 @@ class AccessTokenInterceptor() : Interceptor {
         val builder: Request.Builder = chain.request().newBuilder()
         val jwt: String? = sharedPreferences.getString(X_ACCESS_TOKEN, null)
         jwt?.let{
-            builder.addHeader("Authorization", jwt)
+            builder.addHeader("access_token", jwt)
         }?:run{
             // 로컬에 저장된 토큰 없는경우
         }
