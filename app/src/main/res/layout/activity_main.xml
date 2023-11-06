@@ -18,11 +18,40 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main_nav"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/main_nav" />
+
+        <com.commit.egusajo.presentation.customview.EsBottomNavigationView
+            android:id="@+id/bnv"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center"
+            android:background="@color/es_white"
+            app:elevation="0dp"
+            app:itemActiveIndicatorStyle="@android:color/transparent"
+            app:itemTextAppearanceActive="@android:color/transparent"
+            app:itemTextAppearanceInactive="@android:color/transparent"
+            app:itemTextColor="@color/selector_bnv_text"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/main_menu" />
+
+        <ImageButton
+            android:id="@+id/btn_fund"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_fund"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
