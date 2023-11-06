@@ -18,5 +18,6 @@
     <color name="es_pink">#FF96A3</color>
     <color name="es_light_red">#FF5C5C</color>
     <color name="es_red">#FF334B</color>
+    <color name="es_red1">#FDF0F2</color>
     <color name="es_white">#FCFCFC</color>
 </resources>
