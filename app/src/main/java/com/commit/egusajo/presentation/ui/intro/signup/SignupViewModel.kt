@@ -42,7 +42,8 @@ sealed class SignupState {
 }
 
 sealed class SignupEvents {
-    data class ShowBirthPicker(val curYear: Int, val curMonth: Int, val curDay: Int) : SignupEvents()
+    data class ShowBirthPicker(val curYear: Int, val curMonth: Int, val curDay: Int) :
+        SignupEvents()
 }
 
 @HiltViewModel
@@ -114,10 +115,14 @@ class SignupViewModel @Inject constructor(
     fun signup() {
 
         viewModelScope.launch {
-            val response = introRepository.signup(SignupRequest(snsId = SnsId.snsId,
-                nickname = nick.value,
-                birthday = birthString.value,
-                profileImageSrc = profileUrl.ifBlank { null }))
+            val response = introRepository.signup(
+                SignupRequest(
+                    snsId = SnsId.snsId,
+                    nickname = nick.value,
+                    name = name.value,
+                    birthday = birthString.value,
+                    profileImageSrc = profileUrl.ifBlank { null })
+            )
 
             if (response.isSuccessful) {
 
@@ -172,8 +177,9 @@ class SignupViewModel @Inject constructor(
         curYear = year
         curMonth = month
         curDay = day
-        birthString.value = "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
-        Log.d(TAG,birthString.value)
+        birthString.value =
+            "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
+        Log.d(TAG, birthString.value)
     }
 
 }
