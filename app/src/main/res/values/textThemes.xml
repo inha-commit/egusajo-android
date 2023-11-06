@@ -11,6 +11,12 @@
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="TextMediumGrey9" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/es_grey9</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="TextMediumGrey8" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/es_grey8</item>
         <item name="android:textSize">18sp</item>
@@ -19,6 +25,21 @@
     <style name="TextMediumBlack" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextSmallGrey9" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/es_grey9</item>
+    </style>
+
+    <style name="TextSmallGrey8" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/es_grey8</item>
+    </style>
+
+    <style name="TextTinyRed" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/es_red</item>
     </style>
     
 </resources>
