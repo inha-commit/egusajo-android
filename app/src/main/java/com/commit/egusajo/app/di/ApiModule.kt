@@ -1,5 +1,6 @@
 package com.commit.egusajo.app.di
 
+import com.commit.egusajo.data.remote.HomeApi
 import com.commit.egusajo.data.remote.ImageApi
 import com.commit.egusajo.data.remote.IntroApi
 import dagger.Module
@@ -23,5 +24,11 @@ object ApiModule {
     @Provides
     fun provideImageService(retrofit: Retrofit): ImageApi {
         return retrofit.create(ImageApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHomeService(retrofit: Retrofit): HomeApi {
+        return retrofit.create(HomeApi::class.java)
     }
 }

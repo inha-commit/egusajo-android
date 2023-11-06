@@ -1,5 +1,7 @@
 package com.commit.egusajo.app.di
 
+import com.commit.egusajo.data.repository.HomeRepository
+import com.commit.egusajo.data.repository.HomeRepositoryImpl
 import com.commit.egusajo.data.repository.ImageRepository
 import com.commit.egusajo.data.repository.ImageRepositoryImpl
 import com.commit.egusajo.data.repository.IntroRepository
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindImageRepository(
         imageRepositoryImpl: ImageRepositoryImpl
     ): ImageRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindHomeRepository(
+        homeRepositoryImpl: HomeRepositoryImpl
+    ): HomeRepository
 }
