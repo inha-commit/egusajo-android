@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.commit.egusajo.presentation.ui.intro.signup.AccountVerificationViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +49,7 @@
             android:hint="계좌번호를 입력해주세요"
             android:paddingHorizontal="20dp"
             android:paddingVertical="12dp"
+            android:text="@={vm.account}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_account" />
@@ -72,6 +77,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_account"
+            app:list="@{vm.uiState.bankList}"
             app:spanCount="4"
             tools:listitem="@layout/item_bank" />
 
