@@ -10,7 +10,16 @@
         android:label="Login">
 
         <action
-            android:id="@+id/action_login_fragment_to_signup_fragment"
+            android:id="@+id/action_login_fragment_to_account_verification_fragment"
+            app:destination="@id/account_verification_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/account_verification_fragment"
+        android:name="com.commit.egusajo.presentation.ui.intro.signup.AccountVerificationFragment"
+        android:label="AccountVerification">
+        <action
+            android:id="@+id/action_account_verification_fragment_to_signup_fragment"
             app:destination="@id/signup_fragment" />
     </fragment>
 
@@ -18,6 +27,13 @@
         android:id="@+id/signup_fragment"
         android:name="com.commit.egusajo.presentation.ui.intro.signup.SignupFragment"
         android:label="Signup">
+        <argument
+            android:name="account"
+            app:argType="string" />
+
+        <argument
+            android:name="bank"
+            app:argType="string" />
     </fragment>
 
 </navigation>
