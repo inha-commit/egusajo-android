@@ -61,6 +61,9 @@ class SignupViewModel @Inject constructor(
     val nick = MutableStateFlow("")
     val birthString = MutableStateFlow("")
     private var profileUrl = ""
+    private var bank = ""
+    private var account = ""
+
 
     private var curYear = 2023
     private var curMonth = 11
@@ -120,6 +123,8 @@ class SignupViewModel @Inject constructor(
                     snsId = SnsId.snsId,
                     nickname = nick.value,
                     name = name.value,
+                    bank = bank,
+                    account = account,
                     birthday = birthString.value,
                     profileImageSrc = profileUrl.ifBlank { null })
             )
@@ -182,6 +187,11 @@ class SignupViewModel @Inject constructor(
         birthString.value =
             "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
         Log.d(TAG, birthString.value)
+    }
+
+    fun setAccountInfo(accountData: String, bankData: String){
+        account = accountData
+        bank = bankData
     }
 
 }

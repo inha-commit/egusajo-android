@@ -6,5 +6,7 @@ data class SignupRequest(
     val name: String,
     val birthday: String,
     val fcmId: String = "",
+    val account: String = "",
+    val bank: String = "",
     val profileImageSrc: String? = null
 )
