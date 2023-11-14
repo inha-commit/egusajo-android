@@ -6,9 +6,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +35,13 @@ class AccountVerificationViewModel @Inject constructor() : ViewModel() {
     val events: SharedFlow<AccountVerificationEvents> = _events.asSharedFlow()
 
     val account = MutableStateFlow("")
-    val bank = MutableStateFlow("")
+    private val bank = MutableStateFlow("")
+
+    val isDataReady = combine(account, bank) { account, bank ->
+        account.isNotBlank() && bank.isNotBlank()
+    }.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(), false
+    )
 
     fun checkAccount() {
 
@@ -52,6 +61,10 @@ class AccountVerificationViewModel @Inject constructor() : ViewModel() {
                 bankList = listOf("하나은행", "국민은행", "IBK은행", "카카오뱅크", " 토스뱅크", "부산은행", "경남은행")
             )
         }
+    }
+
+    fun setBank(data: String){
+        bank.value = data
     }
 
 }

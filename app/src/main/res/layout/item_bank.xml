@@ -13,6 +13,7 @@
         android:background="@drawable/shape_red1fill_nostroke_radius20"
         android:paddingHorizontal="12dp"
         android:paddingVertical="4dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="하나은행" />
