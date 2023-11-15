@@ -22,24 +22,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         binding.vm = viewModel
         viewModel.getFundList()
-//        setScrollEventListener()
+        setScrollEventListener()
         binding.rvFund.adapter = HomeFundAdapter()
     }
 
-//    private fun setScrollEventListener() {
-//
-//        binding.rvFund.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//
-//                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-//                val itemTotalCount = recyclerView.adapter?.itemCount?.minus(1)
-//
-//                if (lastVisibleItemPosition == itemTotalCount) {
-//
-//                }
-//            }
-//        })
-//    }
+    private fun setScrollEventListener() {
+
+        binding.rvFund.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter?.itemCount?.minus(1)
+
+                if (lastVisibleItemPosition == itemTotalCount) {
+                    viewModel.getFundList()
+                }
+            }
+        })
+    }
 }

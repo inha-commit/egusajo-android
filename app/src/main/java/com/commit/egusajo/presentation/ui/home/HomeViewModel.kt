@@ -30,18 +30,25 @@ class HomeViewModel @Inject constructor(
 
     fun getFundList(){
         viewModelScope.launch {
-            val response = homeRepository.getFundList(0)
+
+            val response = homeRepository.getFundList(_uiState.value.page)
 
             if(response.isSuccessful){
                 response.body()?.let{ body ->
                     _uiState.update { state ->
                         state.copy(
-                            fundList = body.toFundList()
+                            fundList = _uiState.value.fundList + body.toFundList()
                         )
                     }
                 }
             } else {
 
+            }
+
+            _uiState.update { state ->
+                state.copy(
+                    page = _uiState.value.page + 1
+                )
             }
         }
     }
