@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentSignupBinding
@@ -19,11 +20,16 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
     private val viewModel: SignupViewModel by viewModels()
     private val parentViewModel: IntroViewModel by activityViewModels()
 
+    private val navArgs: SignupFragmentArgs by navArgs()
+    private val account by lazy{ navArgs.account }
+    private val bank by lazy { navArgs.bank }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.pvm = parentViewModel
         binding.vm = viewModel
+        viewModel.setAccountInfo(account, bank)
         initStateObserver()
         initEventsObserver()
     }

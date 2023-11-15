@@ -42,7 +42,8 @@ sealed class SignupState {
 }
 
 sealed class SignupEvents {
-    data class ShowBirthPicker(val curYear: Int, val curMonth: Int, val curDay: Int) : SignupEvents()
+    data class ShowBirthPicker(val curYear: Int, val curMonth: Int, val curDay: Int) :
+        SignupEvents()
 }
 
 @HiltViewModel
@@ -60,6 +61,9 @@ class SignupViewModel @Inject constructor(
     val nick = MutableStateFlow("")
     val birthString = MutableStateFlow("")
     private var profileUrl = ""
+    private var bank = ""
+    private var account = ""
+
 
     private var curYear = 2023
     private var curMonth = 11
@@ -114,16 +118,24 @@ class SignupViewModel @Inject constructor(
     fun signup() {
 
         viewModelScope.launch {
-            val response = introRepository.signup(SignupRequest(snsId = SnsId.snsId,
-                nickname = nick.value,
-                birthday = birthString.value,
-                profileImageSrc = profileUrl.ifBlank { null }))
+            val response = introRepository.signup(
+                SignupRequest(
+                    snsId = SnsId.snsId,
+                    nickname = nick.value,
+                    name = name.value,
+                    bank = bank,
+                    account = account,
+                    birthday = birthString.value,
+                    profileImageSrc = profileUrl.ifBlank { null })
+            )
 
             if (response.isSuccessful) {
 
                 response.body()?.let {
-                    sharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer " + it.accessToken)
-                        .putString(X_REFRESH_TOKEN, it.refreshToken).apply()
+                    sharedPreferences.edit()
+                        .putString(X_ACCESS_TOKEN, it.accessToken)
+                        .putString(X_REFRESH_TOKEN, it.refreshToken)
+                        .apply()
                 }
 
                 _uiState.update { state ->
@@ -172,8 +184,14 @@ class SignupViewModel @Inject constructor(
         curYear = year
         curMonth = month
         curDay = day
-        birthString.value = "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
-        Log.d(TAG,birthString.value)
+        birthString.value =
+            "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
+        Log.d(TAG, birthString.value)
+    }
+
+    fun setAccountInfo(accountData: String, bankData: String){
+        account = accountData
+        bank = bankData
     }
 
 }

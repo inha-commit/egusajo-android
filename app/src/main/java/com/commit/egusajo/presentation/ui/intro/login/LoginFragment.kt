@@ -36,7 +36,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             viewModel.uiState.collect {
                 when (it.loginState) {
                     is LoginState.Success -> parentViewModel.goToMainActivity()
-                    is LoginState.NoMember -> findNavController().toSignup()
+                    is LoginState.NoMember -> findNavController().toAccountVerification()
                     is LoginState.Error -> showCustomToast(it.loginState.msg)
                     else -> {}
                 }
@@ -107,8 +107,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     }
 
-    private fun NavController.toSignup() {
-        val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+    private fun NavController.toAccountVerification() {
+        val action = LoginFragmentDirections.actionLoginFragmentToAccountVerificationFragment()
         this.navigate(action)
     }
 

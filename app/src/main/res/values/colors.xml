@@ -8,10 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+
     <color name="es_grey3">#EBEBEB</color>
+    <color name="es_grey4">#C6BDBD</color>
     <color name="es_grey7">#8C8C8C</color>
     <color name="es_grey8">#595959</color>
+    <color name="es_grey9">#262626</color>
+    <color name="es_dark_grey">#686060</color>
+    <color name="es_light_pink">#B9AEAE</color>
     <color name="es_pink">#FF96A3</color>
-    <color name="es_red">#FF5C5C</color>
+    <color name="es_light_red">#FF5C5C</color>
+    <color name="es_red">#FF334B</color>
+    <color name="es_red1">#FDF0F2</color>
     <color name="es_white">#FCFCFC</color>
 </resources>
