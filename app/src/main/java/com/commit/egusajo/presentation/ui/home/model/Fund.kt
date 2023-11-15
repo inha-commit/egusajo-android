@@ -6,5 +6,5 @@ data class Fund(
     val productTitle: String,
     val productPrice: String,
     val date: String,
-    val productImgUrl: String
+    val productImgUrl: String?=""
 )

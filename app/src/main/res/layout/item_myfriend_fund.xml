@@ -21,10 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="@{item.dDay}"
             android:background="@drawable/shape_red1fill_nostroke_radius20"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
+            android:text="@{item.dDay}"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,13 +33,13 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/TextMediumGrey9"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{item.title}"
             android:layout_marginTop="12dp"
+            android:text="@{item.title}"
+            app:layout_constraintEnd_toStartOf="@id/iv_profile_img"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_dday"
-            tools:text="`김민우` 님의 생일입니다" />
+            app:layout_constraintTop_toBottomOf="@id/tv_dday" />
 
         <TextView
             android:id="@+id/tv_product_title_label"
@@ -47,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:text="제품명"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            tools:text="제품명" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <ImageView
             android:id="@+id/divider_product_title"
@@ -70,8 +70,7 @@
             android:text="@{item.productTitle}"
             app:layout_constraintBottom_toBottomOf="@id/divider_product_title"
             app:layout_constraintStart_toEndOf="@id/divider_product_title"
-            app:layout_constraintTop_toTopOf="@id/divider_product_title"
-            tools:text="아이패드 14 Pro" />
+            app:layout_constraintTop_toTopOf="@id/divider_product_title" />
 
         <TextView
             android:id="@+id/tv_goal_price_label"
@@ -79,9 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:text="목표금액"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_title_label"
-            tools:text="목표금액" />
+            app:layout_constraintTop_toBottomOf="@id/tv_product_title_label" />
 
         <ImageView
             android:id="@+id/divider_goal_price"
@@ -95,6 +94,7 @@
 
         <TextView
             android:id="@+id/tv_goal_price"
+            style="@style/TextSmallGrey8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -110,9 +110,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:text="날짜"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_goal_price_label"
-            tools:text="날짜" />
+            app:layout_constraintTop_toBottomOf="@id/tv_goal_price_label" />
 
         <ImageView
             android:id="@+id/divider_date"
@@ -139,16 +139,25 @@
             tools:text="2019년 8월 31일" />
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_profile_img"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scaleType="centerCrop"
             app:imgUrl="@{item.productImgUrl}"
-            app:layout_constraintTop_toTopOf="@id/tv_title"
             app:layout_constraintBottom_toBottomOf="@id/tv_date_label"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
             app:shapeAppearanceOverlay="@style/All12RadiusImageView"
-            tools:src="@drawable/test"
-            android:scaleType="centerCrop" />
+            tools:src="@drawable/test" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_label" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

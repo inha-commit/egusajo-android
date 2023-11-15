@@ -1,30 +1,30 @@
 package com.commit.egusajo.data.model
 
 data class FundListResponse(
-    val presentItems: List<PresentItem>
+    val presents: List<PresentItem>
 )
 
 data class PresentItem(
+    val user: User,
     val present: Present,
-    val user: User
 )
 
 data class Present(
-    val complete: Boolean,
-    val deadline: String,
-    val goal: Int,
     val id: Int,
-    val longComment: String,
+    val name: String,
+    val productLink: Any?="",
+    val complete: Boolean,
+    val goal: Int?=0,
     val money: Int,
-    val nickname: String,
-    val profileImgSrc: String,
+    val deadline: String,
+    val shortComment: String,
     val representImage: String,
-    val shortComment: String
+    val longComment: String,
 )
 
 data class User(
     val id: Int,
     val name: String,
     val nickname: String,
-    val profileImgSrc: String
+    val profileImgSrc: String?=""
 )

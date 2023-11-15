@@ -12,6 +12,7 @@ import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.presentation.ui.fund.FundFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private lateinit var navController: NavController
