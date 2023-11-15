@@ -32,6 +32,9 @@ class HomeFundViewHolder(private val binding: ItemMyfriendFundBinding) :
 
     fun bind(item: Fund) {
         binding.item = item
+        binding.root.setOnClickListener {
+            item.onItemClickListener(item.fundId)
+        }
     }
 
 }

@@ -6,8 +6,11 @@ import com.commit.egusajo.data.repository.HomeRepository
 import com.commit.egusajo.presentation.ui.home.mapper.toFundList
 import com.commit.egusajo.presentation.ui.home.model.Fund
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,6 +23,10 @@ data class HomeUiState(
     val hasNext: Boolean = true
 )
 
+sealed class HomeEvents{
+    data class NavigateToFundDetail(val fundId: Int): HomeEvents()
+}
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository
@@ -27,6 +34,9 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<HomeEvents>()
+    val events: SharedFlow<HomeEvents> = _events.asSharedFlow()
 
     fun getFundList(){
         viewModelScope.launch {
@@ -37,7 +47,7 @@ class HomeViewModel @Inject constructor(
                 response.body()?.let{ body ->
                     _uiState.update { state ->
                         state.copy(
-                            fundList = _uiState.value.fundList + body.toFundList()
+                            fundList = _uiState.value.fundList + body.toFundList(::navigateToFundDetail)
                         )
                     }
                 }
@@ -50,6 +60,12 @@ class HomeViewModel @Inject constructor(
                     page = _uiState.value.page + 1
                 )
             }
+        }
+    }
+
+    private fun navigateToFundDetail(fundId: Int){
+        viewModelScope.launch {
+            _events.emit(HomeEvents.NavigateToFundDetail(fundId))
         }
     }
 
