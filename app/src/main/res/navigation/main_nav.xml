@@ -10,6 +10,11 @@
         android:label="Home" />
 
     <fragment
+        android:id="@+id/fund_detail_fragment"
+        android:name="com.commit.egusajo.presentation.ui.global.detail.FundDetailFragment"
+        android:label="FundDetail" />
+
+    <fragment
         android:id="@+id/fund_fragment"
         android:name="com.commit.egusajo.presentation.ui.fund.FundFragment"
         android:label="Fund" />
@@ -21,6 +26,6 @@
 
     <action
         android:id="@+id/action_global_to_fund_fragment"
-        app:destination="@id/fund_fragment"/>
+        app:destination="@id/fund_fragment" />
 
 </navigation>
