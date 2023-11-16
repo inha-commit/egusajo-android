@@ -2,7 +2,7 @@ package com.commit.egusajo.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.commit.egusajo.data.repository.HomeRepository
+import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.ui.home.mapper.toFundList
 import com.commit.egusajo.presentation.ui.home.model.Fund
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +29,7 @@ sealed class HomeEvents{
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val fundRepository: FundRepository
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
     fun getFundList(){
         viewModelScope.launch {
 
-            val response = homeRepository.getFundList(_uiState.value.page)
+            val response = fundRepository.getFundList(_uiState.value.page)
 
             if(response.isSuccessful){
                 response.body()?.let{ body ->
