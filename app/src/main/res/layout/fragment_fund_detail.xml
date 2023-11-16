@@ -1,13 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.commit.egusajo.presentation.ui.global.detail.FundDetailViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/TextLargeBlackBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/funding_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_present_img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_present_image" />
+
+                <me.relex.circleindicator.CircleIndicator2
+                    android:id="@+id/ci_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="12dp"
+                    app:layout_constraintBottom_toBottomOf="@id/rv_present_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_dday"
+                    style="@style/TextTinyRed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/shape_red1fill_nostroke_radius20"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:text="@{vm.uiState.fundDetail.dDay}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_present_img"
+                    tools:text="D - 1 🔥" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/TextMediumBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@{vm.uiState.fundDetail.name}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dday"
+                    tools:text="김민우" />
+
+                <TextView
+                    android:id="@+id/tv_name_label"
+                    style="@style/TextMediumBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/is_birthday"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_name"
+                    app:layout_constraintStart_toEndOf="@id/tv_name"
+                    app:layout_constraintTop_toTopOf="@id/tv_name" />
+
+                <TextView
+                    android:id="@+id/tv_product_title_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="제품명"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+                <ImageView
+                    android:id="@+id/divider_product_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icon_grey_divider"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_product_title_label"
+                    app:layout_constraintStart_toEndOf="@id/tv_product_title_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_product_title_label" />
+
+                <TextView
+                    android:id="@+id/tv_product_title"
+                    style="@style/TextSmallGrey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{vm.uiState.fundDetail.presentName}"
+                    app:layout_constraintBottom_toBottomOf="@id/divider_product_title"
+                    app:layout_constraintStart_toEndOf="@id/divider_product_title"
+                    app:layout_constraintTop_toTopOf="@id/divider_product_title" />
+
+                <TextView
+                    android:id="@+id/tv_product_link_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/product_link"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_product_title_label" />
+
+                <ImageView
+                    android:id="@+id/divider_product_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icon_grey_divider"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_product_link_label"
+                    app:layout_constraintStart_toEndOf="@id/tv_product_link_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_product_link_label" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_product_link"
+                    style="@style/TextSmallGrey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/shape_pinkfill_nostroke_radius20"
+                    android:minHeight="0dp"
+                    android:paddingVertical="4dp"
+                    android:text="@string/open_link"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/divider_product_link"
+                    app:layout_constraintStart_toEndOf="@id/divider_product_link"
+                    app:layout_constraintTop_toTopOf="@id/divider_product_link" />
+
+                <TextView
+                    android:id="@+id/tv_description_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/funder_one_talk"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_product_link_label" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/shape_nofill_grey3stroke_radius10"
+                    android:lineSpacingExtra="8sp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="@{vm.uiState.fundDetail.presentDescription}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description_label" />
+
+                <TextView
+                    android:id="@+id/tv_recruit_situation_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/participate_status"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+                <TextView
+                    android:id="@+id/tv_count_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/participate_count"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recruit_situation_label" />
+
+                <ImageView
+                    android:id="@+id/divider_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icon_grey_divider"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_count_label"
+                    app:layout_constraintStart_toEndOf="@id/tv_count_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_count_label" />
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    style="@style/TextSmallGrey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{vm.uiState.fundDetail.count}"
+                    app:layout_constraintBottom_toBottomOf="@id/divider_count"
+                    app:layout_constraintStart_toEndOf="@id/divider_count"
+                    app:layout_constraintTop_toTopOf="@id/divider_count"
+                    tools:text="10명" />
+
+                <TextView
+                    android:id="@+id/tv_goal_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/goal_money"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_count_label" />
+
+                <ImageView
+                    android:id="@+id/divider_goal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icon_grey_divider"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_goal_label"
+                    app:layout_constraintStart_toEndOf="@id/tv_goal_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_goal_label" />
+
+                <TextView
+                    android:id="@+id/tv_goal"
+                    style="@style/TextSmallGrey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@id/divider_goal"
+                    app:layout_constraintStart_toEndOf="@id/divider_goal"
+                    app:layout_constraintTop_toTopOf="@id/divider_goal"
+                    app:price="@{vm.uiState.fundDetail.goal}" />
+
+                <TextView
+                    android:id="@+id/tv_money_label"
+                    style="@style/TextSmallGrey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/cur_money"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_goal_label" />
+
+                <ImageView
+                    android:id="@+id/divider_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/icon_grey_divider"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_money_label"
+                    app:layout_constraintStart_toEndOf="@id/tv_money_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_money_label" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    style="@style/TextSmallGrey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@id/divider_money"
+                    app:layout_constraintStart_toEndOf="@id/divider_money"
+                    app:layout_constraintTop_toTopOf="@id/divider_money"
+                    app:price="@{vm.uiState.fundDetail.money}" />
+
+                <TextView
+                    android:id="@+id/tv_goal_percent"
+                    style="@style/TextSmallGrey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{vm.uiState.fundDetail.percent}"
+                    android:textColor="@color/es_pink"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_money"
+                    app:layout_constraintStart_toEndOf="@id/tv_money"
+                    app:layout_constraintTop_toTopOf="@id/tv_money" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_participate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="200dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_money_label"
+                    app:list="@{vm.uiState.fundDetail.fundList}"
+                    tools:listitem="@layout/item_fund_participation" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_participate"
+            style="@style/TextMediumBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/selector_next_btn"
+            android:enabled="@{vm.uiState.fundDetail.participateAvailable}"
+            android:onClick="@{() -> vm.navigateToFundPayment()}"
+            android:text="@string/participate_fund"
+            android:textColor="@color/selector_next_btn_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:participateText="@{vm.uiState.fundDetail.participateAvailable}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

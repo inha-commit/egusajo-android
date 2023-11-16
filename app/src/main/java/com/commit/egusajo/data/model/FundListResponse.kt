@@ -14,7 +14,7 @@ data class Present(
     val name: String,
     val productLink: Any?="",
     val complete: Boolean,
-    val goal: Int?=0,
+    val goal: Int=0,
     val money: Int,
     val deadline: String,
     val shortComment: String,

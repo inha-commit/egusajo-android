@@ -1,6 +1,7 @@
 package com.commit.egusajo.presentation.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -53,6 +54,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             if (destination.id == R.id.fund_fragment) {
                 val menu = binding.bnv.menu
                 menu.getItem(1).isChecked = true
+            }
+
+            if (destination.id == R.id.fund_fragment || destination.id == R.id.home_fragment || destination.id == R.id.mypage_fragment){
+                binding.bnv.visibility = View.VISIBLE
+                binding.btnFund.visibility = View.VISIBLE
+            } else {
+                binding.bnv.visibility = View.INVISIBLE
+                binding.btnFund.visibility = View.INVISIBLE
             }
         }
     }

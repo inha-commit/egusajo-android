@@ -16,6 +16,9 @@
         <argument
             android:name="fundId"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_fund_detail_fragment_to_fund_payment_fragment"
+            app:destination="@id/fund_payment_fragment" />
     </fragment>
 
     <fragment
@@ -27,6 +30,15 @@
         android:id="@+id/mypage_fragment"
         android:name="com.commit.egusajo.presentation.ui.mypage.MypageFragment"
         android:label="MyPage" />
+
+    <fragment
+        android:id="@+id/fund_payment_fragment"
+        android:name="com.commit.egusajo.presentation.ui.global.payment.FundPaymentFragment"
+        android:label="FundPayment">
+        <argument
+            android:name="fundId"
+            app:argType="integer"/>
+    </fragment>
 
     <action
         android:id="@+id/action_global_to_fund_fragment"
