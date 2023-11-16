@@ -74,6 +74,7 @@ class BearerInterceptor : Interceptor {
                 val newRequest = originalRequest.newBuilder()
                     .addHeader("Authorization", "Bearer $accessToken")
                     .build()
+                response.close()
 
                 return chain.proceed(newRequest)
             } else {

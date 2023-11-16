@@ -23,9 +23,27 @@ class FundDetailFragment: BaseFragment<FragmentFundDetailBinding>(R.layout.fragm
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        binding.rvPresentImg.adapter = PresentImageAdapter()
+
+        initStateObserver()
         viewModel.getFundDetail(fundId)
-        PagerSnapHelper().attachToRecyclerView(binding.rvPresentImg)
+
+    }
+
+    private fun initStateObserver(){
+        repeatOnStarted {
+            viewModel.uiState.collect{
+                if(it.fundDetail.presentImages.isNotEmpty()){
+                    setImgRecyclerView(it.fundDetail.presentImages)
+                }
+            }
+        }
+    }
+
+    private fun setImgRecyclerView(data: List<String>){
+        binding.rvPresentImg.adapter = PresentImageAdapter(data)
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(binding.rvPresentImg)
+        binding.ciIndicator.attachToRecyclerView(binding.rvPresentImg, pagerSnapHelper)
     }
 
 }

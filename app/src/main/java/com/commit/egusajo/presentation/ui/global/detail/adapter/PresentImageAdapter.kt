@@ -2,15 +2,15 @@ package com.commit.egusajo.presentation.ui.global.detail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.commit.egusajo.R
 import com.commit.egusajo.databinding.ItemPresentImageBinding
-import com.commit.egusajo.util.DefaultDiffUtil
 
-class PresentImageAdapter() :ListAdapter<String, PresentImageViewHolder>(DefaultDiffUtil<String>()) {
+class PresentImageAdapter(private val data: List<String>) :RecyclerView.Adapter<PresentImageViewHolder>() {
 
     override fun onBindViewHolder(holder: PresentImageViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(data[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresentImageViewHolder {
@@ -23,12 +23,17 @@ class PresentImageAdapter() :ListAdapter<String, PresentImageViewHolder>(Default
         )
     }
 
+    override fun getItemCount(): Int = data.size
+
 }
 
 class PresentImageViewHolder(private val binding: ItemPresentImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: String) {
-        binding.url = item
+        Glide.with(binding.root.context)
+            .load(item)
+            .error(R.drawable.icon_profile)
+            .into(binding.ivPresentImg)
     }
 }
