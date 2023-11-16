@@ -335,6 +335,7 @@
             android:background="@drawable/shape_pinkfill_nostroke_radius10"
             android:text="@string/participate_fund"
             android:textColor="@color/white"
+            android:onClick="@{() -> vm.navigateToFundPayment()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
