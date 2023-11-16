@@ -17,7 +17,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_present_img"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:imgUrl="@{url}"

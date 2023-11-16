@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.commit.egusajo.R
 import com.commit.egusajo.presentation.ui.intro.signup.SignupState
@@ -22,11 +23,12 @@ fun bindImg(imageView: ImageView, url: String) {
 
 @BindingAdapter("warningText")
 fun bindWarningText(view: TextView, state: SignupState) {
-    when(state){
+    when (state) {
         is SignupState.Error -> {
             view.visibility = View.VISIBLE
             view.text = state.msg
         }
+
         is SignupState.Success -> view.visibility = View.GONE
         else -> {}
     }
@@ -38,3 +40,4 @@ fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list:
     val adapter = recyclerView.adapter as ListAdapter<T, VH>
     adapter.submitList(list)
 }
+

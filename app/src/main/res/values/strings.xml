@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">egusajo</string>
+    <string name="funding_detail">펀딩 상세보기</string>
+    <string name="is_birthday">님의 생일입니다.</string>
+    <string name="product_link">제품링크</string>
+    <string name="open_link">바로가기</string>
+    <string name="funder_one_talk">펀더 한마디</string>
+    <string name="participate_status">모집 현황</string>
+    <string name="participate_count">참여인원</string>
+    <string name="goal_money">목표금액</string>
+    <string name="cur_money">현재모금액</string>
+    <string name="participate_fund">모금 참여</string>
 </resources>

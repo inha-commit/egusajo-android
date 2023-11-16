@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="펀딩 상세보기"
+            android:text="@string/funding_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,13 +40,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_present_img"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_present_img"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:list="@{vm.uiState.fundDetail.presentImages}" />
 
                 <TextView
                     android:id="@+id/tv_dday"
@@ -57,9 +60,10 @@
                     android:background="@drawable/shape_red1fill_nostroke_radius20"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
+                    android:text="@{vm.uiState.fundDetail.dDay}"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/vp_present_img"
+                    app:layout_constraintTop_toBottomOf="@id/rv_present_img"
                     tools:text="D - 1 🔥" />
 
                 <TextView
@@ -68,6 +72,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:text="@{vm.uiState.fundDetail.name}"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_dday"
@@ -79,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:text="님의 생일입니다."
+                    android:text="@string/is_birthday"
                     app:layout_constraintBottom_toBottomOf="@id/tv_name"
                     app:layout_constraintStart_toEndOf="@id/tv_name"
                     app:layout_constraintTop_toTopOf="@id/tv_name" />
@@ -110,10 +115,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:text="@{vm.uiState.fundDetail.presentName}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_product_title"
                     app:layout_constraintStart_toEndOf="@id/divider_product_title"
-                    app:layout_constraintTop_toTopOf="@id/divider_product_title"
-                    tools:text="아이패드 14 Pro" />
+                    app:layout_constraintTop_toTopOf="@id/divider_product_title" />
 
                 <TextView
                     android:id="@+id/tv_product_link_label"
@@ -121,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="제품링크"
+                    android:text="@string/product_link"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_product_title_label" />
 
@@ -144,7 +149,7 @@
                     android:background="@drawable/shape_pinkfill_nostroke_radius20"
                     android:minHeight="0dp"
                     android:paddingVertical="4dp"
-                    android:text="바로가기"
+                    android:text="@string/open_link"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@id/divider_product_link"
                     app:layout_constraintStart_toEndOf="@id/divider_product_link"
@@ -156,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
-                    android:text="펀더 한마디"
+                    android:text="@string/funder_one_talk"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_product_link_label" />
@@ -170,10 +175,10 @@
                     android:lineSpacingExtra="8sp"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
+                    android:text="@{vm.uiState.fundDetail.presentDescription}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_description_label"
-                    tools:text="아이패드를 갖고 싶어요!\n제 오랜 꿈이었습니다! 아이패드!\n 아이패들르 받아야 밤잠 이룰수 있음" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_description_label" />
 
                 <TextView
                     android:id="@+id/tv_recruit_situation_label"
@@ -181,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
-                    android:text="모집 현황"
+                    android:text="@string/participate_status"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_description" />
@@ -192,7 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="참여인원"
+                    android:text="@string/participate_count"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_recruit_situation_label" />
 
@@ -212,6 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:text="@{vm.uiState.fundDetail.count}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_count"
                     app:layout_constraintStart_toEndOf="@id/divider_count"
                     app:layout_constraintTop_toTopOf="@id/divider_count"
@@ -223,7 +229,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="목표금액"
+                    android:text="@string/goal_money"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_count_label" />
 
@@ -243,10 +249,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:text="@{vm.uiState.fundDetail.goal}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_goal"
                     app:layout_constraintStart_toEndOf="@id/divider_goal"
-                    app:layout_constraintTop_toTopOf="@id/divider_goal"
-                    tools:text="1,6000,000원" />
+                    app:layout_constraintTop_toTopOf="@id/divider_goal" />
 
                 <TextView
                     android:id="@+id/tv_money_label"
@@ -254,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="현재모금액"
+                    android:text="@string/cur_money"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_goal_label" />
 
@@ -274,10 +280,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:text="@{vm.uiState.fundDetail.money}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_money"
                     app:layout_constraintStart_toEndOf="@id/divider_money"
-                    app:layout_constraintTop_toTopOf="@id/divider_money"
-                    tools:text="500,000원" />
+                    app:layout_constraintTop_toTopOf="@id/divider_money" />
 
                 <TextView
                     android:id="@+id/tv_goal_percent"
@@ -285,20 +291,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:text="@{vm.uiState.fundDetail.percent}"
                     android:textColor="@color/es_pink"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/tv_money"
                     app:layout_constraintStart_toEndOf="@id/tv_money"
-                    app:layout_constraintTop_toTopOf="@id/tv_money"
-                    tools:text="(30%)" />
+                    app:layout_constraintTop_toTopOf="@id/tv_money" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_participate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_money_label" />
@@ -314,7 +320,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             android:background="@drawable/shape_pinkfill_nostroke_radius10"
-            android:text="모금 참여"
+            android:text="@string/participate_fund"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
