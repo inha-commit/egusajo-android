@@ -12,7 +12,7 @@ fun FundListResponse.toFundList(onItemClickListener: (Int) -> Unit): List<Fund>{
             productTitle = it.present.name,
             productImgUrl = it.user.profileImgSrc,
             productPrice = "${it.present.goal} 원",
-            dDay = it.present.deadline,
+            dDay = it.present.deadline + " 🔥",
             date = "2020년 7월 10일",
             onItemClickListener = onItemClickListener
         )
