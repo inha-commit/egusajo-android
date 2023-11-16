@@ -258,10 +258,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:price ="@{vm.uiState.fundDetail.goal}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_goal"
                     app:layout_constraintStart_toEndOf="@id/divider_goal"
-                    app:layout_constraintTop_toTopOf="@id/divider_goal" />
+                    app:layout_constraintTop_toTopOf="@id/divider_goal"
+                    app:price="@{vm.uiState.fundDetail.goal}" />
 
                 <TextView
                     android:id="@+id/tv_money_label"
@@ -289,10 +289,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:price ="@{vm.uiState.fundDetail.money}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_money"
                     app:layout_constraintStart_toEndOf="@id/divider_money"
-                    app:layout_constraintTop_toTopOf="@id/divider_money" />
+                    app:layout_constraintTop_toTopOf="@id/divider_money"
+                    app:price="@{vm.uiState.fundDetail.money}" />
 
                 <TextView
                     android:id="@+id/tv_goal_percent"
@@ -315,12 +315,12 @@
                     android:clipToPadding="false"
                     android:orientation="vertical"
                     android:paddingBottom="200dp"
-                    tools:listitem="@layout/item_fund_participation"
-                    app:list="@{vm.uiState.fundDetail.fundList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_money_label" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_money_label"
+                    app:list="@{vm.uiState.fundDetail.fundList}"
+                    tools:listitem="@layout/item_fund_participation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -332,13 +332,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/shape_pinkfill_nostroke_radius10"
-            android:text="@string/participate_fund"
-            android:textColor="@color/white"
+            android:background="@drawable/selector_next_btn"
+            android:enabled="@{vm.uiState.fundDetail.participateAvailable}"
             android:onClick="@{() -> vm.navigateToFundPayment()}"
+            android:text="@string/participate_fund"
+            android:textColor="@color/selector_next_btn_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:participateText="@{vm.uiState.fundDetail.participateAvailable}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

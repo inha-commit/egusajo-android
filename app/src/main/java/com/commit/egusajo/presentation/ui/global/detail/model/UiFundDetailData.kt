@@ -11,7 +11,8 @@ data class UiFundDetailData(
     val goal: Int = 0,
     val money: Int = 0,
     val percent: String = "",
-    val fundList: List<ParticipateData>? = emptyList()
+    val fundList: List<ParticipateData>? = emptyList(),
+    val participateAvailable: Boolean = true
 )
 
 data class ParticipateData(

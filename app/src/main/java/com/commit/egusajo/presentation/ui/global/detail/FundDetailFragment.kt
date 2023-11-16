@@ -2,6 +2,8 @@ package com.commit.egusajo.presentation.ui.global.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -71,4 +73,13 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
         this.navigate(action)
     }
 
+}
+
+@BindingAdapter("participateText")
+fun bindParticipateText(tv: TextView, state: Boolean){
+    if(state){
+        tv.text = "모금 참여"
+    } else {
+        tv.text = "이미 참여한 펀딩입니다"
+    }
 }
