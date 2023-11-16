@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentFundDetailBinding
 import com.commit.egusajo.presentation.base.BaseFragment
+import com.commit.egusajo.presentation.ui.global.detail.adapter.FundListAdapter
 import com.commit.egusajo.presentation.ui.global.detail.adapter.PresentImageAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,7 @@ class FundDetailFragment: BaseFragment<FragmentFundDetailBinding>(R.layout.fragm
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-
+        binding.rvParticipate.adapter = FundListAdapter()
         initStateObserver()
         viewModel.getFundDetail(fundId)
 

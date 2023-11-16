@@ -18,6 +18,7 @@ data class ParticipateData(
     val userId: Int,
     val participateId: Int,
     val profileImg: String,
+    val name: String,
     val cost: Int,
     val comment: String
 )

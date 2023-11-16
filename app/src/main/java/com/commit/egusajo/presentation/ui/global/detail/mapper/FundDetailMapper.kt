@@ -23,7 +23,8 @@ internal fun FundDetailResponse.toUiFundDetailData(): UiFundDetailData {
                 participateId = item.funding.id,
                 profileImg = item.sender.profileImgSrc,
                 cost = item.funding.cost,
-                comment = item.funding.comment
+                comment = item.funding.comment,
+                name = item.sender.name
             )
         }
     )

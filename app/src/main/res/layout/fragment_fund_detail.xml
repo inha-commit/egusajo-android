@@ -315,6 +315,8 @@
                     android:clipToPadding="false"
                     android:orientation="vertical"
                     android:paddingBottom="200dp"
+                    tools:listitem="@layout/item_fund_participation"
+                    app:list="@{vm.uiState.fundDetail.fundList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

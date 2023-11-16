@@ -37,9 +37,9 @@ fun bindWarningText(view: TextView, state: SignupState) {
 
 
 @BindingAdapter("list")
-fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list: List<T>) {
+fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list: List<T>?) {
     val adapter = recyclerView.adapter as ListAdapter<T, VH>
-    adapter.submitList(list)
+    if(list != null) adapter.submitList(list)
 }
 
 @BindingAdapter("price")
