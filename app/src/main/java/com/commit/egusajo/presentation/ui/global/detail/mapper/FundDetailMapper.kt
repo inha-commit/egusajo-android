@@ -16,7 +16,7 @@ internal fun FundDetailResponse.toUiFundDetailData(): UiFundDetailData {
         count = (this.fundList?.size?:0).toString() + "명",
         goal = this.present.goal,
         money = this.present.money,
-        percent = ((this.present.money / this.present.goal) * 100).toString() + "%",
+        percent = "(%.2f%%)".format((this.present.money.toDouble() / this.present.goal.toDouble()) * 100),
         fundList = this.fundList?.map { item ->
             ParticipateData(
                 userId = item.sender.id,
