@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -10,13 +11,13 @@ import com.commit.egusajo.MainNavDirections
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.ActivityMainBinding
 import com.commit.egusajo.presentation.base.BaseActivity
-import com.commit.egusajo.presentation.ui.fund.FundFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private lateinit var navController: NavController
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

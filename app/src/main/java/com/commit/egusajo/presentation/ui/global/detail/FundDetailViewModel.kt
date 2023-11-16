@@ -22,6 +22,7 @@ data class FundDetailUiState(
 
 sealed class FundDetailEvents {
     data class NavigateToFundPayment(val fundId: Int) : FundDetailEvents()
+    data class GoToProductLink(val link: String) : FundDetailEvents()
 }
 
 @HiltViewModel
@@ -57,6 +58,12 @@ class FundDetailViewModel @Inject constructor(
 
     fun setFundId(id: Int) {
         fundId = id
+    }
+
+    fun goToProductLink(){
+        viewModelScope.launch {
+            _events.emit(FundDetailEvents.GoToProductLink(_uiState.value.fundDetail.presentLink))
+        }
     }
 
     fun navigateToFundPayment() {

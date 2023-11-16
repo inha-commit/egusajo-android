@@ -1,5 +1,7 @@
 package com.commit.egusajo.presentation.ui.global.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -10,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.commit.egusajo.R
+import com.commit.egusajo.app.App
 import com.commit.egusajo.databinding.FragmentFundDetailBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.global.detail.adapter.FundListAdapter
@@ -54,6 +57,12 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
                         it.fundId
                     )
 
+                    is FundDetailEvents.GoToProductLink -> {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.link))
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        requireContext().startActivity(intent)
+                    }
+
                     else -> {}
                 }
             }
@@ -76,8 +85,8 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
 }
 
 @BindingAdapter("participateText")
-fun bindParticipateText(tv: TextView, state: Boolean){
-    if(state){
+fun bindParticipateText(tv: TextView, state: Boolean) {
+    if (state) {
         tv.text = "모금 참여"
     } else {
         tv.text = "이미 참여한 펀딩입니다"
