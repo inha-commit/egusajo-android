@@ -31,7 +31,6 @@ class BearerInterceptor : Interceptor {
         // API 통신중 특정코드 에러 발생 (accessToken 만료)
         if (response.code == 401) {
 
-            Log.d(TAG,"this is 401")
             var isRefreshed = false
             var accessToken = ""
 
@@ -89,7 +88,6 @@ class BearerInterceptor : Interceptor {
                 context().startActivity(intent)
             }
         }
-
         
         return response
     }

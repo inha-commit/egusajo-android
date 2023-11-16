@@ -9,7 +9,7 @@ interface RefreshApi {
 
     @POST("/auth/refresh")
     suspend fun refreshToken(
-        @Header("refresh_token") refreshToken: String
+        @Header("refresh-token") refreshToken: String
     ): Response<RefreshResponse>
 
 }
