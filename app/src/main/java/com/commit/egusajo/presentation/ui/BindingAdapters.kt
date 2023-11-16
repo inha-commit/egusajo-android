@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.commit.egusajo.R
 import com.commit.egusajo.presentation.ui.intro.signup.SignupState
 import com.commit.egusajo.presentation.ui.intro.signup.SignupUiState
+import java.text.DecimalFormat
 
 
 @BindingAdapter("imgUrl")
@@ -39,5 +40,11 @@ fun bindWarningText(view: TextView, state: SignupState) {
 fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list: List<T>) {
     val adapter = recyclerView.adapter as ListAdapter<T, VH>
     adapter.submitList(list)
+}
+
+@BindingAdapter("price")
+fun bindPrice(textView: TextView, price: Int) {
+    val dec = DecimalFormat("#,###원")
+    textView.text = dec.format(price)
 }
 

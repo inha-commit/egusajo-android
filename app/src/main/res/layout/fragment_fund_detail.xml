@@ -258,7 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{vm.uiState.fundDetail.goal}"
+                    app:price ="@{vm.uiState.fundDetail.goal}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_goal"
                     app:layout_constraintStart_toEndOf="@id/divider_goal"
                     app:layout_constraintTop_toTopOf="@id/divider_goal" />
@@ -289,7 +289,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{vm.uiState.fundDetail.money}"
+                    app:price ="@{vm.uiState.fundDetail.money}"
                     app:layout_constraintBottom_toBottomOf="@id/divider_money"
                     app:layout_constraintStart_toEndOf="@id/divider_money"
                     app:layout_constraintTop_toTopOf="@id/divider_money" />

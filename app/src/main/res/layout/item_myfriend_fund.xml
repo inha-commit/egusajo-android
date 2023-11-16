@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{item.productPrice}"
+            app:price="@{item.productPrice}"
             app:layout_constraintBottom_toBottomOf="@id/tv_goal_price_label"
             app:layout_constraintStart_toEndOf="@id/divider_goal_price"
             app:layout_constraintTop_toTopOf="@id/tv_goal_price_label"

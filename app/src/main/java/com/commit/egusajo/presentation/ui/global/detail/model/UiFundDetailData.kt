@@ -8,8 +8,8 @@ data class UiFundDetailData(
     val presentLink: String = "",
     val presentDescription: String = "",
     val count: String = "",
-    val goal: String = "",
-    val money: String = "",
+    val goal: Int = 0,
+    val money: Int = 0,
     val percent: String = "",
     val fundList: List<ParticipateData>? = emptyList()
 )
@@ -18,6 +18,6 @@ data class ParticipateData(
     val userId: Int,
     val participateId: Int,
     val profileImg: String,
-    val cost: String,
+    val cost: Int,
     val comment: String
 )

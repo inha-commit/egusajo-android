@@ -5,7 +5,7 @@ data class Fund(
     val dDay: String,
     val title: String,
     val productTitle: String,
-    val productPrice: String,
+    val productPrice: Int,
     val date: String,
     val productImgUrl: String?="",
     val onItemClickListener: (Int) -> Unit

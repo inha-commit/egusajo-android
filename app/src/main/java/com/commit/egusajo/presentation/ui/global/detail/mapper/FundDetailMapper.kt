@@ -14,15 +14,15 @@ internal fun FundDetailResponse.toUiFundDetailData(): UiFundDetailData {
         presentLink = this.present.productLink.toString(),
         presentDescription = this.present.longComment,
         count = (this.fundList?.size?:0).toString() + "명",
-        goal = this.present.goal.toString() + "원",
-        money = this.present.money.toString() + "원",
+        goal = this.present.goal,
+        money = this.present.money,
         percent = ((this.present.money / this.present.goal) * 100).toString() + "%",
         fundList = this.fundList?.map { item ->
             ParticipateData(
                 userId = item.sender.id,
                 participateId = item.funding.id,
                 profileImg = item.sender.profileImgSrc,
-                cost = item.funding.cost.toString(),
+                cost = item.funding.cost,
                 comment = item.funding.comment
             )
         }
