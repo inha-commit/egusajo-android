@@ -1,5 +1,6 @@
 package com.commit.egusajo.data.repository
 
+import com.commit.egusajo.data.model.CreateFundRequest
 import com.commit.egusajo.data.model.FundDetailResponse
 import com.commit.egusajo.data.model.FundListResponse
 import retrofit2.Response
@@ -13,4 +14,8 @@ interface FundRepository {
     suspend fun getFundDetail(
         presentId: Int
     ): Response<FundDetailResponse>
+
+    suspend fun createFund(
+        body: CreateFundRequest
+    ): Response<Unit>
 }
