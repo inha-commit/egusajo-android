@@ -24,7 +24,7 @@ class CreateFundFragment: BaseFragment<FragmentCreateFundBinding>(R.layout.fragm
     private fun setDateBtnListener() {
         binding.tilDDay.setEndIconOnClickListener {
             showCalendarDatePicker(parentFragmentManager) {
-                viewModel.setDday(it)
+                viewModel.setDeadline(it)
             }
         }
     }

@@ -64,6 +64,7 @@
                 android:hint="https://"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="12dp"
+                android:text="@={vm.productLink}"
                 android:textColor="@color/es_blue"
                 app:layout_constraintBottom_toBottomOf="@id/tv_product_link_label"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +90,7 @@
                 android:hint="아이패드 14 Pro"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="12dp"
+                android:text="@={vm.productName}"
                 android:textColor="@color/es_blue"
                 app:layout_constraintBottom_toBottomOf="@id/tv_product_name_label"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,6 +131,7 @@
                 android:lineSpacingExtra="18sp"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="16dp"
+                android:text="@={vm.longComment}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_long_comment" />
@@ -152,9 +155,11 @@
                 android:background="@drawable/shape_nofill_grey6stroke_radius10"
                 android:gravity="end"
                 android:hint="100,000"
+                android:inputType="numberDecimal"
                 android:paddingVertical="12dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="52dp"
+                android:text="@={vm.goal}"
                 android:textColor="@color/es_blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +201,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_dDay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@={vm.deadLine}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -207,6 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:background="@drawable/selector_next_btn"
+                android:enabled="@{vm.isDataReady()}"
                 android:text="펀딩 올리기"
                 android:textColor="@color/selector_next_btn_text"
                 app:layout_constraintEnd_toEndOf="parent"
