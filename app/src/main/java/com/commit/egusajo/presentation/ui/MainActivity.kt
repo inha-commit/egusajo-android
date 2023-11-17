@@ -1,4 +1,4 @@
-package com.commit.egusajo.presentation.ui.main
+package com.commit.egusajo.presentation.ui
 
 import android.Manifest
 import android.app.Activity

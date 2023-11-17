@@ -6,19 +6,27 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.commit.egusajo.R
 import com.commit.egusajo.presentation.ui.intro.signup.SignupState
-import com.commit.egusajo.presentation.ui.intro.signup.SignupUiState
 import java.text.DecimalFormat
 
 
 @BindingAdapter("imgUrl")
 fun bindImg(imageView: ImageView, url: String) {
-    if(url.isNotBlank()){
+    if (url.isNotBlank()) {
         Glide.with(imageView.context)
             .load(url)
+            .into(imageView)
+    }
+}
+
+@BindingAdapter("profileImgUrl")
+fun bindProfileImg(imageView: ImageView, url: String) {
+    if (url.isNotBlank()) {
+        Glide.with(imageView.context)
+            .load(url)
+            .error(R.drawable.icon_profile)
             .into(imageView)
     }
 }
@@ -40,7 +48,7 @@ fun bindWarningText(view: TextView, state: SignupState) {
 @BindingAdapter("list")
 fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list: List<T>?) {
     val adapter = recyclerView.adapter as ListAdapter<T, VH>
-    if(list != null) adapter.submitList(list)
+    if (list != null) adapter.submitList(list)
 }
 
 @BindingAdapter("price")

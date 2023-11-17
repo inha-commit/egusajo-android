@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/mypage_fragment"
-        android:name="com.commit.egusajo.presentation.ui.mypage.MypageFragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.main.MyPageFragment"
         android:label="MyPage" />
 
     <fragment

@@ -1,4 +1,4 @@
-package com.commit.egusajo.presentation.ui.main
+package com.commit.egusajo.presentation.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
