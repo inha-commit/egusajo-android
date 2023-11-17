@@ -3,6 +3,7 @@ package com.commit.egusajo.app.di
 import com.commit.egusajo.data.remote.FundApi
 import com.commit.egusajo.data.remote.ImageApi
 import com.commit.egusajo.data.remote.IntroApi
+import com.commit.egusajo.data.remote.UserApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +31,11 @@ object ApiModule {
     @Provides
     fun provideFundService(retrofit: Retrofit): FundApi {
         return retrofit.create(FundApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserService(retrofit: Retrofit): UserApi {
+        return retrofit.create(UserApi::class.java)
     }
 }
