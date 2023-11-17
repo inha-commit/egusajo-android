@@ -49,27 +49,32 @@
                 style="@style/TextTinyRed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:text="제품 링크"
                 android:textColor="@color/es_grey8"
+                app:layout_constraintBottom_toBottomOf="@id/til_product_link"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_label" />
+                app:layout_constraintTop_toTopOf="@id/til_product_link" />
 
-            <EditText
-                android:id="@+id/et_product_link"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_product_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/shape_nofill_grey6stroke_radius10"
-                android:hint="https://"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="12dp"
-                android:text="@={vm.productLink}"
-                android:textColor="@color/es_blue"
-                app:layout_constraintBottom_toBottomOf="@id/tv_product_link_label"
+                android:layout_marginTop="10dp"
+                app:helperMessage="@{vm.uiState.productLinkState}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_product_link_label"
-                app:layout_constraintTop_toTopOf="@id/tv_product_link_label" />
+                app:layout_constraintTop_toBottomOf="@id/tv_product_label"
+                app:placeholderText="https://">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="@={vm.productLink}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tv_product_name_label"
@@ -82,20 +87,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_link_label" />
 
-            <EditText
-                android:id="@+id/et_product_name"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_product_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_nofill_grey6stroke_radius10"
-                android:hint="아이패드 14 Pro"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="12dp"
-                android:text="@={vm.productName}"
-                android:textColor="@color/es_blue"
+                android:layout_marginTop="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_product_name_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/et_product_link"
-                app:layout_constraintTop_toTopOf="@id/tv_product_name_label" />
+                app:layout_constraintStart_toStartOf="@id/til_product_link"
+                app:layout_constraintTop_toTopOf="@id/tv_product_name_label"
+                app:placeholderText="아이패드 프로 14">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="@={vm.productName}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_add_photo"
@@ -106,7 +116,7 @@
                 app:layout_constraintDimensionRatio="942:576"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_product_name" />
+                app:layout_constraintTop_toBottomOf="@id/til_product_name" />
 
             <TextView
                 android:id="@+id/tv_long_comment"
@@ -147,23 +157,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_long_comment" />
 
-            <EditText
-                android:id="@+id/et_goal"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_goal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/shape_nofill_grey6stroke_radius10"
-                android:gravity="end"
-                android:hint="100,000"
-                android:inputType="numberDecimal"
-                android:paddingVertical="12dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="52dp"
-                android:text="@={vm.goal}"
-                android:textColor="@color/es_blue"
+                android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_goal_label" />
+                app:layout_constraintTop_toBottomOf="@id/tv_goal_label"
+                app:placeholderText="100,000">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:inputType="numberDecimal"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="50dp"
+                    android:text="@={vm.goal}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 style="@style/TextMediumBlack"
@@ -171,9 +185,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:text="원"
-                app:layout_constraintBottom_toBottomOf="@id/et_goal"
-                app:layout_constraintEnd_toEndOf="@id/et_goal"
-                app:layout_constraintTop_toTopOf="@id/et_goal" />
+                app:layout_constraintBottom_toBottomOf="@id/til_goal"
+                app:layout_constraintEnd_toEndOf="@id/til_goal"
+                app:layout_constraintTop_toTopOf="@id/til_goal" />
 
             <TextView
                 android:id="@+id/tv_deadline"
@@ -184,7 +198,7 @@
                 android:text="펀딩 종료일"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_goal" />
+                app:layout_constraintTop_toBottomOf="@id/til_goal" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_dDay"
@@ -193,6 +207,7 @@
                 android:layout_marginTop="4dp"
                 app:endIconDrawable="@drawable/ic_calendar"
                 app:endIconMode="custom"
+                app:helperMessage="@{vm.uiState.deadLineState}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_deadline"
@@ -202,6 +217,7 @@
                     android:id="@+id/et_dDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
                     android:text="@={vm.deadLine}" />
 
             </com.google.android.material.textfield.TextInputLayout>
