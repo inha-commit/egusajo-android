@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.commit.egusajo.presentation.ui.fund.create_fund.CreateFundViewModel" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView

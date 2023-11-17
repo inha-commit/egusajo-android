@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentCreateFundBinding
 import com.commit.egusajo.presentation.base.BaseFragment
+import com.commit.egusajo.util.showCalendarDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +16,17 @@ class CreateFundFragment: BaseFragment<FragmentCreateFundBinding>(R.layout.fragm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.vm = viewModel
+        setDateBtnListener()
+    }
+
+    private fun setDateBtnListener() {
+        binding.tilDDay.setEndIconOnClickListener {
+            showCalendarDatePicker(parentFragmentManager) {
+                viewModel.setDday(it)
+            }
+        }
     }
 
 }
