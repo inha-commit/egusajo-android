@@ -12,10 +12,10 @@
     <fragment
         android:id="@+id/fund_detail_fragment"
         android:name="com.commit.egusajo.presentation.ui.global.detail.FundDetailFragment"
-        android:label="FundDetail" >
+        android:label="FundDetail">
         <argument
             android:name="fundId"
-            app:argType="integer"/>
+            app:argType="integer" />
         <action
             android:id="@+id/action_fund_detail_fragment_to_fund_payment_fragment"
             app:destination="@id/fund_payment_fragment" />
@@ -24,7 +24,11 @@
     <fragment
         android:id="@+id/fund_fragment"
         android:name="com.commit.egusajo.presentation.ui.fund.FundFragment"
-        android:label="Fund" />
+        android:label="Fund">
+        <action
+            android:id="@+id/action_fund_fragment_to_create_fund_fragment"
+            app:destination="@id/create_fund_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mypage_fragment"
@@ -37,8 +41,13 @@
         android:label="FundPayment">
         <argument
             android:name="fundId"
-            app:argType="integer"/>
+            app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/create_fund_fragment"
+        android:name="com.commit.egusajo.presentation.ui.fund.create_fund.CreateFundFragment"
+        android:label="CreateFund" />
 
     <action
         android:id="@+id/action_global_to_fund_fragment"
@@ -46,6 +55,6 @@
 
     <action
         android:id="@+id/action_global_to_fund_detail_fragment"
-        app:destination="@id/fund_detail_fragment"/>
+        app:destination="@id/fund_detail_fragment" />
 
 </navigation>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.commit.egusajo.presentation.ui.fund.create_fund.CreateFundViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="100dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/TextHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="펀딩 생성하기"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_product_label"
+                style="@style/TextMediumBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="펀딩 제품 선택"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+            <TextView
+                android:id="@+id/tv_product_link_label"
+                style="@style/TextTinyRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제품 링크"
+                android:textColor="@color/es_grey8"
+                app:layout_constraintBottom_toBottomOf="@id/til_product_link"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/til_product_link" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_product_link"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:helperMessage="@{vm.uiState.productLinkState}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_product_link_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_label"
+                app:placeholderText="https://">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="@={vm.productLink}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_product_name_label"
+                style="@style/TextTinyRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="제품명"
+                android:textColor="@color/es_grey8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_link_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_product_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_name_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/til_product_link"
+                app:layout_constraintTop_toTopOf="@id/tv_product_name_label"
+                app:placeholderText="아이패드 프로 14">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="@={vm.productName}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_add_photo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:imgUrl="@{vm.representImage}"
+                android:layout_marginTop="28dp"
+                android:onClick="@{() -> vm.goToGallery()}"
+                android:src="@drawable/ic_goto_gallery"
+                app:layout_constraintDimensionRatio="942:576"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_product_name" />
+
+            <TextView
+                android:id="@+id/tv_long_comment"
+                style="@style/TextMediumBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="펀딩 상세"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_add_photo" />
+
+            <EditText
+                android:id="@+id/et_long_comment"
+                style="@style/TextSmallGrey8"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_nofill_grey6stroke_radius10"
+                android:gravity="top"
+                android:hint="펀딩 내용을 입력하세요"
+                android:lineSpacingExtra="18sp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="16dp"
+                android:text="@={vm.longComment}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_long_comment" />
+
+            <TextView
+                android:id="@+id/tv_goal_label"
+                style="@style/TextMediumBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="금액 설정"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_long_comment" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_goal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_goal_label"
+                app:placeholderText="100,000">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:inputType="numberDecimal"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="50dp"
+                    android:text="@={vm.goal}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/TextMediumBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="원"
+                app:layout_constraintBottom_toBottomOf="@id/til_goal"
+                app:layout_constraintEnd_toEndOf="@id/til_goal"
+                app:layout_constraintTop_toTopOf="@id/til_goal" />
+
+            <TextView
+                android:id="@+id/tv_deadline"
+                style="@style/TextMediumBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="펀딩 종료일"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_goal" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_dDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:endIconDrawable="@drawable/ic_calendar"
+                app:endIconMode="custom"
+                app:helperMessage="@{vm.uiState.deadLineState}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_deadline"
+                app:placeholderText="YYYY/MM/DD">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_dDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="@={vm.deadLine}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_create_fund"
+                style="@style/TextMediumBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/selector_next_btn"
+                android:enabled="@{vm.isDataReady()}"
+                android:text="펀딩 올리기"
+                android:onClick="@{() -> vm.createFund()}"
+                android:textColor="@color/selector_next_btn_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_dDay" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

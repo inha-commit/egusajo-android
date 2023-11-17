@@ -16,10 +16,11 @@ import java.text.DecimalFormat
 
 @BindingAdapter("imgUrl")
 fun bindImg(imageView: ImageView, url: String) {
-    Glide.with(imageView.context)
-        .load(url)
-        .error(R.drawable.icon_profile)
-        .into(imageView)
+    if(url.isNotBlank()){
+        Glide.with(imageView.context)
+            .load(url)
+            .into(imageView)
+    }
 }
 
 @BindingAdapter("warningText")
