@@ -9,16 +9,165 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp">
 
         <TextView
+            android:id="@+id/tv_header"
+            style="@style/TextHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="마이 페이지"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header"
+            app:shapeAppearanceOverlay="@style/All28RadiusImageView" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            style="@style/TextMediumBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="mypage"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/iv_profile"
+            app:layout_constraintTop_toTopOf="@id/iv_profile"
+            tools:text="해리매과이어여자친구" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile"
+            app:layout_constraintStart_toStartOf="@id/tv_nick"
+            app:layout_constraintTop_toBottomOf="@id/tv_nick"
+            tools:text="박진성" />
+
+        <ImageButton
+            android:id="@+id/btn_goto_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:src="@drawable/icon_next"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/iv_profile" />
+
+        <TextView
+            android:id="@+id/tv_my_fund_history"
+            style="@style/TextSmallGrey9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingBottom="24dp"
+            android:text="내 펀딩 히스토리"
+            app:drawableEndCompat="@drawable/icon_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_my_fund_history"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:dividerColor="@color/es_red1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_fund_history" />
+
+        <TextView
+            android:id="@+id/tv_my_participate_history"
+            style="@style/TextSmallGrey9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="24dp"
+            android:text="내 참여 히스토리"
+            app:drawableEndCompat="@drawable/icon_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_my_fund_history" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_my_participate_history"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:dividerColor="@color/es_red1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_participate_history" />
+
+        <TextView
+            android:id="@+id/tv_follow_list"
+            style="@style/TextSmallGrey9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="24dp"
+            android:text="팔로우 리스트"
+            app:drawableEndCompat="@drawable/icon_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_my_participate_history" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_follow_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:dividerColor="@color/es_red1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_follow_list" />
+
+        <TextView
+            android:id="@+id/tv_edit_account"
+            style="@style/TextSmallGrey9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="24dp"
+            android:text="계좌 설정"
+            app:drawableEndCompat="@drawable/icon_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_follow_list" />
+
+        <TextView
+            android:id="@+id/tv_logout"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="로그아웃"
+            android:textColor="@color/es_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_account" />
+
+        <TextView
+            android:id="@+id/tv_withdrawal"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="회원탈퇴"
+            android:textColor="@color/es_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_logout" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
