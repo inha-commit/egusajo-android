@@ -11,6 +11,7 @@
 
     <color name="es_grey3">#EBEBEB</color>
     <color name="es_grey4">#C6BDBD</color>
+    <color name="es_grey6">#B0A1A1</color>
     <color name="es_grey7">#8C8C8C</color>
     <color name="es_grey8">#595959</color>
     <color name="es_grey9">#262626</color>
@@ -21,4 +22,5 @@
     <color name="es_red">#FF334B</color>
     <color name="es_red1">#FDF0F2</color>
     <color name="es_white">#FCFCFC</color>
+    <color name="es_blue">#3E69D8</color>
 </resources>
