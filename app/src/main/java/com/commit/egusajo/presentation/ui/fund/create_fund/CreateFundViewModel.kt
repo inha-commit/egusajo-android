@@ -4,15 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.util.Validation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -27,18 +31,26 @@ sealed class InputState {
     data class Error(val msg: String) : InputState()
 }
 
+sealed class CreateFundEvent{
+    object GoToGallery: CreateFundEvent()
+}
+
 @HiltViewModel
 class CreateFundViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(CreateFundUiState())
     val uiState: StateFlow<CreateFundUiState> = _uiState.asStateFlow()
 
+    private val _events = MutableSharedFlow<CreateFundEvent>()
+    val events: SharedFlow<CreateFundEvent> = _events.asSharedFlow()
+
     val productName = MutableStateFlow("")
     val goal = MutableStateFlow("")
     val deadLine = MutableStateFlow("")
     val productLink = MutableStateFlow("")
     val longComment = MutableStateFlow("")
-    val presentImages = MutableStateFlow(emptyList<String>())
+    val representImage = MutableStateFlow("")
+    val presentImages = MutableStateFlow(listOf<String>())
 
     init {
         observeProductLink()
@@ -111,7 +123,7 @@ class CreateFundViewModel @Inject constructor() : ViewModel() {
         deadLine,
         productLink,
         longComment
-    ) { productName, goal, deadLine, productLink, longComment ->
+    ) { productName, goal, deadLine, productLink, longComment->
         productName.isNotBlank() && goal.isNotBlank() && deadLine.isNotBlank() && productLink.isNotBlank() && longComment.isNotBlank()
                 && _uiState.value.deadLineState is InputState.Success && _uiState.value.productLinkState is InputState.Success
     }.stateIn(
@@ -122,6 +134,17 @@ class CreateFundViewModel @Inject constructor() : ViewModel() {
 
     fun setDeadline(data: String) {
         deadLine.value = data
+    }
+
+    fun setImages(data: List<String>){
+        representImage.value = data[0]
+        presentImages.value = data
+    }
+
+    fun goToGallery(){
+        viewModelScope.launch {
+            _events.emit(CreateFundEvent.GoToGallery)
+        }
     }
 
 }
