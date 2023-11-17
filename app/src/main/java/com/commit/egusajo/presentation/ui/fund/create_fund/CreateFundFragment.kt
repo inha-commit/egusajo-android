@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentCreateFundBinding
 import com.commit.egusajo.presentation.base.BaseFragment
@@ -43,6 +44,7 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
             viewModel.events.collect{
                 when(it){
                     is CreateFundEvent.GoToGallery -> parentViewModel.goToGallery()
+                    is CreateFundEvent.NavigateToBack -> findNavController().navigateUp()
                     else -> {}
                 }
             }

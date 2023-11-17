@@ -233,6 +233,7 @@
                 android:background="@drawable/selector_next_btn"
                 android:enabled="@{vm.isDataReady()}"
                 android:text="펀딩 올리기"
+                android:onClick="@{() -> vm.createFund()}"
                 android:textColor="@color/selector_next_btn_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

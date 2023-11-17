@@ -2,7 +2,11 @@ package com.commit.egusajo.presentation.ui.fund.create_fund
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.CreateFundRequest
+import com.commit.egusajo.data.model.ErrorResponse
+import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.util.Validation
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,10 +37,13 @@ sealed class InputState {
 
 sealed class CreateFundEvent{
     object GoToGallery: CreateFundEvent()
+    object NavigateToBack : CreateFundEvent()
 }
 
 @HiltViewModel
-class CreateFundViewModel @Inject constructor() : ViewModel() {
+class CreateFundViewModel @Inject constructor(
+    private val fundRepository: FundRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CreateFundUiState())
     val uiState: StateFlow<CreateFundUiState> = _uiState.asStateFlow()
@@ -139,6 +146,31 @@ class CreateFundViewModel @Inject constructor() : ViewModel() {
     fun setImages(data: List<String>){
         representImage.value = data[0]
         presentImages.value = data
+    }
+
+    fun createFund(){
+        viewModelScope.launch {
+            val response = fundRepository.createFund(
+                CreateFundRequest(
+                    name = productName.value,
+                    productLink = productLink.value,
+                    goal = goal.value.toInt(),
+                    deadline = deadLine.value,
+                    representImage = representImage.value,
+                    presentImages = presentImages.value,
+                    longComment = longComment.value
+                )
+            )
+
+            if (response.isSuccessful){
+                _events.emit(CreateFundEvent.NavigateToBack)
+            } else {
+                val error =
+                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
+
+
+            }
+        }
     }
 
     fun goToGallery(){

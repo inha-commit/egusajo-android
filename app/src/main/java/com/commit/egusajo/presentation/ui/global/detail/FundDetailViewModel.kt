@@ -2,9 +2,11 @@ package com.commit.egusajo.presentation.ui.global.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.ui.global.detail.mapper.toUiFundDetailData
 import com.commit.egusajo.presentation.ui.global.detail.model.UiFundDetailData
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +53,8 @@ class FundDetailViewModel @Inject constructor(
                     }
                 }
             } else {
-
+                val error =
+                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
             }
         }
     }
