@@ -6,8 +6,11 @@ import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.ui.mypage.main.mapper.toUiMyPageData
 import com.commit.egusajo.presentation.ui.mypage.main.model.UiMyPageData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -18,6 +21,13 @@ data class MyPageUiState(
     val myInfo: UiMyPageData = UiMyPageData()
 )
 
+sealed class MyPageEvents{
+    object NavigateToEditProfile: MyPageEvents()
+    object NavigateToMyFriend: MyPageEvents()
+    object NavigateToMyFund: MyPageEvents()
+    object NavigateToMyParticipateFund: MyPageEvents()
+}
+
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userRepository: UserRepository
@@ -25,6 +35,9 @@ class MyPageViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(MyPageUiState())
     val uiState: StateFlow<MyPageUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<MyPageEvents>()
+    val events: SharedFlow<MyPageEvents> = _events.asSharedFlow()
 
     fun getMyInfo(){
         viewModelScope.launch {
@@ -41,6 +54,42 @@ class MyPageViewModel @Inject constructor(
             } else {
 
             }
+        }
+    }
+
+    fun withdrawal(){
+        viewModelScope.launch {
+            val response = userRepository.withdrawal()
+
+            if(response.isSuccessful){
+
+            } else {
+
+            }
+        }
+    }
+
+    fun navigateToEditProfile(){
+        viewModelScope.launch {
+            _events.emit(MyPageEvents.NavigateToEditProfile)
+        }
+    }
+
+    fun navigateToMyFund(){
+        viewModelScope.launch {
+            _events.emit(MyPageEvents.NavigateToMyFund)
+        }
+    }
+
+    fun navigateToMyParticipateFund(){
+        viewModelScope.launch {
+            _events.emit(MyPageEvents.NavigateToMyParticipateFund)
+        }
+    }
+
+    fun navigateToMyFriend(){
+        viewModelScope.launch {
+            _events.emit(MyPageEvents.NavigateToMyFriend)
         }
     }
 

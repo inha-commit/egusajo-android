@@ -33,7 +33,20 @@
     <fragment
         android:id="@+id/mypage_fragment"
         android:name="com.commit.egusajo.presentation.ui.mypage.main.MyPageFragment"
-        android:label="MyPage" />
+        android:label="MyPage" >
+        <action
+            android:id="@+id/action_mypage_fragment_to_edit_profile_fragment"
+            app:destination="@id/edit_profile_fragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_my_friend_fragment"
+            app:destination="@id/my_friend_fragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_my_participate_fund_fragment"
+            app:destination="@id/my_participate_fund_fragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_my_fund_fragment"
+            app:destination="@id/my_fund_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/fund_payment_fragment"
@@ -48,6 +61,26 @@
         android:id="@+id/create_fund_fragment"
         android:name="com.commit.egusajo.presentation.ui.fund.create_fund.CreateFundFragment"
         android:label="CreateFund" />
+
+    <fragment
+        android:id="@+id/my_friend_fragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.friend.MyFriendFragment"
+        android:label="MyFriend"/>
+
+    <fragment
+        android:id="@+id/edit_profile_fragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.edit.EditProfileFragment"
+        android:label="EditProfile"/>
+
+    <fragment
+        android:id="@+id/my_fund_fragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.fund.MyFundFragment"
+        android:label="MyFund"/>
+
+    <fragment
+        android:id="@+id/my_participate_fund_fragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.participate.MyParticipateFundFragment"
+        android:label="MyParticipateFund"/>
 
     <action
         android:id="@+id/action_global_to_fund_fragment"
