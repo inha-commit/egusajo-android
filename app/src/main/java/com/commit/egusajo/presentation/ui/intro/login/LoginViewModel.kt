@@ -35,6 +35,8 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
+    private var fcmToken = ""
+
     fun startLogin(
         snsId: String
     ) {
@@ -42,6 +44,7 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
 
             val response = introRepository.login(
                 LoginRequest(
+                    fcmId = fcmToken,
                     snsId = snsId
                 )
             )
@@ -80,5 +83,10 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
             }
         }
     }
+
+    fun setFcmToken(fcm: String){
+        fcmToken = fcm
+    }
+
 
 }

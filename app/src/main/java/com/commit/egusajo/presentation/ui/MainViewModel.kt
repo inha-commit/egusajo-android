@@ -22,6 +22,7 @@ sealed class GallerySelectType{
 
 sealed class MainEvent {
     object GoToGallery: MainEvent()
+    object StartTossPay: MainEvent()
 }
 
 @HiltViewModel
@@ -76,6 +77,12 @@ class MainViewModel @Inject constructor(
         _gallerySelectType.value = GallerySelectType.SingleSelect
         viewModelScope.launch{
             _events.emit(MainEvent.GoToGallery)
+        }
+    }
+
+    fun tossPayStart(){
+        viewModelScope.launch {
+            _events.emit(MainEvent.StartTossPay)
         }
     }
 

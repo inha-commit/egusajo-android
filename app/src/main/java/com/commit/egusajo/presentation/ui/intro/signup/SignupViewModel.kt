@@ -54,6 +54,7 @@ class SignupViewModel @Inject constructor(
     val nickName = MutableStateFlow("")
     val name = MutableStateFlow("")
     val birthDay = MutableStateFlow("")
+    private var fcmToken = ""
     private var bank = ""
     private var account = ""
 
@@ -149,6 +150,7 @@ class SignupViewModel @Inject constructor(
                     nickname = nickName.value,
                     name = name.value,
                     bank = bank,
+                    fcmId = fcmToken,
                     account = account,
                     birthday = birthDay.value,
                     profileImgSrc = profileImg.value.ifBlank { null })
@@ -198,5 +200,9 @@ class SignupViewModel @Inject constructor(
     fun setAccountInfo(accountData: String, bankData: String){
         account = accountData
         bank = bankData
+    }
+
+    fun setFcmToken(fcm: String){
+        fcmToken = fcm
     }
 }

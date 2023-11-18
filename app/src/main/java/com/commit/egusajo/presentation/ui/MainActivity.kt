@@ -22,6 +22,7 @@ import com.commit.egusajo.databinding.ActivityMainBinding
 import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.util.Constants.RC_PERMISSION
 import com.commit.egusajo.util.toMultiPart
+import com.tosspayments.paymentsdk.PaymentWidget
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
 
@@ -98,6 +99,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             viewModel.events.collect {
                 when (it) {
                     is MainEvent.GoToGallery -> onCheckPermissions()
+                    is MainEvent.StartTossPay -> {
+                        PaymentWidget(
+                            this@MainActivity,
+                            "test_ck_vZnjEJeQVxPw5REgwY59VPmOoBN0",
+                            "asdfasdf123456"
+                        )
+                    }
                     else -> {}
                 }
             }
