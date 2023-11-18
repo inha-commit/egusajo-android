@@ -11,8 +11,11 @@ import com.commit.egusajo.databinding.FragmentMyParticipateFundBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.home.adapter.HomeFundAdapter
 import com.commit.egusajo.presentation.ui.mypage.fund.MyFundEvents
+import com.commit.egusajo.presentation.ui.mypage.participate.adapter.MyParticipateAdapter
 import com.commit.egusajo.presentation.ui.toFundDetail
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyParticipateFundFragment: BaseFragment<FragmentMyParticipateFundBinding>(R.layout.fragment_my_participate_fund) {
 
     private val viewModel : MyParticipateFundViewModel by viewModels()
@@ -23,7 +26,8 @@ class MyParticipateFundFragment: BaseFragment<FragmentMyParticipateFundBinding>(
         binding.vm = viewModel
         initEventObserver()
         setScrollEventListener()
-//        binding.rvFund.adapter = HomeFundAdapter()
+        binding.rvFund.adapter = MyParticipateAdapter()
+        viewModel.getMyParticipateList()
     }
 
     private fun initEventObserver() {

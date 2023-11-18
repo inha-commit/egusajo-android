@@ -64,7 +64,6 @@ class SignupViewModel @Inject constructor(
 
     private fun observeNick() {
         nickName.onEach {
-
             if (it.isBlank()) {
                 _uiState.update { state ->
                     state.copy(
@@ -108,7 +107,6 @@ class SignupViewModel @Inject constructor(
                     }
                 }
             }
-
         }.launchIn(viewModelScope)
     }
 
@@ -185,9 +183,7 @@ class SignupViewModel @Inject constructor(
                         )
                     }
                 }
-
             }
-
         }
     }
 

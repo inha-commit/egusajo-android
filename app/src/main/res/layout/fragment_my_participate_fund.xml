@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp">
 
+
         <TextView
             android:id="@+id/tv_header"
             style="@style/TextHeader"
@@ -26,6 +27,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_item"
+            style="@style/TextMediumGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:textVisibility="@{vm.uiState.participateList}"
+            android:text="@string/no_my_participation_list"
+            android:textColor="@color/es_grey6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_fund"
@@ -39,6 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header"
+            app:list="@{vm.uiState.participateList}"
             tools:listitem="@layout/item_my_participate" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

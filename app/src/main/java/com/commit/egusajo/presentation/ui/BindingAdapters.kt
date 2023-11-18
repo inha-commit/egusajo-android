@@ -1,5 +1,6 @@
 package com.commit.egusajo.presentation.ui
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -54,5 +55,11 @@ fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list:
 fun bindPrice(textView: TextView, price: Int) {
     val dec = DecimalFormat("#,###원")
     textView.text = dec.format(price)
+}
+
+@BindingAdapter("textVisibility")
+fun <T> bindTextVisibility(textView: TextView, state: List<T>){
+    if(state.isEmpty()) textView.visibility = View.VISIBLE
+    else textView.visibility = View.GONE
 }
 

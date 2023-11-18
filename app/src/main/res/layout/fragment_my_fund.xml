@@ -22,10 +22,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="내 펀딩 목록"
+            android:text="@string/my_funding_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_item"
+            style="@style/TextMediumGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:textVisibility="@{vm.uiState.fundList}"
+            android:text="@string/no_my_funding_list"
+            android:textColor="@color/es_grey6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_fund"

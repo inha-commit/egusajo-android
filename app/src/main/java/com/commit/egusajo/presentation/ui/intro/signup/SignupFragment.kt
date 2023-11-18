@@ -53,7 +53,6 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
                 }
             }
         }
-
     }
 
     private fun initEventsObserver(){

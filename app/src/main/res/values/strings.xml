@@ -10,4 +10,7 @@
     <string name="goal_money">목표금액</string>
     <string name="cur_money">현재모금액</string>
     <string name="participate_fund">모금 참여</string>
+    <string name="my_funding_list">내 펀딩 목록</string>
+    <string name="no_my_funding_list">내 펀딩 내역이 없어요! 😂</string>
+    <string name="no_my_participation_list">모금내역이 없어요! 😂</string>
 </resources>

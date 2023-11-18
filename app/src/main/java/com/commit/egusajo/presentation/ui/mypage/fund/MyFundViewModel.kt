@@ -50,7 +50,6 @@ class MyFundViewModel @Inject constructor(
                         )
                     }
                 }
-
             } else {
 
             }

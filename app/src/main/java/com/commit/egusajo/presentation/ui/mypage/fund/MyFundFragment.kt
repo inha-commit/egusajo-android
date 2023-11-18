@@ -26,6 +26,7 @@ class MyFundFragment : BaseFragment<FragmentMyFundBinding>(R.layout.fragment_my_
         initEventObserver()
         setScrollEventListener()
         binding.rvFund.adapter = HomeFundAdapter()
+        viewModel.getMyFundList()
     }
 
     private fun initEventObserver() {

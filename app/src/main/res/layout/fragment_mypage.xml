@@ -83,7 +83,7 @@
             android:layout_marginTop="30dp"
             android:paddingBottom="24dp"
             android:text="내 펀딩 히스토리"
-            android:onClick="@{() -> vm.navigateToMyFriend()}"
+            android:onClick="@{() -> vm.navigateToMyFund()}"
             app:drawableEndCompat="@drawable/icon_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

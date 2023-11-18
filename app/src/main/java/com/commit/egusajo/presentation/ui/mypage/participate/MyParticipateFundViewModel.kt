@@ -21,7 +21,7 @@ import javax.inject.Inject
 data class MyParticipateUiState(
     val participateList: List<UiParticipateData> = emptyList(),
     val page: Int = 0,
-    val hasNext: Boolean = true
+    val hasNext: Boolean = true,
 )
 
 sealed class MyParticipateEvents {
