@@ -70,7 +70,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_nofill_grey3stroke_radius10"
-                android:inputType="numberDecimal"
                 android:paddingVertical="16dp"
                 android:text="@={vm.name}" />
 
