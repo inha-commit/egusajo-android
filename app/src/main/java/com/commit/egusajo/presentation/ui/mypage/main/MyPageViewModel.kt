@@ -26,6 +26,7 @@ sealed class MyPageEvents{
     object NavigateToMyFriend: MyPageEvents()
     object NavigateToMyFund: MyPageEvents()
     object NavigateToMyParticipateFund: MyPageEvents()
+    object Logout: MyPageEvents()
 }
 
 @HiltViewModel
@@ -90,6 +91,12 @@ class MyPageViewModel @Inject constructor(
     fun navigateToMyFriend(){
         viewModelScope.launch {
             _events.emit(MyPageEvents.NavigateToMyFriend)
+        }
+    }
+
+    fun logout(){
+        viewModelScope.launch {
+            _events.emit(MyPageEvents.Logout)
         }
     }
 
