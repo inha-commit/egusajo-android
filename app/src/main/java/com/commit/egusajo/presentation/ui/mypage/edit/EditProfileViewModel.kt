@@ -163,7 +163,7 @@ class EditProfileViewModel @Inject constructor(
                         _uiState.update { state ->
                             state.copy(
                                 birthState = InputState.Error("올바른 날짜를 입력하세요"),
-                                isDataChange = true
+                                isDataChange = false
                             )
                         }
                     }

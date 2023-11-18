@@ -1,6 +1,5 @@
 package com.commit.egusajo.presentation.ui
 
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.commit.egusajo.R
 import com.commit.egusajo.presentation.InputState
-import com.commit.egusajo.presentation.ui.intro.signup.SignupState
 import com.google.android.material.textfield.TextInputLayout
 import java.text.DecimalFormat
 
@@ -30,19 +28,6 @@ fun bindProfileImg(imageView: ImageView, url: String) {
             .load(url)
             .error(R.drawable.icon_profile)
             .into(imageView)
-    }
-}
-
-@BindingAdapter("warningText")
-fun bindWarningText(view: TextView, state: SignupState) {
-    when (state) {
-        is SignupState.Error -> {
-            view.visibility = View.VISIBLE
-            view.text = state.msg
-        }
-
-        is SignupState.Success -> view.visibility = View.GONE
-        else -> {}
     }
 }
 
