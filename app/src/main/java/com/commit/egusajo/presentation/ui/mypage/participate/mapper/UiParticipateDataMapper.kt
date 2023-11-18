@@ -6,7 +6,8 @@ import com.commit.egusajo.presentation.ui.mypage.participate.model.UiParticipate
 
 
 fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> Unit): List<UiParticipateData>{
-    return this.funds.map {
+    val result = mutableListOf<UiParticipateData>()
+    val newData = this.funds.map {
         UiParticipateData(
             fundId = it.present.id,
             deadLine = it.present.deadline + " 🔥",
@@ -17,7 +18,24 @@ fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> 
             title = it.present.shortComment,
             participateDate = it.fund.createdAt,
             cost = it.fund.cost,
-            onItemClickListener = onItemClickListener
+            onItemClickListener = onItemClickListener,
+            viewType = "DATA"
         )
+    }.toMutableList()
+
+    var curDate = ""
+    newData.forEach {
+        if(curDate != it.participateDate){
+            curDate = it.participateDate
+            result.add(UiParticipateData(
+                participateDate = curDate,
+                viewType = "DATE",
+                onItemClickListener = onItemClickListener
+            ))
+            result.add(it)
+        } else {
+            result.add(it)
+        }
     }
+    return result
 }

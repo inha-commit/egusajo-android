@@ -54,7 +54,6 @@ class MyParticipateFundViewModel @Inject constructor(
                         )
                     }
                 }
-
             } else {
 
             }
