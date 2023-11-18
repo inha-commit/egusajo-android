@@ -31,9 +31,6 @@ class IntroViewModel @Inject constructor(
     private val _profileImg = MutableStateFlow("")
     val profileImg: StateFlow<String> = _profileImg.asStateFlow()
 
-    private val _fcmToken = MutableStateFlow("")
-    val fcmToken: StateFlow<String> = _fcmToken.asStateFlow()
-
     fun goToGallery() {
         viewModelScope.launch {
             _events.emit(IntroEvents.GoToGallery)
@@ -57,9 +54,4 @@ class IntroViewModel @Inject constructor(
             }
         }
     }
-
-    fun setFcm(fcm: String){
-        _fcmToken.value = fcm
-    }
-
 }

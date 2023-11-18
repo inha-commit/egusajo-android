@@ -6,9 +6,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.commit.egusajo.R
-import com.commit.egusajo.presentation.ui.MainActivity
+import com.commit.egusajo.presentation.ui.intro.IntroActivity
+import com.commit.egusajo.util.Constants.TAG
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -20,6 +22,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+
+        Log.d(TAG, "new Token: $token")
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
@@ -32,9 +36,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     private fun sendNotification(title: String?, body: String?) {
 
-
         val uniId = (System.currentTimeMillis() / 7).toInt()
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, IntroActivity::class.java)
         val pIntent = PendingIntent.getActivity(this, uniId, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 
         val channelId = "mostx_channel"
@@ -65,7 +68,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         }
     }
 
-    // Token 가져오기
     suspend fun getFirebaseToken(): String = suspendCoroutine { continuation ->
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {

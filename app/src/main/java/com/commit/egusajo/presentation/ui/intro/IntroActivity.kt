@@ -11,17 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.commit.egusajo.config.MyFirebaseMessagingService
 import com.commit.egusajo.databinding.ActivityIntroBinding
 import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.presentation.ui.MainActivity
 import com.commit.egusajo.util.Constants
 import com.commit.egusajo.util.toMultiPart
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::inflate) {
@@ -45,9 +41,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::i
         super.onCreate(savedInstanceState)
 
         initObserver()
-        CoroutineScope(Dispatchers.Main).launch {
-            async { viewModel.setFcm(MyFirebaseMessagingService().getFirebaseToken()) }.await()
-        }
     }
 
     private fun initObserver() {

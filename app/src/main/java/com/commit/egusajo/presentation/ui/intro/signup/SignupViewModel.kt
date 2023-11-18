@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.intro.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.app.App.Companion.fcmToken
 import com.commit.egusajo.app.App.Companion.sharedPreferences
 import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.model.NickCheckRequest
@@ -54,7 +55,6 @@ class SignupViewModel @Inject constructor(
     val nickName = MutableStateFlow("")
     val name = MutableStateFlow("")
     val birthDay = MutableStateFlow("")
-    private var fcmToken = ""
     private var bank = ""
     private var account = ""
 
@@ -200,9 +200,5 @@ class SignupViewModel @Inject constructor(
     fun setAccountInfo(accountData: String, bankData: String){
         account = accountData
         bank = bankData
-    }
-
-    fun setFcmToken(fcm: String){
-        fcmToken = fcm
     }
 }

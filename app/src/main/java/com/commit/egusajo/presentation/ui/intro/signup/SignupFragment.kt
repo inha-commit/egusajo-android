@@ -53,12 +53,6 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
                 }
             }
         }
-
-        repeatOnStarted {
-            parentViewModel.fcmToken.collect{
-                viewModel.setFcmToken(it)
-            }
-        }
     }
 
     private fun initEventsObserver(){

@@ -3,6 +3,7 @@ package com.commit.egusajo.presentation.ui.intro.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.app.App
+import com.commit.egusajo.app.App.Companion.fcmToken
 import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.model.LoginRequest
 import com.commit.egusajo.data.repository.IntroRepository
@@ -34,8 +35,6 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
-
-    private var fcmToken = ""
 
     fun startLogin(
         snsId: String
@@ -83,10 +82,5 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
             }
         }
     }
-
-    fun setFcmToken(fcm: String){
-        fcmToken = fcm
-    }
-
 
 }

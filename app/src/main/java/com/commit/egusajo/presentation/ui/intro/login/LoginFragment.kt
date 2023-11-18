@@ -29,7 +29,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         super.onViewCreated(view, savedInstanceState)
         binding.view = this
         initObserver()
-        initFcmObserver()
     }
 
     private fun initObserver() {
@@ -41,14 +40,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     is LoginState.Error -> showCustomToast(it.loginState.msg)
                     else -> {}
                 }
-            }
-        }
-    }
-
-    private fun initFcmObserver(){
-        repeatOnStarted {
-            parentViewModel.fcmToken.collect{
-                viewModel.setFcmToken(it)
             }
         }
     }
