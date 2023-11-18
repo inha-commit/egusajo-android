@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.commit.egusajo.R
+import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.presentation.ui.intro.signup.SignupState
+import com.google.android.material.textfield.TextInputLayout
 import java.text.DecimalFormat
 
 
@@ -41,6 +43,18 @@ fun bindWarningText(view: TextView, state: SignupState) {
 
         is SignupState.Success -> view.visibility = View.GONE
         else -> {}
+    }
+}
+
+@BindingAdapter("helperMessage")
+fun bindHelperMessage(view: TextInputLayout, inputState: InputState) {
+    when (inputState) {
+        is InputState.Success -> view.helperText = inputState.msg
+        is InputState.Error -> view.error = inputState.msg
+        else -> {
+            view.helperText = ""
+            view.error = ""
+        }
     }
 }
 

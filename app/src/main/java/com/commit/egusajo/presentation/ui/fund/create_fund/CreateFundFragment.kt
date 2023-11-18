@@ -38,11 +38,11 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
         }
     }
 
-    private fun initEventObserver(){
+    private fun initEventObserver() {
         repeatOnStarted {
-            viewModel.events.collect{
-                when(it){
-                    is CreateFundEvent.GoToGallery -> parentViewModel.goToGallery()
+            viewModel.events.collect {
+                when (it) {
+                    is CreateFundEvent.GoToGallery -> parentViewModel.goToMultiSelectGallery()
                     is CreateFundEvent.NavigateToBack -> findNavController().navigateUp()
                     else -> {}
                 }
@@ -50,25 +50,13 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
         }
     }
 
-    private fun imagesObserver(){
+    private fun imagesObserver() {
         repeatOnStarted {
-            parentViewModel.image.collect{
-                if(it.isNotEmpty()){
+            parentViewModel.images.collect {
+                if (it.isNotEmpty()) {
                     viewModel.setImages(it)
                 }
             }
-        }
-    }
-}
-
-@BindingAdapter("helperMessage")
-fun bindHelperMessage(view: TextInputLayout, inputState: InputState) {
-    when (inputState) {
-        is InputState.Success -> view.helperText = inputState.msg
-        is InputState.Error -> view.error = inputState.msg
-        else -> {
-            view.helperText = ""
-            view.error = ""
         }
     }
 }

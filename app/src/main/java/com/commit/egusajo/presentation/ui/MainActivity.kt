@@ -20,7 +20,7 @@ import com.commit.egusajo.MainNavDirections
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.ActivityMainBinding
 import com.commit.egusajo.presentation.base.BaseActivity
-import com.commit.egusajo.util.Constants
+import com.commit.egusajo.util.Constants.RC_PERMISSION
 import com.commit.egusajo.util.toMultiPart
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MultipartBody
@@ -119,7 +119,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             ActivityCompat.requestPermissions(
                 this,
                 neededPermissionList.toTypedArray(),
-                Constants.RC_PERMISSION
+                RC_PERMISSION
             )
         } else {
             openGallery()
@@ -132,7 +132,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Constants.RC_PERMISSION) {
+        if (requestCode == RC_PERMISSION) {
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.READ_EXTERNAL_STORAGE
@@ -150,8 +150,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun openGallery() {
         val galleryIntent =
             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                type = "image/*"
+                if(viewModel.gallerySelectType.value is GallerySelectType.MultiSelect){
+                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                    type = "image/*"
+                }
             }
 
         galleryLauncher.launch(galleryIntent)
@@ -162,14 +164,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
             if (result.resultCode == Activity.RESULT_OK) {
-                val clipData = result.data?.clipData
-                val fileList = mutableListOf<MultipartBody.Part>()
-                if (clipData != null) {
-                    for (i in 0 until clipData.itemCount) {
-                        val uri = clipData.getItemAt(i).uri
-                        fileList.add(uri.toMultiPart(this))
+
+                if(viewModel.gallerySelectType.value is GallerySelectType.MultiSelect){
+                    val clipData = result.data?.clipData
+                    val fileList = mutableListOf<MultipartBody.Part>()
+                    if (clipData != null) {
+                        for (i in 0 until clipData.itemCount) {
+                            val uri = clipData.getItemAt(i).uri
+                            fileList.add(uri.toMultiPart(this))
+                        }
+                        viewModel.imagesToUrls(fileList)
                     }
-                    viewModel.imageToUrl(fileList)
+                } else if (viewModel.gallerySelectType.value is GallerySelectType.SingleSelect){
+                    val uri = result.data?.data
+                    uri?.let {
+                        viewModel.imageToUrl(it.toMultiPart(this))
+                    }
                 }
             }
         }

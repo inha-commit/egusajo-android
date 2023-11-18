@@ -14,8 +14,14 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
+
+sealed class GallerySelectType{
+    object MultiSelect: GallerySelectType()
+    object SingleSelect: GallerySelectType()
+}
+
 sealed class MainEvent {
-    object GoToGallery : MainEvent()
+    object GoToGallery: MainEvent()
 }
 
 @HiltViewModel
@@ -23,28 +29,55 @@ class MainViewModel @Inject constructor(
     private val imageRepository: ImageRepository
 ) : ViewModel() {
 
+    private val _gallerySelectType = MutableStateFlow<GallerySelectType>(GallerySelectType.MultiSelect)
+    val gallerySelectType: StateFlow<GallerySelectType> = _gallerySelectType.asStateFlow()
+
     private val _events = MutableSharedFlow<MainEvent>()
     val events: SharedFlow<MainEvent> = _events.asSharedFlow()
 
-    private val _image = MutableStateFlow(listOf<String>())
-    val image: StateFlow<List<String>> = _image.asStateFlow()
+    private val _images = MutableStateFlow(listOf<String>())
+    val images: StateFlow<List<String>> = _images.asStateFlow()
 
-    fun imageToUrl(files: List<MultipartBody.Part>) {
+    private val _image = MutableStateFlow("")
+    val image: StateFlow<String> = _image.asStateFlow()
+
+    fun imagesToUrls(files: List<MultipartBody.Part>) {
         viewModelScope.launch {
             val response = imageRepository.imageToUrl(files, "users")
 
             if (response.isSuccessful) {
                 response.body()?.let {
-                    _image.value = it
+                    _images.value = it
                 }
             }
         }
     }
 
-    fun goToGallery(){
+    fun imageToUrl(file: MultipartBody.Part) {
+        viewModelScope.launch {
+            val response = imageRepository.imageToUrl(listOf(file), "users")
+
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    _image.value = it[0]
+                }
+            }
+        }
+    }
+
+    fun goToMultiSelectGallery(){
+        _gallerySelectType.value = GallerySelectType.MultiSelect
         viewModelScope.launch {
             _events.emit(MainEvent.GoToGallery)
         }
     }
+
+    fun goToSingleSelectGallery(){
+        _gallerySelectType.value = GallerySelectType.SingleSelect
+        viewModelScope.launch{
+            _events.emit(MainEvent.GoToGallery)
+        }
+    }
+
 
 }
