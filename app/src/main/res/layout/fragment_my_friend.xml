@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.commit.egusajo.presentation.ui.mypage.friend.MyFriendViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:text="내 친구 목록"
             tools:text="plashdof" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,9 +51,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_grey3fill_nostroke_radius10"
+                android:onClick="@{() -> vm.getFollowerList()}"
                 android:outlineProvider="none"
                 android:text="팔로워"
                 android:textColor="@color/black"
+                app:friendButton="@{vm.uiState.followerState}"
                 app:layout_constraintEnd_toEndOf="@id/guidline_toggle_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,24 +66,28 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_lightgreyfill_nostroke_radius10"
+                android:onClick="@{() -> vm.getFollowingList()}"
                 android:outlineProvider="none"
                 android:text="팔로잉"
                 android:textColor="@color/es_grey7"
+                app:friendButton="@{vm.uiState.followingState}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guidline_toggle_button"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_friends"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_toggle_button" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_friends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_toggle_button"
+            tools:listitem="@layout/item_friend"
+            app:list="@{vm.uiState.friendList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

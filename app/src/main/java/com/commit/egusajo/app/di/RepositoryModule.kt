@@ -1,5 +1,7 @@
 package com.commit.egusajo.app.di
 
+import com.commit.egusajo.data.repository.FollowRepository
+import com.commit.egusajo.data.repository.FollowRepositoryImpl
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.data.repository.FundRepositoryImpl
 import com.commit.egusajo.data.repository.ImageRepository
@@ -41,4 +43,10 @@ abstract class RepositoryModule {
     abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindFollowRepository(
+        followRepositoryImpl: FollowRepositoryImpl
+    ): FollowRepository
 }

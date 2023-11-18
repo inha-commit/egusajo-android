@@ -36,8 +36,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         PushUtils.acquireWakeLock(App.context())
         //수신한 메시지를 처리
-        val title = message.notification?.title
-        val body = message.notification?.body
+        val title = message.data["title"]
+        val body = message.data["body"]
         sendNotification(title, body)
     }
 

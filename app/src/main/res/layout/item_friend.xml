@@ -5,18 +5,23 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.commit.egusajo.presentation.ui.mypage.friend.model.UiFriendData" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginTop="40dp"
             android:scaleType="centerCrop"
+            app:imgUrl="@{item.profileImg}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/All28RadiusImageView"
@@ -24,10 +29,11 @@
 
         <TextView
             android:id="@+id/tv_nick"
-            style="@style/TextHeader"
+            style="@style/TextMediumBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="12dp"
+            android:text="@{item.nick}"
             app:layout_constraintBottom_toBottomOf="@id/iv_profile_img"
             app:layout_constraintStart_toEndOf="@id/iv_profile_img"
             app:layout_constraintTop_toTopOf="@id/iv_profile_img"
