@@ -49,7 +49,8 @@ class MyParticipateFundViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             participateList = _uiState.value.participateList + body.toUiParticipateDataList(
-                                ::navigateToFundDetail
+                                ::navigateToFundDetail,
+                                if(_uiState.value.participateList.isEmpty()) "" else (_uiState.value.participateList.last().participateDate)
                             )
                         )
                     }

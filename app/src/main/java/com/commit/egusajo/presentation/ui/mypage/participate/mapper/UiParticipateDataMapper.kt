@@ -5,7 +5,7 @@ import com.commit.egusajo.data.model.MyParticipateResponse
 import com.commit.egusajo.presentation.ui.mypage.participate.model.UiParticipateData
 
 
-fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> Unit): List<UiParticipateData>{
+fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> Unit, lastDate: String): List<UiParticipateData>{
     val result = mutableListOf<UiParticipateData>()
     val newData = this.funds.map {
         UiParticipateData(
@@ -23,7 +23,7 @@ fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> 
         )
     }.toMutableList()
 
-    var curDate = ""
+    var curDate = lastDate
     newData.forEach {
         if(curDate != it.participateDate){
             curDate = it.participateDate
