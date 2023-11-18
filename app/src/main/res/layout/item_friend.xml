@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_profile_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/All28RadiusImageView"
+            tools:src="@drawable/test" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            style="@style/TextHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_img"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_img"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_img"
+            tools:text="Noah" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_follow_unfollow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_lightgreyfill_nostroke_radius10"
+            android:minHeight="0dp"
+            android:paddingVertical="6dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_img"
+            tools:text="언팔로우" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

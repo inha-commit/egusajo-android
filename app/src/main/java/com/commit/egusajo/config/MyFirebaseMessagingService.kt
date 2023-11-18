@@ -9,8 +9,10 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.commit.egusajo.R
+import com.commit.egusajo.app.App
 import com.commit.egusajo.presentation.ui.intro.IntroActivity
 import com.commit.egusajo.util.Constants.TAG
+import com.commit.egusajo.util.PushUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -20,6 +22,11 @@ import kotlin.coroutines.suspendCoroutine
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
+    override fun onCreate() {
+        super.onCreate()
+        PushUtils.acquireWakeLock(this)
+    }
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
@@ -27,7 +34,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        super.onMessageReceived(message)
+        PushUtils.acquireWakeLock(App.context())
         //수신한 메시지를 처리
         val title = message.notification?.title
         val body = message.notification?.body

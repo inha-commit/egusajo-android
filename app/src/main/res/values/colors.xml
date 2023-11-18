@@ -8,8 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
-    <color name="es_grey3">#EBEBEB</color>
+    <color name="es_light_grey">#EBEBEB</color>
+    <color name="es_grey3">#D5D5D5</color>
     <color name="es_grey4">#C6BDBD</color>
     <color name="es_grey6">#B0A1A1</color>
     <color name="es_grey7">#8C8C8C</color>
