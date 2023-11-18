@@ -4,5 +4,6 @@ data class UiFriendData(
     val id: Int,
     val nick: String,
     val profileImg: String,
-    val isFollowing: Boolean
+    val isFollowing: Boolean,
+    val followOrUnfollow: (Boolean, Int) -> Unit
 )

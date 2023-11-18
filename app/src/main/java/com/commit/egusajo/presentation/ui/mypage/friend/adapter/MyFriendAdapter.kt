@@ -31,6 +31,9 @@ class MyFriendViewHolder(private val binding: ItemFriendBinding) :
 
     fun bind(item: UiFriendData) {
         binding.item = item
+        binding.btnFollowUnfollow.setOnClickListener {
+            item.followOrUnfollow(item.isFollowing, item.id)
+        }
     }
 
 }

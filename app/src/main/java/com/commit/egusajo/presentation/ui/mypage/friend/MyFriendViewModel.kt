@@ -32,10 +32,10 @@ class MyFriendViewModel @Inject constructor(
             val response = followRepository.getFollowers()
 
             if (response.isSuccessful) {
-                response.body()?.let{ body ->
+                response.body()?.let { body ->
                     _uiState.update { state ->
                         state.copy(
-                            friendList = body.toUiFriendData(),
+                            friendList = body.toUiFriendData(::followOrUnFollow),
                             followerState = true,
                             followingState = false
                         )
@@ -52,10 +52,10 @@ class MyFriendViewModel @Inject constructor(
             val response = followRepository.getFollowings()
 
             if (response.isSuccessful) {
-                response.body()?.let{ body ->
+                response.body()?.let { body ->
                     _uiState.update { state ->
                         state.copy(
-                            friendList = body.toUiFriendData(),
+                            friendList = body.toUiFriendData(::followOrUnFollow),
                             followerState = false,
                             followingState = true
                         )
@@ -63,6 +63,36 @@ class MyFriendViewModel @Inject constructor(
                 }
             } else {
 
+            }
+        }
+    }
+
+    private fun followOrUnFollow(isFollowing: Boolean, id: Int) {
+        if (isFollowing) {
+            viewModelScope.launch {
+                val response = followRepository.unFollow(id)
+                if (response.isSuccessful) {
+                    if (_uiState.value.followerState) {
+                        getFollowerList()
+                    } else {
+                        getFollowingList()
+                    }
+                } else {
+
+                }
+            }
+        } else {
+            viewModelScope.launch {
+                val response = followRepository.follow(id)
+                if (response.isSuccessful) {
+                    if (_uiState.value.followerState) {
+                        getFollowerList()
+                    } else {
+                        getFollowingList()
+                    }
+                } else {
+
+                }
             }
         }
     }

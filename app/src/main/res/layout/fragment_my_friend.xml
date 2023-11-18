@@ -87,6 +87,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_toggle_button"
             tools:listitem="@layout/item_friend"
+            android:clipToPadding="false"
+            android:paddingBottom="150dp"
             app:list="@{vm.uiState.friendList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

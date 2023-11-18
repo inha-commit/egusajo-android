@@ -1,5 +1,6 @@
 package com.commit.egusajo.presentation.ui.mypage.friend
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
@@ -34,6 +35,19 @@ fun bindFriendButton(btn: AppCompatButton, state: Boolean) {
     } else {
         btn.setBackgroundResource(R.drawable.shape_lightgreyfill_nostroke_radius10)
         btn.setTextColor(ContextCompat.getColor(btn.context, R.color.es_grey7))
+    }
+}
+
+@BindingAdapter("followButton")
+fun bindFollowButton(btn: AppCompatButton, isFollowing: Boolean) {
+    if (isFollowing) {
+        btn.text = "언팔로우"
+        btn.setTextColor(Color.BLACK)
+        btn.setBackgroundResource(R.drawable.shape_lightgreyfill_nostroke_radius10)
+    } else {
+        btn.text = "팔로우"
+        btn.setTextColor(Color.GREEN)
+        btn.setBackgroundResource(R.drawable.shape_grey3fill_nostroke_radius10)
     }
 }
 
