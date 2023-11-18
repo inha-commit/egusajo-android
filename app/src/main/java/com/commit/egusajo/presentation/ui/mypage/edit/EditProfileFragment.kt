@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentEditProfileBinding
 import com.commit.egusajo.presentation.base.BaseFragment
@@ -27,7 +28,7 @@ class EditProfileFragment :
         viewModel.getOriginInfo()
         setBirthBtnListener()
         initImageObserver()
-
+        initEventObserver()
     }
 
     private fun setBirthBtnListener() {
@@ -42,6 +43,17 @@ class EditProfileFragment :
         repeatOnStarted {
             parentViewModel.image.collect {
                 viewModel.setProfileImg(it)
+            }
+        }
+    }
+
+    private fun initEventObserver() {
+        repeatOnStarted {
+            viewModel.events.collect {
+                when (it) {
+                    is EditProfileEvents.NavigateToBack -> findNavController().navigateUp()
+                    else -> {}
+                }
             }
         }
     }

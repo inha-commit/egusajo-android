@@ -4,14 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.model.NickCheckRequest
+import com.commit.egusajo.data.model.PatchMyInfoRequest
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.util.Validation
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,6 +29,10 @@ data class EditProfileUiState(
     val birthState: InputState = InputState.Empty
 )
 
+sealed class EditProfileEvents {
+    object NavigateToBack : EditProfileEvents()
+}
+
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
@@ -34,11 +42,15 @@ class EditProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(EditProfileUiState())
     val uiState: StateFlow<EditProfileUiState> = _uiState.asStateFlow()
 
+    private val _events = MutableSharedFlow<EditProfileEvents>()
+    val events: SharedFlow<EditProfileEvents> = _events.asSharedFlow()
+
     private var originProfile = ""
     private var originNick = ""
     private var originName = ""
     private var originBirth = ""
     private var originAlarm = false
+    private var originFcmId = ""
 
     val profileImg = MutableStateFlow("")
     val nickName = MutableStateFlow("")
@@ -56,7 +68,7 @@ class EditProfileViewModel @Inject constructor(
     private fun observeNick() {
         nickName.onEach {
             if (it != originNick) {
-                if(it.isBlank()){
+                if (it.isBlank()) {
                     _uiState.update { state ->
                         state.copy(
                             nickState = InputState.Error("바꿀 닉네임을 입력하세요"),
@@ -74,7 +86,10 @@ class EditProfileViewModel @Inject constructor(
                         }
                     } else {
                         val error =
-                            Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
+                            Gson().fromJson(
+                                response.errorBody()?.string(),
+                                ErrorResponse::class.java
+                            )
                         when (error.code) {
                             1100, 1101 -> {
                                 _uiState.update { state ->
@@ -140,14 +155,14 @@ class EditProfileViewModel @Inject constructor(
                     if (Validation.validateDate(it)) {
                         _uiState.update { state ->
                             state.copy(
-                                birthState  = InputState.Success("올바른 날짜입니다"),
+                                birthState = InputState.Success("올바른 날짜입니다"),
                                 isDataChange = true
                             )
                         }
                     } else {
                         _uiState.update { state ->
                             state.copy(
-                                birthState  = InputState.Error("올바른 날짜를 입력하세요"),
+                                birthState = InputState.Error("올바른 날짜를 입력하세요"),
                                 isDataChange = true
                             )
                         }
@@ -194,6 +209,7 @@ class EditProfileViewModel @Inject constructor(
                     originBirth = body.birthday
                     originAlarm = body.alarm
                     originProfile = body.profileImgSrc
+                    originFcmId = body.fcmId
                     nickName.value = body.nickname
                     name.value = body.name
                     birthDay.value = body.birthday
@@ -206,12 +222,34 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-    fun setProfileImg(url: String){
+    fun setProfileImg(url: String) {
         profileImg.value = url
     }
 
-    fun setBirth(data: String){
+    fun setBirth(data: String) {
         birthDay.value = data
     }
+
+    fun patchProfile() {
+        viewModelScope.launch {
+            val response = userRepository.patchMyInfo(
+                PatchMyInfoRequest(
+                    name = name.value,
+                    nickname = nickName.value,
+                    profileImgSrc = profileImg.value,
+                    birthday = birthDay.value,
+                    fcmId = originFcmId,
+                    alarm = alarm.value
+                )
+            )
+
+            if (response.isSuccessful) {
+                _events.emit(EditProfileEvents.NavigateToBack)
+            } else {
+
+            }
+        }
+    }
+
 
 }

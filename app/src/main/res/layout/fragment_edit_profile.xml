@@ -35,14 +35,14 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
-            app:profileImgUrl="@{vm.profileImg}"
-            android:src="@drawable/icon_profile"
             android:onClick="@{() -> pvm.goToSingleSelectGallery()}"
+            android:src="@drawable/icon_profile"
             app:civ_border_color="@color/es_grey3"
             app:civ_border_width="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_header"
+            app:profileImgUrl="@{vm.profileImg}" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -92,10 +92,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            app:helperMessage="@{vm.uiState.nickState}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nick"
-            app:helperMessage="@{vm.uiState.nickState}"
             app:placeholderText="닉네임을 입력해주세요">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -138,8 +138,8 @@
             android:layout_marginTop="4dp"
             app:endIconDrawable="@drawable/icon_calendar"
             app:endIconMode="custom"
-            app:layout_constraintEnd_toEndOf="parent"
             app:helperMessage="@{vm.uiState.birthState}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_birth"
             app:placeholderText="YYYY/MM/DD">
@@ -148,9 +148,9 @@
                 android:id="@+id/et_birth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={vm.birthDay}"
                 android:background="@drawable/shape_nofill_grey3stroke_radius10"
-                android:paddingVertical="10dp" />
+                android:paddingVertical="10dp"
+                android:text="@={vm.birthDay}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,14 +167,14 @@
         <com.google.android.material.materialswitch.MaterialSwitch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:checked="@={vm.alarm}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_alarm"
             app:layout_constraintStart_toEndOf="@id/tv_alarm"
             app:layout_constraintTop_toTopOf="@id/tv_alarm"
-            android:checked="@={vm.alarm}"
             app:thumbColor="@{vm.alarm}"
-            app:trackTint="@color/es_grey3"
             app:thumbTint="@color/es_light_yellow"
-            app:layout_constraintBottom_toBottomOf="@id/tv_alarm"
-            android:layout_marginStart="16dp"/>
+            app:trackTint="@color/es_grey3" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_signup"
@@ -182,8 +182,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:background="@drawable/selector_next_btn"
-            android:text="저장하기"
             android:enabled="@{vm.uiState.isDataChange()}"
+            android:onClick="@{() -> vm.patchProfile()}"
+            android:text="저장하기"
             android:textColor="@color/selector_next_btn_text"
             android:textSize="20sp"
             android:textStyle="bold"
