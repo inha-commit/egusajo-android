@@ -14,10 +14,10 @@ android {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 
-    buildFeatures{
-        viewBinding=true
-        dataBinding=true
-        buildConfig=true
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -30,6 +30,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "KAKAO_API_KEY", properties['kakaoApiKey']
         buildConfigField "String", "BASE_URL", properties['baseUrl']
+        buildConfigField "String", "TOSS_CLIENT", properties['tossClientKey']
         manifestPlaceholders = [KAKAO_API_KEY: properties["kakaoApiKey"]]
 
     }
@@ -93,5 +94,12 @@ dependencies {
 
     // CircleIndicator
     implementation 'me.relex:circleindicator:2.1.6'
+
+    // Toss Pay
+    implementation 'com.github.tosspayments:payment-sdk-android:0.1.12'
+
+    // FCM
+    implementation platform('com.google.firebase:firebase-bom:32.6.0')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 
 }

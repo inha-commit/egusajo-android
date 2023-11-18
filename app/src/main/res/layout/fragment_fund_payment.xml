@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -7,7 +9,181 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/TextHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="결제하기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_fund_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_nofill_grey3stroke_radius10"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+            <TextView
+                android:id="@+id/tv_short_comment"
+                style="@style/TextMediumBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="김민우 님의 생일펀딩"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_present_title_label"
+                style="@style/TextSmallGrey8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="제품명 : "
+                android:textColor="@color/es_grey6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_short_comment" />
+
+            <TextView
+                android:id="@+id/tv_present_title"
+                style="@style/TextSmallGrey8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/es_grey6"
+                app:layout_constraintStart_toEndOf="@id/tv_present_title_label"
+                app:layout_constraintTop_toTopOf="@id/tv_present_title_label"
+                tools:text="아이패드 14 Pro" />
+
+            <TextView
+                android:id="@+id/tv_goal_label"
+                style="@style/TextSmallGrey8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="목표 금액 : "
+                android:textColor="@color/es_grey6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_present_title_label" />
+
+            <TextView
+                android:id="@+id/tv_goal"
+                style="@style/TextSmallGrey8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/es_grey6"
+                app:layout_constraintStart_toEndOf="@id/tv_goal_label"
+                app:layout_constraintTop_toTopOf="@id/tv_goal_label"
+                tools:text="1600000" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_present_img"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/tv_goal_label"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_short_comment"
+                app:shapeAppearanceOverlay="@style/All12RadiusImageView"
+                tools:src="@drawable/test" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_pay_label"
+            style="@style/TextMediumBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="결제 금액"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_fund_info" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pay_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pay_label"
+            app:layout_goneMarginTop="12dp"
+            app:placeholderText="100,000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_pay_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_nofill_grey3stroke_radius10"
+                android:gravity="end"
+                android:inputType="numberDecimal"
+                android:paddingVertical="10dp"
+                android:paddingEnd="50dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TextMediumBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="원"
+            app:layout_constraintBottom_toBottomOf="@id/til_pay_amount"
+            app:layout_constraintEnd_toEndOf="@id/til_pay_amount"
+            app:layout_constraintTop_toTopOf="@id/til_pay_amount" />
+
+        <TextView
+            android:id="@+id/tv_pay_method"
+            style="@style/TextMediumBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="결제 수단"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_pay_amount" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_toss_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="토스페이"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pay_method" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_kakao_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="카카오 페이"
+            app:layout_constraintBottom_toBottomOf="@id/btn_toss_pay"
+            app:layout_constraintStart_toEndOf="@id/btn_toss_pay"
+            app:layout_constraintTop_toTopOf="@id/btn_toss_pay" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_participate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/selector_next_btn"
+            android:text="모금하기"
+            android:textColor="@color/selector_next_btn_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
