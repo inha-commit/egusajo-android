@@ -8,9 +8,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.commit.egusajo.R
+import com.commit.egusajo.app.App
 import com.commit.egusajo.databinding.FragmentMypageBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.intro.IntroActivity
+import com.commit.egusajo.util.Constants
 import com.commit.egusajo.util.Constants.TAG
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,6 +72,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             }
             else {
                 Log.d(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                App.sharedPreferences.edit()
+                    .remove(Constants.X_ACCESS_TOKEN)
+                    .remove(Constants.X_REFRESH_TOKEN)
+                    .apply()
                 val intent = Intent(requireContext(),IntroActivity::class.java)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)

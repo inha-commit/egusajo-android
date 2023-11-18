@@ -63,7 +63,7 @@ class MyPageViewModel @Inject constructor(
             val response = userRepository.withdrawal()
 
             if(response.isSuccessful){
-
+                logout()
             } else {
 
             }
