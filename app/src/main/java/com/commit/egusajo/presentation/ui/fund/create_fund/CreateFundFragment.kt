@@ -10,6 +10,7 @@ import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentCreateFundBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.MainViewModel
+import com.commit.egusajo.util.DateType
 import com.commit.egusajo.util.showCalendarDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,7 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
 
     private fun setDateBtnListener() {
         binding.tilDDay.setEndIconOnClickListener {
-            showCalendarDatePicker(parentFragmentManager) {
+            showCalendarDatePicker(parentFragmentManager, DateType.DEADLINE) {
                 viewModel.setDeadline(it)
             }
         }

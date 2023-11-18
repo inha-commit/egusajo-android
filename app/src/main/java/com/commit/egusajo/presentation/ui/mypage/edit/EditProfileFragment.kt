@@ -10,6 +10,7 @@ import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentEditProfileBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.MainViewModel
+import com.commit.egusajo.util.DateType
 import com.commit.egusajo.util.showCalendarDatePicker
 import com.google.android.material.materialswitch.MaterialSwitch
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +34,7 @@ class EditProfileFragment :
 
     private fun setBirthBtnListener() {
         binding.tilBirth.setEndIconOnClickListener {
-            showCalendarDatePicker(parentFragmentManager) {
+            showCalendarDatePicker(parentFragmentManager, DateType.BIRTH_DAY) {
                 viewModel.setBirth(it)
             }
         }

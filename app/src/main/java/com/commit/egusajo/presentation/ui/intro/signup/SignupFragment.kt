@@ -1,5 +1,6 @@
 package com.commit.egusajo.presentation.ui.intro.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -8,7 +9,9 @@ import androidx.navigation.fragment.navArgs
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentSignupBinding
 import com.commit.egusajo.presentation.base.BaseFragment
+import com.commit.egusajo.presentation.ui.MainActivity
 import com.commit.egusajo.presentation.ui.intro.IntroViewModel
+import com.commit.egusajo.util.DateType
 import com.commit.egusajo.util.showCalendarDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +38,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
 
     private fun setBirthBtnListener() {
         binding.tilBirth.setEndIconOnClickListener {
-            showCalendarDatePicker(parentFragmentManager) {
+            showCalendarDatePicker(parentFragmentManager, DateType.BIRTH_DAY) {
                 viewModel.setBirth(it)
             }
         }
@@ -57,7 +60,11 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
         repeatOnStarted {
             viewModel.events.collect{
                 when(it){
-                    is SignupEvents.NavigateToMainActivity -> {}
+                    is SignupEvents.NavigateToMainActivity -> {
+                        startActivity(Intent(requireContext(), MainActivity::class.java).setFlags(
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        ))
+                    }
                     is SignupEvents.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }

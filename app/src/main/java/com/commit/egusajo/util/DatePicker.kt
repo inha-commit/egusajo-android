@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.sql.DataTruncation
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -12,18 +13,21 @@ import java.util.TimeZone
 
 fun showCalendarDatePicker(
     fragmentManager: FragmentManager,
-    onSelectDateListener: (String) -> Unit
+    type : DateType,
+    onSelectDateListener: (String) -> Unit,
 ) {
 
     val calendarConstraintBuilder = CalendarConstraints.Builder()
     //오늘 이후만 선택가능하게 하는 코드
     calendarConstraintBuilder.setValidator(DateValidatorPointForward.now())
 
-    val datePicker = MaterialDatePicker.Builder.datePicker()
-        .setTitleText("목표 날짜를 고르세요")
-        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-        .setCalendarConstraints(calendarConstraintBuilder.build())
-        .build()
+    val datePicker = MaterialDatePicker.Builder.datePicker().apply{
+        setTitleText("목표 날짜를 고르세요")
+        setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+        if(type == DateType.DEADLINE) setCalendarConstraints(calendarConstraintBuilder.build())
+    }.build()
+
+
     datePicker.addOnPositiveButtonClickListener {
         onSelectDateListener(it.toDateString())
     }
@@ -36,4 +40,9 @@ private fun Long.toDateString(): String {
     dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     val date = Date(this)
     return dateFormat.format(date)
+}
+
+enum class DateType{
+    BIRTH_DAY,
+    DEADLINE
 }
