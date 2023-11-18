@@ -13,6 +13,7 @@ import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentHomeBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.home.adapter.HomeFundAdapter
+import com.commit.egusajo.presentation.ui.toFundDetail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,10 +58,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
         })
-    }
-
-    private fun NavController.toFundDetail(fundId: Int) {
-        val action = MainNavDirections.actionGlobalToFundDetailFragment(fundId)
-        this.navigate(action)
     }
 }

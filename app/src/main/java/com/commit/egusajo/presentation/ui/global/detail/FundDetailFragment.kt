@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.commit.egusajo.R
-import com.commit.egusajo.app.App
 import com.commit.egusajo.databinding.FragmentFundDetailBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.global.detail.adapter.FundListAdapter

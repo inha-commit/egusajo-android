@@ -23,11 +23,11 @@
 
         <TextView
             android:id="@+id/tv_header"
-            style="@style/TextLargeBlackBold"
+            style="@style/TextHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="회원가입"
+            android:text="프로필 수정"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header"
-            app:profileImgUrl="@{pvm.profileImg}" />
+            app:profileImgUrl="@{vm.profileImg}" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -57,20 +57,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_profile" />
 
-        <EditText
-            android:id="@+id/et_name"
-            style="@style/TextMediumBlack"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/shape_nofill_grey3stroke_radius10"
-            android:hint="이름을 입력해주세요"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="12dp"
-            android:text="@={vm.name}"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:placeholderText="이름을 입력해주세요">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_nofill_grey3stroke_radius10"
+                android:paddingVertical="16dp"
+                android:text="@={vm.name}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_nick"
@@ -81,22 +86,28 @@
             android:text="닉네임"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_name" />
+            app:layout_constraintTop_toBottomOf="@id/til_name" />
 
-        <EditText
-            android:id="@+id/et_nick"
-            style="@style/TextMediumBlack"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_nick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/shape_nofill_grey3stroke_radius10"
-            android:hint="닉네임을 입력해 주세요"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="12dp"
-            android:text="@={vm.nick}"
+            android:layout_marginTop="4dp"
+            app:helperMessage="@{vm.uiState.nickState}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nick" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nick"
+            app:placeholderText="닉네임을 입력해주세요">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_nofill_grey3stroke_radius10"
+                android:paddingVertical="16dp"
+                android:text="@={vm.nickName}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_warning"
@@ -107,8 +118,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_nick"
-            app:warningText="@{vm.uiState.nickState}"
+            app:layout_constraintTop_toBottomOf="@id/til_nick"
             tools:text="사용중인 닉네임 임" />
 
         <TextView
@@ -122,31 +132,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_warning" />
 
-        <TextView
-            android:id="@+id/et_birth"
-            style="@style/TextMediumBlack"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_birth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/shape_nofill_grey3stroke_radius10"
-            android:hint="생일을 입력해주세요"
-            android:onClick="@{() -> vm.showBirthPicker()}"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="12dp"
-            android:text="@{vm.birthString}"
+            android:layout_marginTop="4dp"
+            app:endIconDrawable="@drawable/icon_calendar"
+            app:endIconMode="custom"
+            app:helperMessage="@{vm.uiState.birthState}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_birth" />
+            app:layout_constraintTop_toBottomOf="@id/tv_birth"
+            app:placeholderText="YYYY/MM/DD">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_nofill_grey3stroke_radius10"
+                android:paddingVertical="10dp"
+                android:text="@={vm.birthDay}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_signup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/selector_next_btn"
-            android:enabled="@{vm.isDataReady()}"
+            android:enabled="@{vm.uiState.isDataReady()}"
             android:onClick="@{() -> vm.signup()}"
-            android:text="회원가입"
+            android:text="저장하기"
             android:textColor="@color/selector_next_btn_text"
             android:textSize="20sp"
             android:textStyle="bold"

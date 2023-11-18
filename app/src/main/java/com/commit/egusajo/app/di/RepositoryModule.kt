@@ -6,6 +6,8 @@ import com.commit.egusajo.data.repository.ImageRepository
 import com.commit.egusajo.data.repository.ImageRepositoryImpl
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.data.repository.IntroRepositoryImpl
+import com.commit.egusajo.data.repository.UserRepository
+import com.commit.egusajo.data.repository.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindFundRepository(
         fundRepositoryImpl: FundRepositoryImpl
     ): FundRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }

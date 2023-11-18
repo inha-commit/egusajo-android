@@ -8,5 +8,5 @@ data class SignupRequest(
     val fcmId: String = "",
     val account: String = "",
     val bank: String = "",
-    val profileImageSrc: String? = null
+    val profileImgSrc: String? = null
 )

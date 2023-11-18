@@ -71,6 +71,7 @@
                     android:id="@+id/et_nick"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/shape_nofill_grey3stroke_radius10"
                     android:paddingVertical="10dp"
                     android:text="@={vm.productLink}" />
 
@@ -102,6 +103,7 @@
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/shape_nofill_grey3stroke_radius10"
                     android:paddingVertical="10dp"
                     android:text="@={vm.productName}" />
 
@@ -111,10 +113,10 @@
                 android:id="@+id/iv_add_photo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:imgUrl="@{vm.representImage}"
                 android:layout_marginTop="28dp"
                 android:onClick="@{() -> vm.goToGallery()}"
-                android:src="@drawable/ic_goto_gallery"
+                android:src="@drawable/icon_goto_gallery"
+                app:imgUrl="@{vm.representImage}"
                 app:layout_constraintDimensionRatio="942:576"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +139,7 @@
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/shape_nofill_grey6stroke_radius10"
+                android:background="@drawable/shape_nofill_grey3stroke_radius10"
                 android:gravity="top"
                 android:hint="펀딩 내용을 입력하세요"
                 android:lineSpacingExtra="18sp"
@@ -173,6 +175,7 @@
                     android:id="@+id/et_goal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/shape_nofill_grey3stroke_radius10"
                     android:gravity="end"
                     android:inputType="numberDecimal"
                     android:paddingVertical="10dp"
@@ -207,7 +210,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                app:endIconDrawable="@drawable/ic_calendar"
+                app:endIconDrawable="@drawable/icon_calendar"
                 app:endIconMode="custom"
                 app:helperMessage="@{vm.uiState.deadLineState}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -219,6 +222,7 @@
                     android:id="@+id/et_dDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/shape_nofill_grey3stroke_radius10"
                     android:paddingVertical="10dp"
                     android:text="@={vm.deadLine}" />
 
@@ -232,8 +236,8 @@
                 android:layout_marginTop="60dp"
                 android:background="@drawable/selector_next_btn"
                 android:enabled="@{vm.isDataReady()}"
-                android:text="펀딩 올리기"
                 android:onClick="@{() -> vm.createFund()}"
+                android:text="펀딩 올리기"
                 android:textColor="@color/selector_next_btn_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

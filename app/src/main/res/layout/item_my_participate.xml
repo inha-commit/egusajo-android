@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.commit.egusajo.presentation.ui.mypage.participate.model.UiParticipateData" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_dday"
+            style="@style/TextTinyRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/shape_red1fill_nostroke_radius20"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="@{item.deadLine}"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="D - 1 🔥" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextMediumGrey9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@{item.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_dday" />
+
+        <TextView
+            android:id="@+id/tv_product_title_label"
+            style="@style/TextSmallGrey9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="제품명"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <ImageView
+            android:id="@+id/divider_product_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/icon_grey_divider"
+            app:layout_constraintBottom_toBottomOf="@id/tv_product_title_label"
+            app:layout_constraintStart_toEndOf="@id/tv_product_title_label"
+            app:layout_constraintTop_toTopOf="@id/tv_product_title_label" />
+
+        <TextView
+            android:id="@+id/tv_product_title"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{item.presentName}"
+            app:layout_constraintBottom_toBottomOf="@id/divider_product_title"
+            app:layout_constraintStart_toEndOf="@id/divider_product_title"
+            app:layout_constraintTop_toTopOf="@id/divider_product_title" />
+
+        <TextView
+            android:id="@+id/tv_goal_price_label"
+            style="@style/TextSmallGrey9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="목표금액"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_title_label" />
+
+        <ImageView
+            android:id="@+id/divider_goal_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/icon_grey_divider"
+            app:layout_constraintBottom_toBottomOf="@id/tv_goal_price_label"
+            app:layout_constraintStart_toEndOf="@id/tv_goal_price_label"
+            app:layout_constraintTop_toTopOf="@id/tv_goal_price_label" />
+
+        <TextView
+            android:id="@+id/tv_goal_price"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_goal_price_label"
+            app:layout_constraintStart_toEndOf="@id/divider_goal_price"
+            app:layout_constraintTop_toTopOf="@id/tv_goal_price_label"
+            app:price="@{item.goal}"
+            tools:text="1,000,000원" />
+
+        <TextView
+            android:id="@+id/tv_date_label"
+            style="@style/TextSmallGrey9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="날짜"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_goal_price_label" />
+
+        <ImageView
+            android:id="@+id/divider_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/icon_grey_divider"
+            app:layout_constraintBottom_toBottomOf="@id/tv_date_label"
+            app:layout_constraintStart_toEndOf="@id/tv_date_label"
+            app:layout_constraintTop_toTopOf="@id/tv_date_label" />
+
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{item.date}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_date_label"
+            app:layout_constraintStart_toEndOf="@id/divider_date"
+            app:layout_constraintTop_toTopOf="@id/tv_date_label"
+            app:layout_goneMarginStart="8dp"
+            tools:text="2019년 8월 31일" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_present_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            app:imgUrl="@{item.presentImgUrl}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_date_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:shapeAppearanceOverlay="@style/All12RadiusImageView"
+            tools:src="@drawable/test" />
+
+        <TextView
+            android:id="@+id/tv_participate_cost"
+            style="@style/TextMediumGrey8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_nofill_grey3stroke_radius10"
+            android:paddingVertical="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/es_blue"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_present_img"
+            app:price="@{item.cost}" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:dividerColor="@color/es_red1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_participate_cost" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

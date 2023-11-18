@@ -6,33 +6,41 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.commit.egusajo.R
-import com.commit.egusajo.presentation.ui.intro.signup.SignupState
-import com.commit.egusajo.presentation.ui.intro.signup.SignupUiState
+import com.commit.egusajo.presentation.InputState
+import com.google.android.material.textfield.TextInputLayout
 import java.text.DecimalFormat
 
 
 @BindingAdapter("imgUrl")
 fun bindImg(imageView: ImageView, url: String) {
-    if(url.isNotBlank()){
+    if (url.isNotBlank()) {
         Glide.with(imageView.context)
             .load(url)
             .into(imageView)
     }
 }
 
-@BindingAdapter("warningText")
-fun bindWarningText(view: TextView, state: SignupState) {
-    when (state) {
-        is SignupState.Error -> {
-            view.visibility = View.VISIBLE
-            view.text = state.msg
-        }
+@BindingAdapter("profileImgUrl")
+fun bindProfileImg(imageView: ImageView, url: String) {
+    if (url.isNotBlank()) {
+        Glide.with(imageView.context)
+            .load(url)
+            .error(R.drawable.icon_profile)
+            .into(imageView)
+    }
+}
 
-        is SignupState.Success -> view.visibility = View.GONE
-        else -> {}
+@BindingAdapter("helperMessage")
+fun bindHelperMessage(view: TextInputLayout, inputState: InputState) {
+    when (inputState) {
+        is InputState.Success -> view.helperText = inputState.msg
+        is InputState.Error -> view.error = inputState.msg
+        else -> {
+            view.helperText = ""
+            view.error = ""
+        }
     }
 }
 
@@ -40,12 +48,18 @@ fun bindWarningText(view: TextView, state: SignupState) {
 @BindingAdapter("list")
 fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list: List<T>?) {
     val adapter = recyclerView.adapter as ListAdapter<T, VH>
-    if(list != null) adapter.submitList(list)
+    if (list != null) adapter.submitList(list)
 }
 
 @BindingAdapter("price")
 fun bindPrice(textView: TextView, price: Int) {
     val dec = DecimalFormat("#,###원")
     textView.text = dec.format(price)
+}
+
+@BindingAdapter("textVisibility")
+fun <T> bindTextVisibility(textView: TextView, state: List<T>){
+    if(state.isEmpty()) textView.visibility = View.VISIBLE
+    else textView.visibility = View.GONE
 }
 

@@ -9,11 +9,11 @@ import androidx.navigation.fragment.findNavController
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.FragmentCreateFundBinding
 import com.commit.egusajo.presentation.base.BaseFragment
-import com.commit.egusajo.presentation.ui.main.MainViewModel
+import com.commit.egusajo.presentation.ui.MainViewModel
+import com.commit.egusajo.util.DateType
 import com.commit.egusajo.util.showCalendarDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -33,17 +33,17 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
 
     private fun setDateBtnListener() {
         binding.tilDDay.setEndIconOnClickListener {
-            showCalendarDatePicker(parentFragmentManager) {
+            showCalendarDatePicker(parentFragmentManager, DateType.DEADLINE) {
                 viewModel.setDeadline(it)
             }
         }
     }
 
-    private fun initEventObserver(){
+    private fun initEventObserver() {
         repeatOnStarted {
-            viewModel.events.collect{
-                when(it){
-                    is CreateFundEvent.GoToGallery -> parentViewModel.goToGallery()
+            viewModel.events.collect {
+                when (it) {
+                    is CreateFundEvent.GoToGallery -> parentViewModel.goToMultiSelectGallery()
                     is CreateFundEvent.NavigateToBack -> findNavController().navigateUp()
                     else -> {}
                 }
@@ -51,25 +51,13 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
         }
     }
 
-    private fun imagesObserver(){
+    private fun imagesObserver() {
         repeatOnStarted {
-            parentViewModel.image.collect{
-                if(it.isNotEmpty()){
+            parentViewModel.images.collect {
+                if (it.isNotEmpty()) {
                     viewModel.setImages(it)
                 }
             }
-        }
-    }
-}
-
-@BindingAdapter("helperMessage")
-fun bindHelperMessage(view: TextInputLayout, inputState: InputState) {
-    when (inputState) {
-        is InputState.Success -> view.helperText = inputState.msg
-        is InputState.Error -> view.error = inputState.msg
-        else -> {
-            view.helperText = ""
-            view.error = ""
         }
     }
 }

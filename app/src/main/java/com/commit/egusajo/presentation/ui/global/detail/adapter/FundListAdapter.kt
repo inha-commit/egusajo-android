@@ -28,6 +28,6 @@ class FundListAdapter: ListAdapter<ParticipateData,FundListViewHolder>(DefaultDi
 class FundListViewHolder(private val binding: ItemFundParticipationBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(item: ParticipateData){
-
+        binding.item = item
     }
 }

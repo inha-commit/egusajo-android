@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.data.model.CreateFundRequest
 import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.repository.FundRepository
+import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.util.Validation
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,12 +29,6 @@ data class CreateFundUiState(
     val productLinkState: InputState = InputState.Empty,
     val deadLineState: InputState = InputState.Empty
 )
-
-sealed class InputState {
-    object Empty : InputState()
-    data class Success(val msg: String) : InputState()
-    data class Error(val msg: String) : InputState()
-}
 
 sealed class CreateFundEvent{
     object GoToGallery: CreateFundEvent()

@@ -13,19 +13,19 @@ internal fun FundDetailResponse.toUiFundDetailData(): UiFundDetailData {
         presentName = this.present.name,
         presentLink = this.present.productLink.toString(),
         presentDescription = this.present.longComment,
-        count = (this.fundList?.size?:0).toString() + "명",
+        count = (this.fundings?.size?:0).toString() + "명",
         goal = this.present.goal,
         money = this.present.money,
         percent = "(%.2f%%)".format((this.present.money.toDouble() / this.present.goal.toDouble()) * 100),
-        fundList = this.fundList?.map { item ->
+        fundList = this.fundings?.let{ it.map { item ->
             ParticipateData(
-                userId = item.sender.id,
+                userId = item.user.id,
                 participateId = item.funding.id,
-                profileImg = item.sender.profileImgSrc,
+                profileImg = item.user.profileImgSrc,
                 cost = item.funding.cost,
                 comment = item.funding.comment,
-                name = item.sender.name
+                name = item.user.name
             )
-        }
+        }}
     )
 }

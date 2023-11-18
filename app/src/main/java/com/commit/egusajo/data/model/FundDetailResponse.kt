@@ -1,7 +1,7 @@
 package com.commit.egusajo.data.model
 
 data class FundDetailResponse(
-    val fundList: List<FundingItem>?,
+    val fundings: List<FundingItem>?,
     val present: Present,
     val presentImages: List<String>,
     val user: User
@@ -9,7 +9,7 @@ data class FundDetailResponse(
 
 data class FundingItem(
     val funding: FundingInfo,
-    val sender: Sender
+    val user: Sender
 )
 
 data class FundingInfo(

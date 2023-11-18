@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.commit.egusajo.databinding.ActivityIntroBinding
 import com.commit.egusajo.presentation.base.BaseActivity
-import com.commit.egusajo.presentation.ui.main.MainActivity
+import com.commit.egusajo.presentation.ui.MainActivity
 import com.commit.egusajo.util.Constants
 import com.commit.egusajo.util.toMultiPart
 import dagger.hilt.android.AndroidEntryPoint

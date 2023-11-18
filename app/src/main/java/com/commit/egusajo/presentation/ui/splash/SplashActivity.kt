@@ -13,7 +13,7 @@ import com.commit.egusajo.app.App
 import com.commit.egusajo.databinding.ActivitySplashBinding
 import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.presentation.ui.intro.IntroActivity
-import com.commit.egusajo.presentation.ui.main.MainActivity
+import com.commit.egusajo.presentation.ui.MainActivity
 import com.commit.egusajo.util.Constants.X_ACCESS_TOKEN
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {

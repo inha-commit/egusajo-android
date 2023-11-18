@@ -1,6 +1,5 @@
 package com.commit.egusajo.presentation.ui.intro.signup
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.app.App.Companion.sharedPreferences
@@ -8,42 +7,36 @@ import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.model.NickCheckRequest
 import com.commit.egusajo.data.model.SignupRequest
 import com.commit.egusajo.data.repository.IntroRepository
+import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.presentation.ui.intro.SnsId
-import com.commit.egusajo.util.Constants.TAG
 import com.commit.egusajo.util.Constants.X_ACCESS_TOKEN
 import com.commit.egusajo.util.Constants.X_REFRESH_TOKEN
+import com.commit.egusajo.util.Validation
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SignupUiState(
-    val nickState: SignupState = SignupState.Empty,
-    val signUp: SignupState = SignupState.Empty
+    val isDataChange: Boolean = false,
+    val nickState: InputState = InputState.Empty,
+    val birthState: InputState = InputState.Empty,
+    val isDataReady: Boolean = false
 )
 
-sealed class SignupState {
-    object Empty : SignupState()
-    object Success : SignupState()
-    object Failure : SignupState()
-    data class Error(val msg: String) : SignupState()
-}
 
 sealed class SignupEvents {
-    data class ShowBirthPicker(val curYear: Int, val curMonth: Int, val curDay: Int) :
-        SignupEvents()
+   object NavigateToMainActivity: SignupEvents()
+    data class ShowToastMessage(val msg: String): SignupEvents()
 }
 
 @HiltViewModel
@@ -57,60 +50,92 @@ class SignupViewModel @Inject constructor(
     private val _events = MutableSharedFlow<SignupEvents>()
     val events: SharedFlow<SignupEvents> = _events.asSharedFlow()
 
+    val profileImg = MutableStateFlow("")
+    val nickName = MutableStateFlow("")
     val name = MutableStateFlow("")
-    val nick = MutableStateFlow("")
-    val birthString = MutableStateFlow("")
-    private var profileUrl = ""
+    val birthDay = MutableStateFlow("")
     private var bank = ""
     private var account = ""
 
-
-    private var curYear = 2023
-    private var curMonth = 11
-    private var curDay = 1
-
     init {
-        checkNick()
+        observeNick()
+        observeBirth()
     }
 
-    val isDataReady = combine(name, nick, birthString) { name, nick, birth ->
-        name.isNotBlank() && nick.isNotBlank() && birth.isNotBlank()
-    }.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(), false
-    )
-
-    private fun checkNick() {
-        nick.onEach {
-            Log.d(TAG, it)
-            val response = introRepository.checkNick(NickCheckRequest(it))
-
-            if (response.isSuccessful) {
+    private fun observeNick() {
+        nickName.onEach {
+            if (it.isBlank()) {
                 _uiState.update { state ->
                     state.copy(
-                        nickState = SignupState.Success
+                        nickState = InputState.Error("닉네임을 입력하세요"),
+                        isDataReady = false
                     )
                 }
             } else {
-                val error =
-                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-                when (error.code) {
-                    1100, 1101 -> {
-                        _uiState.update { state ->
-                            state.copy(
-                                nickState = SignupState.Error(error.description)
-                            )
-                        }
+                val response = introRepository.checkNick(NickCheckRequest(it))
+                if (response.isSuccessful) {
+                    _uiState.update { state ->
+                        state.copy(
+                            nickState = InputState.Success("사용 가능한 닉네임 입니다"),
+                            isDataReady = true
+                        )
                     }
+                } else {
+                    val error =
+                        Gson().fromJson(
+                            response.errorBody()?.string(),
+                            ErrorResponse::class.java
+                        )
+                    when (error.code) {
+                        1100, 1101 -> {
+                            _uiState.update { state ->
+                                state.copy(
+                                    nickState = InputState.Error(error.description),
+                                    isDataReady = false
+                                )
+                            }
+                        }
 
-                    else -> {
-                        _uiState.update { state ->
-                            state.copy(
-                                nickState = SignupState.Error("닉네임 검사 실패")
-                            )
+                        else -> {
+                            _uiState.update { state ->
+                                state.copy(
+                                    nickState = InputState.Error("닉네임 검사 실패"),
+                                    isDataReady = false
+                                )
+                            }
                         }
                     }
                 }
+            }
+        }.launchIn(viewModelScope)
+    }
 
+    private fun observeBirth() {
+        birthDay.onEach {
+
+            if (it.isBlank()) {
+                _uiState.update { state ->
+                    state.copy(
+                        birthState = InputState.Empty,
+                        isDataReady =  false
+                    )
+                }
+            } else {
+                if (Validation.validateDate(it)) {
+                    _uiState.update { state ->
+                        state.copy(
+                            birthState = InputState.Success("올바른 날짜입니다"),
+                            isDataReady =  true
+                        )
+                    }
+                } else {
+                    _uiState.update { state ->
+                        state.copy(
+                            birthState = InputState.Error("올바른 날짜를 입력하세요"),
+                            isDataReady = false
+                        )
+                    }
+                }
             }
         }.launchIn(viewModelScope)
     }
@@ -121,12 +146,12 @@ class SignupViewModel @Inject constructor(
             val response = introRepository.signup(
                 SignupRequest(
                     snsId = SnsId.snsId,
-                    nickname = nick.value,
+                    nickname = nickName.value,
                     name = name.value,
                     bank = bank,
                     account = account,
-                    birthday = birthString.value,
-                    profileImageSrc = profileUrl.ifBlank { null })
+                    birthday = birthDay.value,
+                    profileImgSrc = profileImg.value.ifBlank { null })
             )
 
             if (response.isSuccessful) {
@@ -138,60 +163,40 @@ class SignupViewModel @Inject constructor(
                         .apply()
                 }
 
-                _uiState.update { state ->
-                    state.copy(
-                        signUp = SignupState.Success
-                    )
-                }
+                _events.emit(
+                    SignupEvents.NavigateToMainActivity
+                )
 
             } else {
                 val error =
                     Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
                 when (error.code) {
                     1001, 1101 -> {
-                        _uiState.update { state ->
-                            state.copy(
-                                signUp = SignupState.Error(error.description)
-                            )
-                        }
+                        _events.emit(
+                            SignupEvents.ShowToastMessage(error.description)
+                        )
                     }
 
                     else -> {
-                        _uiState.update { state ->
-                            state.copy(
-                                signUp = SignupState.Error("네트워크 오류")
-                            )
-                        }
+                        _events.emit(
+                            SignupEvents.ShowToastMessage(error.description)
+                        )
                     }
                 }
-
             }
-
         }
     }
 
     fun setProfileImg(url: String) {
-        profileUrl = url
+        profileImg.value = url
     }
 
-    fun showBirthPicker() {
-        viewModelScope.launch {
-            _events.emit(SignupEvents.ShowBirthPicker(curYear, curMonth, curDay))
-        }
-    }
-
-    fun setBirthday(year: Int, month: Int, day: Int) {
-        curYear = year
-        curMonth = month
-        curDay = day
-        birthString.value =
-            "$curYear${if (curMonth < 10) "0${curMonth}" else curMonth.toString()}${if (curDay < 10) "0${curDay}" else curDay.toString()}"
-        Log.d(TAG, birthString.value)
+    fun setBirth(data: String){
+        birthDay.value = data
     }
 
     fun setAccountInfo(accountData: String, bankData: String){
         account = accountData
         bank = bankData
     }
-
 }
