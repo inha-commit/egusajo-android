@@ -2,6 +2,7 @@ package com.commit.egusajo.data.remote
 
 import com.commit.egusajo.data.model.FundListResponse
 import com.commit.egusajo.data.model.MyInfoResponse
+import com.commit.egusajo.data.model.MyParticipateResponse
 import com.commit.egusajo.data.model.PatchMyInfoRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,4 +28,9 @@ interface UserApi {
     suspend fun getMyFund(
         @Query("page") page: Int 
     ): Response<FundListResponse>
+
+    @GET("/funds/me")
+    suspend fun getMyParticipate(
+        @Query("page") page: Int
+    ): Response<MyParticipateResponse>
 }
