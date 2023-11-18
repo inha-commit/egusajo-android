@@ -13,9 +13,10 @@ fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> 
             presentName = it.present.name,
             presentImgUrl = it.present.representImage,
             goal = it.present.goal,
-            date ="",
+            date = it.present.createdAt,
             title = it.present.shortComment,
-            participateInfo = "${it.fund.cost} 원   ${it.fund.createdAt}",
+            participateDate = it.fund.createdAt,
+            cost = it.fund.cost,
             onItemClickListener = onItemClickListener
         )
     }

@@ -20,6 +20,7 @@ data class Present(
     val shortComment: String,
     val representImage: String,
     val longComment: String,
+    val createdAt: String
 )
 
 data class User(

@@ -150,20 +150,30 @@
             tools:src="@drawable/test" />
 
         <TextView
-            android:id="@+id/tv_participate_info"
+            android:id="@+id/tv_participate_cost"
             style="@style/TextMediumGrey8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_nofill_grey3stroke_radius10"
             android:paddingVertical="10dp"
-            android:text="@{item.participateInfo}"
             android:textAlignment="center"
             android:textColor="@color/es_blue"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_present_img" />
+            app:layout_constraintTop_toBottomOf="@id/iv_present_img"
+            app:price="@{item.cost}" />
+
+        <TextView
+            android:id="@+id/tv_participate_date"
+            style="@style/TextSmallGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.participateDate}"
+            android:textColor="@color/es_grey6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_participate_cost" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="0dp"
@@ -172,8 +182,7 @@
             app:dividerColor="@color/es_red1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_participate_info" />
-
+            app:layout_constraintTop_toBottomOf="@id/tv_participate_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

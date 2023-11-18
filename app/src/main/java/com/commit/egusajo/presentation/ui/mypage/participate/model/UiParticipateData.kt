@@ -7,7 +7,8 @@ data class UiParticipateData(
     val presentName: String,
     val goal: Int,
     val date: String,
-    val participateInfo: String,
+    val cost: Int,
+    val participateDate: String,
     val presentImgUrl: String,
     val onItemClickListener: (Int) -> Unit
 )
