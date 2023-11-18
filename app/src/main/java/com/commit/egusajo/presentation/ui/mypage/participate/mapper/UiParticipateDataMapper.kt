@@ -12,8 +12,9 @@ fun MyParticipateResponse.toUiParticipateDataList(onItemClickListener: (Int) -> 
             deadLine = it.present.deadline + " 🔥",
             presentName = it.present.name,
             presentImgUrl = it.present.representImage,
-            goal = it.present.goal.toString() + " 원",
+            goal = it.present.goal,
             date ="",
+            title = it.present.shortComment,
             participateInfo = "${it.fund.cost} 원   ${it.fund.createdAt}",
             onItemClickListener = onItemClickListener
         )
