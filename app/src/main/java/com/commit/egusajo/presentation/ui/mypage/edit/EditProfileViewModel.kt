@@ -20,17 +20,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class EditProfileUiState(
-    val originUserData: UiEditProfileData = UiEditProfileData(),
     val isDataChange: Boolean = false
 )
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
     private val userRepository: UserRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EditProfileUiState())
     val uiState: StateFlow<EditProfileUiState> = _uiState.asStateFlow()
+
+    private var originProfile = ""
+    private var originNick = ""
+    private var originName = ""
+    private var originBirth = ""
+    private var originAlarm = false
 
     val profileImg = MutableStateFlow("")
     val nickName = MutableStateFlow("")
@@ -38,28 +43,102 @@ class EditProfileViewModel @Inject constructor(
     val birthDay = MutableStateFlow("")
     val alarm = MutableStateFlow(false)
 
-    private fun observeNick(){
+    init {
+        observeNick()
+        observeBirth()
+        observeName()
+        observeAlarm()
+    }
+
+    private fun observeNick() {
         nickName.onEach {
+            if (it != originNick) {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = true
+                    )
+                }
+            } else {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = false
+                    )
+                }
+            }
         }.launchIn(viewModelScope)
     }
 
-    fun getOriginInfo(){
+    private fun observeName() {
+        name.onEach {
+            if (it != originName) {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = true
+                    )
+                }
+            } else {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = false
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun observeBirth() {
+        birthDay.onEach {
+            if (it != originBirth) {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = true
+                    )
+                }
+            } else {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = false
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun observeAlarm() {
+        alarm.onEach {
+            if (it != originAlarm) {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = true
+                    )
+                }
+            } else {
+                _uiState.update { state ->
+                    state.copy(
+                        isDataChange = false
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+
+    fun getOriginInfo() {
         viewModelScope.launch {
             val response = userRepository.getMyInfo()
 
-            if(response.isSuccessful){
-                response.body()?.let{ body ->
+            if (response.isSuccessful) {
+                response.body()?.let { body ->
+                    originNick = body.nickname
+                    originName = body.name
+                    originBirth = body.birthday
+                    originAlarm = body.alarm
+                    originProfile = body.profileImgSrc
                     nickName.value = body.nickname
                     name.value = body.name
                     birthDay.value = body.birthday
                     alarm.value = body.alarm
-                    profileImg.value  = body.profileImgSrc
-
-                    _uiState.update { state ->
-                        state.copy(
-                            originUserData = body.toUiEditProfileData()
-                        )
-                    }
+                    profileImg.value = body.profileImgSrc
                 }
             } else {
 

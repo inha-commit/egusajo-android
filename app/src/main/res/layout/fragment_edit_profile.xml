@@ -32,7 +32,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
-            app:profileImgUrl="@{vm.uiState.originUserData.profileImgSrc}"
+            app:profileImgUrl="@{vm.profileImg}"
             android:src="@drawable/icon_profile"
             app:civ_border_color="@color/es_grey3"
             app:civ_border_width="1dp"
