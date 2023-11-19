@@ -55,7 +55,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             .setContentText(body)
             .setContentIntent(pIntent)
             .setAutoCancel(true)
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.drawable.icon_gift)
 
         // Head up 알람 설정
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
