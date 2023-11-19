@@ -3,6 +3,7 @@ package com.commit.egusajo.data.repository
 import com.commit.egusajo.data.model.CreateFundRequest
 import com.commit.egusajo.data.model.FundDetailResponse
 import com.commit.egusajo.data.model.FundListResponse
+import com.commit.egusajo.data.model.ParticipateRequest
 import retrofit2.Response
 
 interface FundRepository {
@@ -17,5 +18,10 @@ interface FundRepository {
 
     suspend fun createFund(
         body: CreateFundRequest
+    ): Response<Unit>
+
+    suspend fun participate(
+        fundId: Int,
+        body: ParticipateRequest
     ): Response<Unit>
 }

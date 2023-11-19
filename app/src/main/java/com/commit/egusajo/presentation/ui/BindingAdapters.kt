@@ -55,6 +55,7 @@ fun <T, VH : RecyclerView.ViewHolder> bindList(recyclerView: RecyclerView, list:
 fun bindPrice(textView: TextView, price: Int) {
     val dec = DecimalFormat("#,###원")
     textView.text = dec.format(price)
+    textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
 }
 
 @BindingAdapter("textVisibility")

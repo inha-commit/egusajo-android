@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -16,14 +17,20 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.commit.egusajo.BuildConfig
 import com.commit.egusajo.MainNavDirections
 import com.commit.egusajo.R
 import com.commit.egusajo.databinding.ActivityMainBinding
 import com.commit.egusajo.presentation.base.BaseActivity
 import com.commit.egusajo.util.Constants.RC_PERMISSION
 import com.commit.egusajo.util.toMultiPart
-import com.tosspayments.paymentsdk.PaymentWidget
 import dagger.hilt.android.AndroidEntryPoint
+import kr.co.bootpay.Bootpay
+import kr.co.bootpay.BootpayAnalytics
+import kr.co.bootpay.enums.PG
+import kr.co.bootpay.enums.UX
+import kr.co.bootpay.model.BootExtra
+import kr.co.bootpay.model.BootUser
 import okhttp3.MultipartBody
 
 @AndroidEntryPoint
@@ -47,6 +54,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        BootpayAnalytics.init(this, BuildConfig.BOOT_PAY_KEY)
 
         setBottomNavigation()
         setBottomNavigationListener()
@@ -99,13 +108,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             viewModel.events.collect {
                 when (it) {
                     is MainEvent.GoToGallery -> onCheckPermissions()
-                    is MainEvent.StartTossPay -> {
-                        PaymentWidget(
-                            this@MainActivity,
-                            "test_ck_vZnjEJeQVxPw5REgwY59VPmOoBN0",
-                            "asdfasdf123456"
-                        )
-                    }
+                    is MainEvent.OpenBootPay -> goBootpayRequest(
+                        it.presentName,
+                        it.presentId,
+                        it.price
+                    )
                     else -> {}
                 }
             }
@@ -191,4 +198,51 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
             }
         }
+
+    private fun goBootpayRequest(
+        presentName: String,
+        presentId: String,
+        price: Int,
+    ) {
+        val bootUser = BootUser().setPhone("010-1234-5678")
+        val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
+
+        val stuck = 1 //재고 있음
+
+        Bootpay.init(this)
+            .setApplicationId(BuildConfig.BOOT_PAY_KEY) // 해당 프로젝트(안드로이드)의 application id 값
+            .setContext(this)
+            .setBootUser(bootUser)
+            .setBootExtra(bootExtra)
+            .setUX(UX.PG_DIALOG)
+            .setPG(PG.KCP)
+            .setName(presentName) // 결제할 상품명
+            .setOrderId(presentId) // 결제 고유번호expire_month
+            .setPrice(price) // 결제할 금액
+            .addItem(presentName, 1, presentName, price,presentName,presentName,presentName) // 주문정보에 담길 상품정보, 통계를 위해 사용
+            .onConfirm { message ->
+                if (0 < stuck) Bootpay.confirm(message); // 재고가 있을 경우.
+                else Bootpay.removePaymentWindow(); // 재고가 없어 중간에 결제창을 닫고 싶을 경우
+                Log.d("confirm", message);
+            }
+            .onDone { message ->
+                viewModel.paymentState(
+                    PaymentState.Success
+                )
+            }
+            .onReady { message ->
+                Log.d("ready", message)
+            }
+            .onCancel { message ->
+                viewModel.paymentState(
+                    PaymentState.Error(message)
+                )
+            }
+            .onError{ message ->
+                viewModel.paymentState(
+                    PaymentState.Error(message)
+                )
+            }
+            .request();
+    }
 }

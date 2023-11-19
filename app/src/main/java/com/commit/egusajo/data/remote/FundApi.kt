@@ -3,6 +3,7 @@ package com.commit.egusajo.data.remote
 import com.commit.egusajo.data.model.CreateFundRequest
 import com.commit.egusajo.data.model.FundDetailResponse
 import com.commit.egusajo.data.model.FundListResponse
+import com.commit.egusajo.data.model.ParticipateRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,5 +26,11 @@ interface FundApi {
     @POST("/presents")
     suspend fun createFund(
         @Body params: CreateFundRequest
+    ): Response<Unit>
+
+    @POST("/presents/{presentId}/funds")
+    suspend fun participate(
+        @Path("presentId") presentId: Int,
+        @Body params: ParticipateRequest
     ): Response<Unit>
 }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kr.co.bootpay.Bootpay
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -22,7 +23,17 @@ sealed class GallerySelectType{
 
 sealed class MainEvent {
     object GoToGallery: MainEvent()
-    object StartTossPay: MainEvent()
+    data class OpenBootPay(
+        val presentName: String,
+        val presentId: String,
+        val price: Int
+    ): MainEvent()
+}
+
+sealed class PaymentState{
+    object Empty: PaymentState()
+    object Success: PaymentState()
+    data class Error(val msg: String): PaymentState()
 }
 
 @HiltViewModel
@@ -41,6 +52,9 @@ class MainViewModel @Inject constructor(
 
     private val _image = MutableStateFlow("")
     val image: StateFlow<String> = _image.asStateFlow()
+
+    private val _paymentState = MutableStateFlow<PaymentState>(PaymentState.Empty)
+    val paymentState: StateFlow<PaymentState> = _paymentState.asStateFlow()
 
     fun imagesToUrls(files: List<MultipartBody.Part>) {
         viewModelScope.launch {
@@ -80,11 +94,24 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun tossPayStart(){
+    fun openBootPay(
+        presentName: String,
+        presentId: String,
+        price: Int
+    ){
         viewModelScope.launch {
-            _events.emit(MainEvent.StartTossPay)
+            _events.emit(MainEvent.OpenBootPay(
+                presentName,
+                presentId,
+                price
+            ))
         }
     }
 
+    fun paymentState(state: PaymentState){
+        _paymentState.value = state
+
+        _paymentState.value = PaymentState.Empty
+    }
 
 }

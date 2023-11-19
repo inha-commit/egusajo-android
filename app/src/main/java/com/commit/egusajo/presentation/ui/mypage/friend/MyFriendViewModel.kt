@@ -3,6 +3,7 @@ package com.commit.egusajo.presentation.ui.mypage.friend
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.data.repository.FollowRepository
+import com.commit.egusajo.presentation.LoadingState
 import com.commit.egusajo.presentation.ui.mypage.friend.mapper.toUiFriendData
 import com.commit.egusajo.presentation.ui.mypage.friend.model.UiFriendData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 data class MyFriendUiState(
     val friendList: List<UiFriendData> = emptyList(),
     val followerState: Boolean = true,
-    val followingState: Boolean = false
+    val followingState: Boolean = false,
+    val loading: LoadingState = LoadingState.Empty
 )
 
 @HiltViewModel
@@ -29,6 +31,13 @@ class MyFriendViewModel @Inject constructor(
 
     fun getFollowerList() {
         viewModelScope.launch {
+
+            _uiState.update { state ->
+                state.copy(
+                    loading = LoadingState.IsLoading(true)
+                )
+            }
+
             val response = followRepository.getFollowers()
 
             if (response.isSuccessful) {
@@ -37,18 +46,26 @@ class MyFriendViewModel @Inject constructor(
                         state.copy(
                             friendList = body.toUiFriendData(::followOrUnFollow),
                             followerState = true,
-                            followingState = false
+                            followingState = false,
+                            loading = LoadingState.IsLoading(false)
                         )
                     }
                 }
             } else {
 
             }
+
         }
     }
 
     fun getFollowingList() {
         viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    loading = LoadingState.IsLoading(true)
+                )
+            }
+
             val response = followRepository.getFollowings()
 
             if (response.isSuccessful) {
@@ -57,13 +74,16 @@ class MyFriendViewModel @Inject constructor(
                         state.copy(
                             friendList = body.toUiFriendData(::followOrUnFollow),
                             followerState = false,
-                            followingState = true
+                            followingState = true,
+                            loading = LoadingState.IsLoading(false)
                         )
                     }
                 }
             } else {
 
             }
+
+
         }
     }
 

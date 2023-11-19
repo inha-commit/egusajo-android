@@ -25,6 +25,7 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
 
     private val args: FundDetailFragmentArgs by navArgs()
     private val fundId by lazy { args.fundId }
+    private val pagerSnapHelper = PagerSnapHelper()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,8 +70,8 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
     }
 
     private fun setImgRecyclerView(data: List<String>) {
+
         binding.rvPresentImg.adapter = PresentImageAdapter(data)
-        val pagerSnapHelper = PagerSnapHelper()
         pagerSnapHelper.attachToRecyclerView(binding.rvPresentImg)
         binding.ciIndicator.attachToRecyclerView(binding.rvPresentImg, pagerSnapHelper)
     }
