@@ -1,6 +1,7 @@
 package com.commit.egusajo.presentation.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -14,6 +15,7 @@ import com.commit.egusajo.databinding.FragmentHomeBinding
 import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.home.adapter.HomeFundAdapter
 import com.commit.egusajo.presentation.ui.toFundDetail
+import com.commit.egusajo.util.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +26,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.reset()
         binding.vm = viewModel
         viewModel.getFundList()
         initEventsObserver()

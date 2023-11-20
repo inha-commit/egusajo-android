@@ -73,4 +73,13 @@ class MyParticipateFundViewModel @Inject constructor(
         }
     }
 
+    fun reset(){
+        _uiState.update { state ->
+            state.copy(
+                page = 0,
+                hasNext = true
+            )
+        }
+    }
+
 }

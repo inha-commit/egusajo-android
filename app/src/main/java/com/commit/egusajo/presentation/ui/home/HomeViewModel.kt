@@ -40,25 +40,34 @@ class HomeViewModel @Inject constructor(
 
     fun getFundList(){
         viewModelScope.launch {
+            if(_uiState.value.hasNext){
+                val response = fundRepository.getFundList(_uiState.value.page)
 
-            val response = fundRepository.getFundList(_uiState.value.page)
+                if(response.isSuccessful){
+                    response.body()?.let{ body ->
+                        if(body.presents.isEmpty()){
+                            _uiState.update { state ->
+                                state.copy(
+                                    hasNext = false
+                                )
+                            }
+                        } else {
+                            _uiState.update { state ->
+                                state.copy(
+                                    fundList = _uiState.value.fundList + body.toFundList(::navigateToFundDetail)
+                                )
+                            }
 
-            if(response.isSuccessful){
-                response.body()?.let{ body ->
-                    _uiState.update { state ->
-                        state.copy(
-                            fundList = _uiState.value.fundList + body.toFundList(::navigateToFundDetail)
-                        )
+                            _uiState.update { state ->
+                                state.copy(
+                                    page = _uiState.value.page + 1
+                                )
+                            }
+                        }
                     }
+                } else {
+
                 }
-            } else {
-
-            }
-
-            _uiState.update { state ->
-                state.copy(
-                    page = _uiState.value.page + 1
-                )
             }
         }
     }
@@ -68,5 +77,15 @@ class HomeViewModel @Inject constructor(
             _events.emit(HomeEvents.NavigateToFundDetail(fundId))
         }
     }
+
+    fun reset(){
+        _uiState.update { state ->
+            state.copy(
+                hasNext = true,
+                page = 0
+            )
+        }
+    }
+
 
 }
