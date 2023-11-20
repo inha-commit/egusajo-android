@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import com.commit.egusajo.R
 import com.commit.egusajo.app.App
 import com.commit.egusajo.presentation.ui.intro.IntroActivity
+import com.commit.egusajo.presentation.ui.splash.SplashActivity
 import com.commit.egusajo.util.Constants.TAG
 import com.commit.egusajo.util.PushUtils
 import com.google.firebase.messaging.FirebaseMessaging
@@ -46,7 +47,15 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     private fun sendNotification(title: String?, body: String?, code: String?) {
 
         val uniId = (System.currentTimeMillis() / 7).toInt()
-        val intent = Intent(this, IntroActivity::class.java)
+        val intent = Intent(this, SplashActivity::class.java).apply{
+            putExtra("type", when(code){
+                "complete" -> "complete"
+                "friend" -> "friend"
+                "accept" -> "accept"
+                "fund" -> "fund"
+                else -> "normal"
+            })
+        }
         val pIntent = PendingIntent.getActivity(this, uniId, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 
         val channelId = "egasajo"
