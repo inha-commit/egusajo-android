@@ -13,4 +13,5 @@
     <string name="my_funding_list">내 펀딩 목록</string>
     <string name="no_my_funding_list">내 펀딩 내역이 없어요! 😂</string>
     <string name="no_my_participation_list">모금내역이 없어요! 😂</string>
+    <string name="there_is_no_funding">펀딩이 존재하지 않습니다! 😢</string>
 </resources>

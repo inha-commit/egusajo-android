@@ -54,13 +54,8 @@ class HomeViewModel @Inject constructor(
                         } else {
                             _uiState.update { state ->
                                 state.copy(
+                                    page = _uiState.value.page + 1,
                                     fundList = _uiState.value.fundList + body.toFundList(::navigateToFundDetail)
-                                )
-                            }
-
-                            _uiState.update { state ->
-                                state.copy(
-                                    page = _uiState.value.page + 1
                                 )
                             }
                         }
@@ -81,6 +76,7 @@ class HomeViewModel @Inject constructor(
     fun reset(){
         _uiState.update { state ->
             state.copy(
+                fundList = emptyList(),
                 hasNext = true,
                 page = 0
             )
