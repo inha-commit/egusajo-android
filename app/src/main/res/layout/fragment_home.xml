@@ -27,6 +27,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_no_item"
+            style="@style/TextMediumGrey8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:textVisibility="@{vm.uiState.fundList}"
+            android:text="@string/there_is_no_funding"
+            android:textColor="@color/es_grey6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_fund"
             android:layout_width="0dp"
