@@ -5,6 +5,5 @@ data class PatchMyInfoRequest(
     val nickname: String,
     val birthday: String,
     val profileImgSrc: String,
-    val fcmId: String,
     val alarm: Boolean
 )

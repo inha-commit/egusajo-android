@@ -53,6 +53,7 @@ class EditProfileFragment :
             viewModel.events.collect {
                 when (it) {
                     is EditProfileEvents.NavigateToBack -> findNavController().navigateUp()
+                    is EditProfileEvents.ShowToastMessage -> showCustomToast(it.msg)
                     else -> {}
                 }
             }

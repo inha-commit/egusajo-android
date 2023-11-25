@@ -4,6 +4,8 @@ data class FollowerResponse(
     val followers: List<Follower>
 )
 
+
+
 data class Follower(
     val birthday: String,
     val id: Int,

@@ -31,6 +31,7 @@ data class EditProfileUiState(
 
 sealed class EditProfileEvents {
     object NavigateToBack : EditProfileEvents()
+    data class ShowToastMessage(val msg: String) : EditProfileEvents()
 }
 
 @HiltViewModel
@@ -50,7 +51,6 @@ class EditProfileViewModel @Inject constructor(
     private var originName = ""
     private var originBirth = ""
     private var originAlarm = false
-    private var originFcmId = ""
 
     val profileImg = MutableStateFlow("")
     val nickName = MutableStateFlow("")
@@ -209,7 +209,6 @@ class EditProfileViewModel @Inject constructor(
                     originBirth = body.birthday
                     originAlarm = body.alarm
                     originProfile = body.profileImgSrc
-                    originFcmId = body.fcmId
                     nickName.value = body.nickname
                     name.value = body.name
                     birthDay.value = body.birthday
@@ -223,6 +222,13 @@ class EditProfileViewModel @Inject constructor(
     }
 
     fun setProfileImg(url: String) {
+        if (originProfile != url) {
+            _uiState.update { state ->
+                state.copy(
+                    isDataChange = true
+                )
+            }
+        }
         profileImg.value = url
     }
 
@@ -238,7 +244,6 @@ class EditProfileViewModel @Inject constructor(
                     nickname = nickName.value,
                     profileImgSrc = profileImg.value,
                     birthday = birthDay.value,
-                    fcmId = originFcmId,
                     alarm = alarm.value
                 )
             )
@@ -246,6 +251,10 @@ class EditProfileViewModel @Inject constructor(
             if (response.isSuccessful) {
                 _events.emit(EditProfileEvents.NavigateToBack)
             } else {
+                val error =
+                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
+
+                _events.emit(EditProfileEvents.ShowToastMessage(error.message))
 
             }
         }
