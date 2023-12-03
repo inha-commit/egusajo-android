@@ -3,6 +3,7 @@ package com.commit.egusajo.presentation.base
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
@@ -10,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.commit.egusajo.presentation.customview.CustomSnackBar
 import com.commit.egusajo.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
 abstract class BaseActivity<B : ViewDataBinding>(private val inflate: (LayoutInflater) -> B) :
     AppCompatActivity() {
     protected lateinit var binding: B
-    private lateinit var loadingDialog : LoadingDialog
+    private lateinit var loadingDialog: LoadingDialog
+    private var loadingState = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,20 +36,37 @@ abstract class BaseActivity<B : ViewDataBinding>(private val inflate: (LayoutInf
         }
     }
 
-    fun showLoading(context : Context){
-        loadingDialog = LoadingDialog(context)
-        loadingDialog.show()
+    fun showLoading(context: Context) {
+        if (!loadingState) {
+            loadingDialog = LoadingDialog(context)
+            loadingDialog.show()
+        }
     }
 
-    fun dismissLoading(){
-        if(loadingDialog.isShowing){
+    fun dismissLoading() {
+        if (loadingState) {
             loadingDialog.dismiss()
         }
     }
 
+    fun showCustomSnack(
+        view: View,
+        text: String,
+    ) {
+        CustomSnackBar.make(view, text).show()
+    }
+
+
     fun showCustomToast(message: String) {
         val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
         toast.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (loadingState) {
+            loadingDialog.dismiss()
+        }
     }
 
 }

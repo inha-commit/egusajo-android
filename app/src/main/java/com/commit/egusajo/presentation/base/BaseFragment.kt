@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.commit.egusajo.presentation.customview.CustomSnackBar
 import com.commit.egusajo.util.BirthdayPickerDialog
 import com.commit.egusajo.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
@@ -25,8 +26,9 @@ abstract class BaseFragment<B : ViewDataBinding>(
     private var _binding: B? = null
     protected val binding get() = _binding!!
 
-    private lateinit var loadingDialog : LoadingDialog
-    private lateinit var birthdayPicker : BirthdayPickerDialog
+    private lateinit var loadingDialog: LoadingDialog
+    private lateinit var birthdayPicker: BirthdayPickerDialog
+    private var loadingState = false
 
 
     override fun onCreateView(
@@ -45,13 +47,15 @@ abstract class BaseFragment<B : ViewDataBinding>(
         }
     }
 
-    fun showLoading(context : Context){
-        loadingDialog = LoadingDialog(context)
-        loadingDialog.show()
+    fun showLoading(context: Context) {
+        if (!loadingState) {
+            loadingDialog = LoadingDialog(context)
+            loadingDialog.show()
+        }
     }
 
-    fun dismissLoading(){
-        if(loadingDialog.isShowing){
+    fun dismissLoading() {
+        if (loadingState) {
             loadingDialog.dismiss()
         }
     }
@@ -62,13 +66,14 @@ abstract class BaseFragment<B : ViewDataBinding>(
         curMonth: Int,
         curDay: Int,
         onConfirmBtnClickListener: (Int, Int, Int) -> Unit
-    ){
-        birthdayPicker = BirthdayPickerDialog(context, curYear, curMonth, curDay, onConfirmBtnClickListener)
+    ) {
+        birthdayPicker =
+            BirthdayPickerDialog(context, curYear, curMonth, curDay, onConfirmBtnClickListener)
         birthdayPicker.show()
     }
 
-    fun dismissBirthdayPicker(){
-        if(birthdayPicker.isShowing){
+    fun dismissBirthdayPicker() {
+        if (birthdayPicker.isShowing) {
             birthdayPicker.dismiss()
         }
     }
@@ -78,10 +83,18 @@ abstract class BaseFragment<B : ViewDataBinding>(
         toast.show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    fun showCustomSnack(
+        view: View,
+        text: String,
+    ) {
+        CustomSnackBar.make(view, text).show()
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (loadingState) {
+            loadingDialog.dismiss()
+        }
+        _binding = null
+    }
 }
