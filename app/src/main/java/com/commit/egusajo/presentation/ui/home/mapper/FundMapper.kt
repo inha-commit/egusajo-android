@@ -1,6 +1,6 @@
 package com.commit.egusajo.presentation.ui.home.mapper
 
-import com.commit.egusajo.data.model.FundListResponse
+import com.commit.egusajo.data.model.response.FundListResponse
 import com.commit.egusajo.presentation.ui.home.model.Fund
 
 

@@ -1,17 +1,18 @@
 package com.commit.egusajo.data.repository
 
-import com.commit.egusajo.data.model.CreateFundRequest
-import com.commit.egusajo.data.model.FundDetailResponse
-import com.commit.egusajo.data.model.FundListResponse
-import com.commit.egusajo.data.model.ParticipateRequest
+import com.commit.egusajo.data.model.BaseState
+import com.commit.egusajo.data.model.request.CreateFundRequest
+import com.commit.egusajo.data.model.request.ParticipateRequest
+import com.commit.egusajo.data.model.response.FundDetailResponse
+import com.commit.egusajo.data.model.response.FundListResponse
+import com.commit.egusajo.data.model.runRemote
 import com.commit.egusajo.data.remote.FundApi
-import retrofit2.Response
 import javax.inject.Inject
 
 class FundRepositoryImpl @Inject constructor(private val api: FundApi) : FundRepository {
 
-    override suspend fun getFundList(page: Int): Response<FundListResponse> = api.getFundList(page)
-    override suspend fun getFundDetail(presentId: Int): Response<FundDetailResponse> = api.getFundDetail(presentId)
-    override suspend fun createFund(body: CreateFundRequest): Response<Unit> = api.createFund(body)
-    override suspend fun participate(fundId: Int, body: ParticipateRequest): Response<Unit> = api.participate(fundId, body)
+    override suspend fun getFundList(page: Int): BaseState<FundListResponse> = runRemote { api.getFundList(page) }
+    override suspend fun getFundDetail(presentId: Int): BaseState<FundDetailResponse> = runRemote { api.getFundDetail(presentId) }
+    override suspend fun createFund(body: CreateFundRequest): BaseState<Unit> = runRemote { api.createFund(body) }
+    override suspend fun participate(fundId: Int, body: ParticipateRequest): BaseState<Unit> = runRemote { api.participate(fundId, body) }
 }

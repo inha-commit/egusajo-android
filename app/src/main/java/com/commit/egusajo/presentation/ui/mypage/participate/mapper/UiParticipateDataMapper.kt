@@ -1,7 +1,7 @@
 package com.commit.egusajo.presentation.ui.mypage.participate.mapper
 
 
-import com.commit.egusajo.data.model.MyParticipateResponse
+import com.commit.egusajo.data.model.response.MyParticipateResponse
 import com.commit.egusajo.presentation.ui.mypage.participate.model.UiParticipateData
 
 

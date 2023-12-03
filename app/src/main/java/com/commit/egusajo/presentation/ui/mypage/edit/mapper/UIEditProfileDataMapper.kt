@@ -1,6 +1,6 @@
 package com.commit.egusajo.presentation.ui.mypage.edit.mapper
 
-import com.commit.egusajo.data.model.MyInfoResponse
+import com.commit.egusajo.data.model.response.MyInfoResponse
 import com.commit.egusajo.presentation.ui.mypage.edit.model.UiEditProfileData
 
 

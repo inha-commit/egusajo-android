@@ -1,7 +1,7 @@
 package com.commit.egusajo.presentation.ui.mypage.friend.mapper
 
-import com.commit.egusajo.data.model.FollowerResponse
-import com.commit.egusajo.data.model.FollowingResponse
+import com.commit.egusajo.data.model.response.FollowerResponse
+import com.commit.egusajo.data.model.response.FollowingResponse
 import com.commit.egusajo.presentation.ui.mypage.friend.model.UiFriendData
 
 

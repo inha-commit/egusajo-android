@@ -2,9 +2,8 @@ package com.commit.egusajo.presentation.ui.mypage.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.commit.egusajo.data.model.ErrorResponse
-import com.commit.egusajo.data.model.NickCheckRequest
-import com.commit.egusajo.data.model.PatchMyInfoRequest
+import com.commit.egusajo.data.model.request.NickCheckRequest
+import com.commit.egusajo.data.model.request.PatchMyInfoRequest
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.InputState

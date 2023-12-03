@@ -1,12 +1,12 @@
 package com.commit.egusajo.data.repository
 
+import com.commit.egusajo.data.model.BaseState
 import okhttp3.MultipartBody
-import retrofit2.Response
 
 interface ImageRepository {
 
     suspend fun imageToUrl(
         data: List<MultipartBody.Part>,
         type: String
-    ): Response<List<String>>
+    ): BaseState<List<String>>
 }

@@ -1,8 +1,9 @@
 package com.commit.egusajo.data.repository
 
+import com.commit.egusajo.data.model.BaseState
+import com.commit.egusajo.data.model.runRemote
 import com.commit.egusajo.data.remote.ImageApi
 import okhttp3.MultipartBody
-import retrofit2.Response
 import javax.inject.Inject
 
 class ImageRepositoryImpl @Inject constructor(private val api: ImageApi) : ImageRepository {
@@ -10,5 +11,5 @@ class ImageRepositoryImpl @Inject constructor(private val api: ImageApi) : Image
     override suspend fun imageToUrl(
         data: List<MultipartBody.Part>,
         type: String
-    ): Response<List<String>> = api.imageToUrl(data, type)
+    ): BaseState<List<String>> = runRemote { api.imageToUrl(data, type) }
 }

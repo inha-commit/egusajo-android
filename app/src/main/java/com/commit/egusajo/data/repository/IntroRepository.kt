@@ -1,24 +1,24 @@
 package com.commit.egusajo.data.repository
 
-import com.commit.egusajo.data.model.LoginRequest
-import com.commit.egusajo.data.model.LoginResponse
-import com.commit.egusajo.data.model.NickCheckRequest
-import com.commit.egusajo.data.model.NickCheckResponse
-import com.commit.egusajo.data.model.SignupRequest
-import retrofit2.Response
+import com.commit.egusajo.data.model.BaseState
+import com.commit.egusajo.data.model.request.LoginRequest
+import com.commit.egusajo.data.model.request.NickCheckRequest
+import com.commit.egusajo.data.model.request.SignupRequest
+import com.commit.egusajo.data.model.response.LoginResponse
+import com.commit.egusajo.data.model.response.NickCheckResponse
 
 interface IntroRepository {
 
     suspend fun login(
         data: LoginRequest
-    ): Response<LoginResponse>
+    ): BaseState<LoginResponse>
 
     suspend fun signup(
         data: SignupRequest
-    ): Response<LoginResponse>
+    ): BaseState<LoginResponse>
 
     suspend fun checkNick(
         data: NickCheckRequest
-    ): Response<NickCheckResponse>
+    ): BaseState<NickCheckResponse>
 
 }

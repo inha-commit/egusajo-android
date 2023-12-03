@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.app.App.Companion.fcmToken
 import com.commit.egusajo.app.App.Companion.sharedPreferences
-import com.commit.egusajo.data.model.ErrorResponse
-import com.commit.egusajo.data.model.NickCheckRequest
-import com.commit.egusajo.data.model.SignupRequest
+import com.commit.egusajo.data.model.request.NickCheckRequest
+import com.commit.egusajo.data.model.request.SignupRequest
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.presentation.ui.intro.SnsId

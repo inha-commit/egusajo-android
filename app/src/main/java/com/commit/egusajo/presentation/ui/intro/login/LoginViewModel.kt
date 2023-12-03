@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.app.App
 import com.commit.egusajo.app.App.Companion.fcmToken
-import com.commit.egusajo.data.model.ErrorResponse
-import com.commit.egusajo.data.model.LoginRequest
+import com.commit.egusajo.data.model.request.LoginRequest
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.util.Constants
 import com.google.gson.Gson

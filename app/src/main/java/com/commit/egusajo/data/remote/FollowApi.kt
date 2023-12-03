@@ -1,9 +1,7 @@
 package com.commit.egusajo.data.remote
 
-import com.commit.egusajo.data.model.Follower
-import com.commit.egusajo.data.model.FollowerResponse
-import com.commit.egusajo.data.model.Following
-import com.commit.egusajo.data.model.FollowingResponse
+import com.commit.egusajo.data.model.response.FollowerResponse
+import com.commit.egusajo.data.model.response.FollowingResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET

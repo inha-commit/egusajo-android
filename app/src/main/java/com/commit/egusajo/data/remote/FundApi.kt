@@ -1,9 +1,9 @@
 package com.commit.egusajo.data.remote
 
-import com.commit.egusajo.data.model.CreateFundRequest
-import com.commit.egusajo.data.model.FundDetailResponse
-import com.commit.egusajo.data.model.FundListResponse
-import com.commit.egusajo.data.model.ParticipateRequest
+import com.commit.egusajo.data.model.request.CreateFundRequest
+import com.commit.egusajo.data.model.response.FundDetailResponse
+import com.commit.egusajo.data.model.response.FundListResponse
+import com.commit.egusajo.data.model.request.ParticipateRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

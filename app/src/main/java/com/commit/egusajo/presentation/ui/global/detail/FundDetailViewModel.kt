@@ -2,7 +2,6 @@ package com.commit.egusajo.presentation.ui.global.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.ui.global.detail.mapper.toUiFundDetailData
 import com.commit.egusajo.presentation.ui.global.detail.model.UiFundDetailData

@@ -1,6 +1,6 @@
 package com.commit.egusajo.data.remote
 
-import com.commit.egusajo.data.model.RefreshResponse
+import com.commit.egusajo.data.model.response.RefreshResponse
 import retrofit2.Response
 import retrofit2.http.Header
 import retrofit2.http.POST

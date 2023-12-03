@@ -1,27 +1,27 @@
 package com.commit.egusajo.data.repository
 
-import com.commit.egusajo.data.model.CreateFundRequest
-import com.commit.egusajo.data.model.FundDetailResponse
-import com.commit.egusajo.data.model.FundListResponse
-import com.commit.egusajo.data.model.ParticipateRequest
-import retrofit2.Response
+import com.commit.egusajo.data.model.BaseState
+import com.commit.egusajo.data.model.request.CreateFundRequest
+import com.commit.egusajo.data.model.request.ParticipateRequest
+import com.commit.egusajo.data.model.response.FundDetailResponse
+import com.commit.egusajo.data.model.response.FundListResponse
 
 interface FundRepository {
 
     suspend fun getFundList(
         page: Int
-    ): Response<FundListResponse>
+    ): BaseState<FundListResponse>
 
     suspend fun getFundDetail(
         presentId: Int
-    ): Response<FundDetailResponse>
+    ): BaseState<FundDetailResponse>
 
     suspend fun createFund(
         body: CreateFundRequest
-    ): Response<Unit>
+    ): BaseState<Unit>
 
     suspend fun participate(
         fundId: Int,
         body: ParticipateRequest
-    ): Response<Unit>
+    ): BaseState<Unit>
 }

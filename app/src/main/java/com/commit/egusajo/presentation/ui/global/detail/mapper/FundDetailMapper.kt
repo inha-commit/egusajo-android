@@ -1,6 +1,6 @@
 package com.commit.egusajo.presentation.ui.global.detail.mapper
 
-import com.commit.egusajo.data.model.FundDetailResponse
+import com.commit.egusajo.data.model.response.FundDetailResponse
 import com.commit.egusajo.presentation.ui.global.detail.model.ParticipateData
 import com.commit.egusajo.presentation.ui.global.detail.model.UiFundDetailData
 

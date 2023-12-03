@@ -1,6 +1,5 @@
 package com.commit.egusajo.app.di
 
-import com.commit.egusajo.data.model.Following
 import com.commit.egusajo.data.remote.FollowApi
 import com.commit.egusajo.data.remote.FundApi
 import com.commit.egusajo.data.remote.ImageApi

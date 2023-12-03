@@ -2,9 +2,8 @@ package com.commit.egusajo.presentation.ui.global.payment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.commit.egusajo.data.model.ParticipateRequest
+import com.commit.egusajo.data.model.request.ParticipateRequest
 import com.commit.egusajo.data.repository.FundRepository
-import com.commit.egusajo.presentation.ui.MainEvent
 import com.commit.egusajo.presentation.ui.global.payment.mapper.toUiPaymentData
 import com.commit.egusajo.presentation.ui.global.payment.model.UiPaymentData
 import dagger.hilt.android.lifecycle.HiltViewModel

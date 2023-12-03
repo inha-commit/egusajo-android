@@ -1,10 +1,10 @@
 package com.commit.egusajo.data.remote
 
-import com.commit.egusajo.data.model.LoginRequest
-import com.commit.egusajo.data.model.LoginResponse
-import com.commit.egusajo.data.model.NickCheckRequest
-import com.commit.egusajo.data.model.NickCheckResponse
-import com.commit.egusajo.data.model.SignupRequest
+import com.commit.egusajo.data.model.request.LoginRequest
+import com.commit.egusajo.data.model.response.LoginResponse
+import com.commit.egusajo.data.model.request.NickCheckRequest
+import com.commit.egusajo.data.model.response.NickCheckResponse
+import com.commit.egusajo.data.model.request.SignupRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
