@@ -113,7 +113,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         it.presentId,
                         it.price
                     )
-                    else -> {}
+                    is MainEvent.ShowSnackMessage -> showCustomSnack(binding.guide, it.msg)
+                    is MainEvent.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }
         }

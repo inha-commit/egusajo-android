@@ -65,6 +65,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(R.layout.fragment_sig
                         ))
                     }
                     is SignupEvents.ShowToastMessage -> showCustomToast(it.msg)
+                    is SignupEvents.ShowSnackMessage -> showCustomSnack(binding.ivProfile,it.msg)
                 }
             }
         }

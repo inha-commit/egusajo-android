@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.intro
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,6 +19,7 @@ import javax.inject.Inject
 sealed class IntroEvents {
     object GoToGallery : IntroEvents()
     object GoToMainActivity : IntroEvents()
+    data class ShowSnackMessage(val msg: String) : IntroEvents()
 }
 
 @HiltViewModel
@@ -45,11 +47,14 @@ class IntroViewModel @Inject constructor(
 
     fun imageToUrl(file: MultipartBody.Part) {
         viewModelScope.launch {
-            val response = imageRepository.imageToUrl(listOf(file), "users")
-
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    _profileImg.value = it[0]
+            imageRepository.imageToUrl(listOf(file), "users").let{
+                when(it){
+                    is BaseState.Success -> {
+                        _profileImg.value = it.body[0]
+                    }
+                    is BaseState.Error -> {
+                        _events.emit(IntroEvents.ShowSnackMessage(it.msg))
+                    }
                 }
             }
         }

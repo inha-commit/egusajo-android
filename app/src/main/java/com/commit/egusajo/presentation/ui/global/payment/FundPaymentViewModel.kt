@@ -2,12 +2,12 @@ package com.commit.egusajo.presentation.ui.global.payment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.model.request.ParticipateRequest
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.ui.global.payment.mapper.toUiPaymentData
 import com.commit.egusajo.presentation.ui.global.payment.model.UiPaymentData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -30,6 +30,8 @@ sealed class FundPaymentEvents{
     ): FundPaymentEvents()
 
     object NavigateBack: FundPaymentEvents()
+    data class ShowSnackMessage(val msg: String) : FundPaymentEvents()
+    data class ShowToastMessage(val msg: String) : FundPaymentEvents()
 }
 
 
@@ -51,18 +53,19 @@ class FundPaymentViewModel @Inject constructor(
 
     fun getFundDetail(){
         viewModelScope.launch{
-            val response = fundRepository.getFundDetail(fundId)
-
-            if(response.isSuccessful){
-                response.body()?.let{
-                    _uiState.update { state ->
-                        state.copy(
-                            fundDetail = it.toUiPaymentData()
-                        )
+            fundRepository.getFundDetail(fundId).let{
+                when(it){
+                    is BaseState.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                fundDetail = it.body.toUiPaymentData()
+                            )
+                        }
+                    }
+                    is BaseState.Error -> {
+                        _events.emit(FundPaymentEvents.ShowSnackMessage(it.msg))
                     }
                 }
-            } else {
-
             }
         }
     }
@@ -77,20 +80,23 @@ class FundPaymentViewModel @Inject constructor(
 
     fun participate(){
         viewModelScope.launch {
-            val response = fundRepository.participate(
+           fundRepository.participate(
                 fundId = fundId,
                 body = ParticipateRequest(
                     cost = price.value.toInt(),
                     comment = comment.value
                 )
-            )
-
-            if(response.isSuccessful){
-                delay(500)
-                _events.emit(FundPaymentEvents.NavigateBack)
-            } else {
-
-            }
+            ).let{
+                when(it){
+                    is BaseState.Success -> {
+                        _events.emit(FundPaymentEvents.ShowToastMessage("${price}원 참여 성공"))
+                        _events.emit(FundPaymentEvents.NavigateBack)
+                    }
+                    is BaseState.Error -> {
+                        _events.emit(FundPaymentEvents.ShowSnackMessage(it.msg))
+                    }
+                }
+           }
         }
     }
 

@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -11,7 +12,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kr.co.bootpay.Bootpay
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -28,6 +28,8 @@ sealed class MainEvent {
         val presentId: String,
         val price: Int
     ): MainEvent()
+    data class ShowSnackMessage(val msg: String): MainEvent()
+    data class ShowToastMessage(val msg: String): MainEvent()
 }
 
 sealed class PaymentState{
@@ -58,11 +60,15 @@ class MainViewModel @Inject constructor(
 
     fun imagesToUrls(files: List<MultipartBody.Part>) {
         viewModelScope.launch {
-            val response = imageRepository.imageToUrl(files, "users")
+            imageRepository.imageToUrl(files, "users").let{
+                when(it){
+                    is BaseState.Success -> {
+                        _images.value = it.body
+                    }
 
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    _images.value = it
+                    is BaseState.Error -> {
+                        _events.emit(MainEvent.ShowSnackMessage(it.msg))
+                    }
                 }
             }
         }
@@ -70,11 +76,15 @@ class MainViewModel @Inject constructor(
 
     fun imageToUrl(file: MultipartBody.Part) {
         viewModelScope.launch {
-            val response = imageRepository.imageToUrl(listOf(file), "users")
+            imageRepository.imageToUrl(listOf(file), "users").let{
+                when(it){
+                    is BaseState.Success -> {
+                        _image.value = it.body[0]
+                    }
 
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    _image.value = it[0]
+                    is BaseState.Error -> {
+                        _events.emit(MainEvent.ShowSnackMessage(it.msg))
+                    }
                 }
             }
         }

@@ -55,6 +55,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(ActivityIntroBinding::i
                     )
 
                     is IntroEvents.GoToGallery -> onCheckPermissions()
+                    is IntroEvents.ShowSnackMessage -> showCustomSnack(binding.guide, it.msg)
                 }
             }
         }

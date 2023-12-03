@@ -40,7 +40,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             viewModel.events.collect {
                 when (it) {
                     is HomeEvents.NavigateToFundDetail -> findNavController().toFundDetail(it.fundId)
-                    else -> {}
+                    is HomeEvents.ShowSnackMessage -> showCustomSnack(binding.rvFund, it.msg)
+                    is HomeEvents.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }
         }

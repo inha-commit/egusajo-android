@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.ui.home.mapper.toFundList
 import com.commit.egusajo.presentation.ui.home.model.Fund
@@ -25,6 +26,8 @@ data class HomeUiState(
 
 sealed class HomeEvents{
     data class NavigateToFundDetail(val fundId: Int): HomeEvents()
+    data class ShowSnackMessage(val msg: String) : HomeEvents()
+    data class ShowToastMessage(val msg: String) : HomeEvents()
 }
 
 @HiltViewModel
@@ -41,27 +44,30 @@ class HomeViewModel @Inject constructor(
     fun getFundList(){
         viewModelScope.launch {
             if(_uiState.value.hasNext){
-                val response = fundRepository.getFundList(_uiState.value.page)
-
-                if(response.isSuccessful){
-                    response.body()?.let{ body ->
-                        if(body.presents.isEmpty()){
-                            _uiState.update { state ->
-                                state.copy(
-                                    hasNext = false
-                                )
-                            }
-                        } else {
-                            _uiState.update { state ->
-                                state.copy(
-                                    page = _uiState.value.page + 1,
-                                    fundList = _uiState.value.fundList + body.toFundList(::navigateToFundDetail)
-                                )
+                fundRepository.getFundList(_uiState.value.page).let{
+                    when(it){
+                        is BaseState.Success -> {
+                            if(it.body.presents.isEmpty()){
+                                _uiState.update { state ->
+                                    state.copy(
+                                        hasNext = false
+                                    )
+                                }
+                            } else {
+                                _uiState.update { state ->
+                                    state.copy(
+                                        page = _uiState.value.page + 1,
+                                        fundList = _uiState.value.fundList + it.body.toFundList(::navigateToFundDetail)
+                                    )
+                                }
                             }
                         }
-                    }
-                } else {
 
+                        is BaseState.Error -> {
+                            _events.emit(HomeEvents.ShowSnackMessage(it.msg))
+                        }
+
+                    }
                 }
             }
         }

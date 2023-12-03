@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commit.egusajo.app.App.Companion.fcmToken
 import com.commit.egusajo.app.App.Companion.sharedPreferences
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.model.request.NickCheckRequest
 import com.commit.egusajo.data.model.request.SignupRequest
 import com.commit.egusajo.data.repository.IntroRepository
@@ -12,7 +13,6 @@ import com.commit.egusajo.presentation.ui.intro.SnsId
 import com.commit.egusajo.util.Constants.X_ACCESS_TOKEN
 import com.commit.egusajo.util.Constants.X_REFRESH_TOKEN
 import com.commit.egusajo.util.Validation
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +37,7 @@ data class SignupUiState(
 sealed class SignupEvents {
    object NavigateToMainActivity: SignupEvents()
     data class ShowToastMessage(val msg: String): SignupEvents()
+    data class ShowSnackMessage(val msg: String): SignupEvents()
 }
 
 @HiltViewModel
@@ -72,40 +73,41 @@ class SignupViewModel @Inject constructor(
                     )
                 }
             } else {
-                val response = introRepository.checkNick(NickCheckRequest(it))
-                if (response.isSuccessful) {
-                    _uiState.update { state ->
-                        state.copy(
-                            nickState = InputState.Success("사용 가능한 닉네임 입니다"),
-                            isDataReady = true
-                        )
-                    }
-                } else {
-                    val error =
-                        Gson().fromJson(
-                            response.errorBody()?.string(),
-                            ErrorResponse::class.java
-                        )
-                    when (error.code) {
-                        1100, 1101 -> {
+                introRepository.checkNick(NickCheckRequest(it)).let{ response ->
+
+                    when(response){
+                        is BaseState.Success -> {
                             _uiState.update { state ->
                                 state.copy(
-                                    nickState = InputState.Error(error.description),
-                                    isDataReady = false
+                                    nickState = InputState.Success("사용 가능한 닉네임 입니다"),
+                                    isDataReady = true
                                 )
                             }
                         }
+                        is BaseState.Error -> {
+                            when (response.code) {
+                                1100, 1101 -> {
+                                    _uiState.update { state ->
+                                        state.copy(
+                                            nickState = InputState.Error(response.msg),
+                                            isDataReady = false
+                                        )
+                                    }
+                                }
 
-                        else -> {
-                            _uiState.update { state ->
-                                state.copy(
-                                    nickState = InputState.Error("닉네임 검사 실패"),
-                                    isDataReady = false
-                                )
+                                else -> {
+                                    _uiState.update { state ->
+                                        state.copy(
+                                            nickState = InputState.Error("닉네임 검사 실패"),
+                                            isDataReady = false
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
+
             }
         }.launchIn(viewModelScope)
     }
@@ -143,7 +145,7 @@ class SignupViewModel @Inject constructor(
     fun signup() {
 
         viewModelScope.launch {
-            val response = introRepository.signup(
+            introRepository.signup(
                 SignupRequest(
                     snsId = SnsId.snsId,
                     nickname = nickName.value,
@@ -153,35 +155,33 @@ class SignupViewModel @Inject constructor(
                     account = account,
                     birthday = birthDay.value,
                     profileImgSrc = profileImg.value.ifBlank { null })
-            )
+            ).let{
+                when(it){
+                    is BaseState.Success -> {
+                        sharedPreferences.edit()
+                            .putString(X_ACCESS_TOKEN, it.body.accessToken)
+                            .putString(X_REFRESH_TOKEN, it.body.refreshToken)
+                            .apply()
 
-            if (response.isSuccessful) {
-
-                response.body()?.let {
-                    sharedPreferences.edit()
-                        .putString(X_ACCESS_TOKEN, it.accessToken)
-                        .putString(X_REFRESH_TOKEN, it.refreshToken)
-                        .apply()
-                }
-
-                _events.emit(
-                    SignupEvents.NavigateToMainActivity
-                )
-
-            } else {
-                val error =
-                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-                when (error.code) {
-                    1001, 1101 -> {
                         _events.emit(
-                            SignupEvents.ShowToastMessage(error.description)
+                            SignupEvents.NavigateToMainActivity
                         )
                     }
 
-                    else -> {
-                        _events.emit(
-                            SignupEvents.ShowToastMessage(error.description)
-                        )
+                    is BaseState.Error -> {
+                        when (it.code) {
+                            1001, 1101 -> {
+                                _events.emit(
+                                    SignupEvents.ShowToastMessage(it.msg)
+                                )
+                            }
+
+                            else -> {
+                                _events.emit(
+                                    SignupEvents.ShowSnackMessage(it.msg)
+                                )
+                            }
+                        }
                     }
                 }
             }

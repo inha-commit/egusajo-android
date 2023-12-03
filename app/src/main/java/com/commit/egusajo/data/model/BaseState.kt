@@ -19,7 +19,7 @@ suspend fun <T> runRemote(block: suspend () -> Response<T>): BaseState<T> {
             }
         } else {
             val error = Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-            BaseState.Error(error.message, error.code)
+            BaseState.Error(error.description, error.code)
         }
     } catch (e: Exception) {
         BaseState.Error("네트워크 통신 에러", 0)
