@@ -124,4 +124,13 @@ class MainViewModel @Inject constructor(
         _paymentState.value = PaymentState.Empty
     }
 
+    fun imagesCollected(){
+        _images.value = listOf()
+    }
+
+    fun imageCollected(){
+        _image.value = ""
+    }
+
+
 }

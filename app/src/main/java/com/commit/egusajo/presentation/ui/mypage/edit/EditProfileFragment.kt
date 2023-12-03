@@ -44,6 +44,7 @@ class EditProfileFragment :
         repeatOnStarted {
             parentViewModel.image.collect {
                 viewModel.setProfileImg(it)
+                parentViewModel.imageCollected()
             }
         }
     }

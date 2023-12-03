@@ -24,11 +24,10 @@ fun bindImg(imageView: ImageView, url: String) {
 
 @BindingAdapter("profileImgUrl")
 fun bindProfileImg(imageView: ImageView, url: String) {
-    if (url.isNotBlank()) {
-        Glide.with(imageView.context)
-            .load(url)
-            .into(imageView)
-    }
+    Glide.with(imageView.context)
+        .load(url)
+        .error(R.drawable.icon_profile)
+        .into(imageView)
 }
 
 @BindingAdapter("helperMessage")

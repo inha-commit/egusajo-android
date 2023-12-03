@@ -158,6 +158,7 @@
             android:background="@drawable/shape_nofill_grey3stroke_radius10"
             android:paddingVertical="10dp"
             android:textAlignment="center"
+            android:paddingHorizontal="50dp"
             android:textColor="@color/es_blue"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

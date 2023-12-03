@@ -33,7 +33,6 @@
             android:layout_height="60dp"
             android:layout_marginTop="40dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/test"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header"
             app:profileImgUrl="@{vm.uiState.myInfo.profileImg}"
@@ -68,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:padding="10dp"
             android:onClick="@{() -> vm.navigateToEditProfile()}"
+            android:padding="10dp"
             android:src="@drawable/icon_next"
             app:layout_constraintBottom_toBottomOf="@id/iv_profile"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,9 +80,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:onClick="@{() -> vm.navigateToMyFund()}"
             android:paddingBottom="24dp"
             android:text="내 펀딩 히스토리"
-            android:onClick="@{() -> vm.navigateToMyFund()}"
             app:drawableEndCompat="@drawable/icon_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,8 +103,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:paddingBottom="24dp"
             android:onClick="@{() -> vm.navigateToMyParticipateFund()}"
+            android:paddingBottom="24dp"
             android:text="내 참여 히스토리"
             app:drawableEndCompat="@drawable/icon_next"
             app:layout_constraintEnd_toEndOf="parent"
@@ -163,8 +162,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="로그아웃"
             android:onClick="@{() -> vm.logout()}"
+            android:text="로그아웃"
             android:textColor="@color/es_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_edit_account" />
@@ -180,6 +179,18 @@
             android:textColor="@color/es_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_logout" />
+
+        <ImageButton
+            android:id="@+id/btn_add_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> vm.navigateToAddFriend()}"
+            android:layout_marginBottom="120dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_plusbtn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

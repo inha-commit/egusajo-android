@@ -2,6 +2,7 @@ package com.commit.egusajo.data.remote
 
 import com.commit.egusajo.data.model.response.FollowerResponse
 import com.commit.egusajo.data.model.response.FollowingResponse
+import com.commit.egusajo.data.model.response.FriendSearchResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -25,4 +26,9 @@ interface FollowApi {
     suspend fun unFollow(
         @Path("userId") userId: Int
     ): Response<Unit>
+
+    @GET("/users/nickname/{nickname}")
+    suspend fun searchUser(
+        @Path("nickname") nickname: String
+    ): Response<FriendSearchResponse>
 }

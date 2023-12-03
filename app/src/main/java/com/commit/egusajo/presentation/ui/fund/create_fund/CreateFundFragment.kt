@@ -61,6 +61,7 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
             parentViewModel.images.collect {
                 if (it.isNotEmpty()) {
                     viewModel.setImages(it)
+                    parentViewModel.imagesCollected()
                 }
             }
         }

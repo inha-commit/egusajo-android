@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_mypage_fragment_to_my_fund_fragment"
             app:destination="@id/my_fund_fragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_add_friend_fragment"
+            app:destination="@id/add_friend_fragment" />
     </fragment>
 
     <fragment
@@ -81,6 +84,11 @@
         android:id="@+id/my_participate_fund_fragment"
         android:name="com.commit.egusajo.presentation.ui.mypage.participate.MyParticipateFundFragment"
         android:label="MyParticipateFund"/>
+
+    <fragment
+        android:id="@+id/add_friend_fragment"
+        android:name="com.commit.egusajo.presentation.ui.mypage.addfriend.AddFriendFragment"
+        android:label="AddFriend"/>
 
     <action
         android:id="@+id/action_global_to_fund_fragment"

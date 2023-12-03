@@ -27,6 +27,7 @@ sealed class MyPageEvents{
     object NavigateToMyFriend: MyPageEvents()
     object NavigateToMyFund: MyPageEvents()
     object NavigateToMyParticipateFund: MyPageEvents()
+    object NavigateToAddFriend: MyPageEvents()
     object Logout: MyPageEvents()
     data class ShowSnackMessage(val msg: String): MyPageEvents()
 }
@@ -98,6 +99,12 @@ class MyPageViewModel @Inject constructor(
     fun navigateToMyFriend(){
         viewModelScope.launch {
             _events.emit(MyPageEvents.NavigateToMyFriend)
+        }
+    }
+
+    fun navigateToAddFriend(){
+        viewModelScope.launch {
+            _events.emit(MyPageEvents.NavigateToAddFriend)
         }
     }
 

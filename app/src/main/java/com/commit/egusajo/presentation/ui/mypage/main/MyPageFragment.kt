@@ -40,6 +40,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                     is MyPageEvents.NavigateToEditProfile -> findNavController().toEditProfile()
                     is MyPageEvents.Logout -> kakaoUnlink()
                     is MyPageEvents.ShowSnackMessage -> showCustomSnack(binding.ivProfile, it.msg)
+                    is MyPageEvents.NavigateToAddFriend -> findNavController().toAddFriend()
                 }
             }
         }
@@ -63,6 +64,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     private fun NavController.toEditProfile(){
         val action = MyPageFragmentDirections.actionMypageFragmentToEditProfileFragment()
         this.navigate(action)
+    }
+
+    private fun NavController.toAddFriend(){
+        val action = MyPageFragmentDirections.actionMypageFragmentToAddFriendFragment()
+        navigate(action)
     }
 
     private fun kakaoUnlink(){
