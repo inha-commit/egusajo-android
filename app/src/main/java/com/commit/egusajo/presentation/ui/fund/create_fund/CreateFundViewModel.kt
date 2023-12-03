@@ -131,7 +131,7 @@ class CreateFundViewModel @Inject constructor(
         longComment
     ) { productName, goal, deadLine, longComment->
         productName.isNotBlank() && goal.isNotBlank() && deadLine.isNotBlank()  && longComment.isNotBlank()
-                && _uiState.value.deadLineState is InputState.Success && _uiState.value.productLinkState is InputState.Success
+                && _uiState.value.deadLineState is InputState.Success
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),

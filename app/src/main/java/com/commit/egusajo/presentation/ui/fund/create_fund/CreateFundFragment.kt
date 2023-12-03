@@ -44,7 +44,7 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
                     is CreateFundEvent.GoToGallery -> parentViewModel.goToMultiSelectGallery()
                     is CreateFundEvent.NavigateToBack -> findNavController().navigateUp()
                     is CreateFundEvent.ShowSnackMessage -> showCustomSnack(
-                        binding.tvProductLabel,
+                        binding.tvLongComment,
                         it.msg
                     )
 
