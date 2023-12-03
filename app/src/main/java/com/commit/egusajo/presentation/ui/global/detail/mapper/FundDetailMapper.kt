@@ -26,6 +26,7 @@ internal fun FundDetailResponse.toUiFundDetailData(): UiFundDetailData {
                 comment = item.funding.comment,
                 name = item.user.name
             )
-        }}
+        }},
+        participateStatus = participateStatus
     )
 }

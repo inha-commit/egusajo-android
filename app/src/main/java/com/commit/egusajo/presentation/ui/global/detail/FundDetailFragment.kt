@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -90,10 +91,20 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
 }
 
 @BindingAdapter("participateText")
-fun bindParticipateText(tv: TextView, state: Boolean) {
-    if (state) {
-        tv.text = "모금 참여"
-    } else {
-        tv.text = "이미 참여한 펀딩입니다"
+fun bindParticipateText(btn: AppCompatButton, state: String) {
+    when (state) {
+        "TRUE" -> {
+            btn.isEnabled = true
+            btn.text = "모금 참여"
+        }
+
+        "FALSE" -> {
+            btn.isEnabled = false
+            btn.text = "이미 참여한 펀딩입니다"
+        }
+
+        "MINE" -> {
+            btn.visibility = View.INVISIBLE
+        }
     }
 }

@@ -4,7 +4,8 @@ data class FundDetailResponse(
     val fundings: List<FundingItem>?,
     val present: Present,
     val presentImages: List<String>,
-    val user: User
+    val user: User,
+    val participateStatus: String
 )
 
 data class FundingItem(
