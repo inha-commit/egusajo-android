@@ -53,16 +53,24 @@ class AddFriendViewModel @Inject constructor(
                 followRepository.friendSearch(it).let{ response ->
                     when(response){
                         is BaseState.Success -> {
-                            _uiState.update { state ->
-                                state.copy(
-                                    friendList = response.body.toUiFriendData(::followOrUnFollow)
-                                )
+                            if(response.body.users.isNotEmpty()){
+                                _uiState.update { state ->
+                                    state.copy(
+                                        friendList = response.body.toUiFriendData(::followOrUnFollow)
+                                    )
+                                }
                             }
                         }
                         is BaseState.Error -> {
                             _events.emit(AddFriendEvents.ShowSnackMessage(response.msg))
                         }
                     }
+                }
+            } else {
+                _uiState.update { state ->
+                    state.copy(
+                        friendList = emptyList()
+                    )
                 }
             }
         }.launchIn(viewModelScope)
