@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.fund.create_fund
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.model.request.CreateFundRequest
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.InputState
@@ -32,6 +33,8 @@ data class CreateFundUiState(
 sealed class CreateFundEvent{
     object GoToGallery: CreateFundEvent()
     object NavigateToBack : CreateFundEvent()
+    data class ShowToastMessage(val msg: String) : CreateFundEvent()
+    data class ShowSnackMessage(val msg: String) : CreateFundEvent()
 }
 
 @HiltViewModel
@@ -144,7 +147,7 @@ class CreateFundViewModel @Inject constructor(
 
     fun createFund(){
         viewModelScope.launch {
-            val response = fundRepository.createFund(
+            fundRepository.createFund(
                 CreateFundRequest(
                     name = productName.value,
                     productLink = productLink.value,
@@ -154,15 +157,14 @@ class CreateFundViewModel @Inject constructor(
                     presentImages = presentImages.value,
                     longComment = longComment.value
                 )
-            )
-
-            if (response.isSuccessful){
-                _events.emit(CreateFundEvent.NavigateToBack)
-            } else {
-                val error =
-                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-
-
+            ).let{
+                when(it){
+                    is BaseState.Success -> {
+                        _events.emit(CreateFundEvent.ShowToastMessage("펀딩 생성 성공!"))
+                        _events.emit(CreateFundEvent.NavigateToBack)
+                    }
+                    is BaseState.Error -> _events.emit(CreateFundEvent.ShowSnackMessage(it.msg))
+                }
             }
         }
     }

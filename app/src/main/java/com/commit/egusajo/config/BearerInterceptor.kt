@@ -5,6 +5,7 @@ import android.util.Log
 import com.commit.egusajo.BuildConfig.BASE_URL
 import com.commit.egusajo.app.App.Companion.context
 import com.commit.egusajo.app.App.Companion.sharedPreferences
+import com.commit.egusajo.data.model.ErrorResponse
 import com.commit.egusajo.data.remote.RefreshApi
 import com.commit.egusajo.presentation.ui.intro.IntroActivity
 import com.commit.egusajo.util.Constants.TAG

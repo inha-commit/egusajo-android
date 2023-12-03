@@ -2,7 +2,6 @@ package com.commit.egusajo.presentation.ui.fund.create_fund
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,7 +11,6 @@ import com.commit.egusajo.presentation.base.BaseFragment
 import com.commit.egusajo.presentation.ui.MainViewModel
 import com.commit.egusajo.util.DateType
 import com.commit.egusajo.util.showCalendarDatePicker
-import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -45,7 +43,12 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
                 when (it) {
                     is CreateFundEvent.GoToGallery -> parentViewModel.goToMultiSelectGallery()
                     is CreateFundEvent.NavigateToBack -> findNavController().navigateUp()
-                    else -> {}
+                    is CreateFundEvent.ShowSnackMessage -> showCustomSnack(
+                        binding.tvProductLabel,
+                        it.msg
+                    )
+
+                    is CreateFundEvent.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }
         }
