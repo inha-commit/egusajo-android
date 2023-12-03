@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.mypage.fund
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.ui.home.mapper.toFundList
 import com.commit.egusajo.presentation.ui.home.model.Fund
@@ -25,6 +26,8 @@ data class MyFundUiState(
 
 sealed class MyFundEvents {
     data class NavigateToFundDetail(val fundId: Int) : MyFundEvents()
+    data class ShowSnackMessage(val msg: String) : MyFundEvents()
+    data class ShowToastMessage(val msg: String) : MyFundEvents()
 }
 
 @HiltViewModel
@@ -40,24 +43,23 @@ class MyFundViewModel @Inject constructor(
 
     fun getMyFundList() {
         viewModelScope.launch {
-            val response = userRepository.getMyFundList(_uiState.value.page)
+            userRepository.getMyFundList(_uiState.value.page).let{
 
-            if (response.isSuccessful) {
-                response.body()?.let { body ->
-                    _uiState.update { state ->
-                        state.copy(
-                            fundList = _uiState.value.fundList + body.toFundList(::navigateToFundDetail)
-                        )
+                when(it){
+                    is BaseState.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                fundList = _uiState.value.fundList + it.body.toFundList(::navigateToFundDetail),
+                                page = _uiState.value.page + 1
+                            )
+                        }
+                    }
+
+                    is BaseState.Error -> {
+                        _events.emit(MyFundEvents.ShowSnackMessage(it.msg))
                     }
                 }
-            } else {
 
-            }
-
-            _uiState.update { state ->
-                state.copy(
-                    page = _uiState.value.page + 1
-                )
             }
         }
     }

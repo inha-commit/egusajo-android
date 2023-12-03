@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.mypage.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.ui.mypage.main.mapper.toUiMyPageData
 import com.commit.egusajo.presentation.ui.mypage.main.model.UiMyPageData
@@ -27,6 +28,7 @@ sealed class MyPageEvents{
     object NavigateToMyFund: MyPageEvents()
     object NavigateToMyParticipateFund: MyPageEvents()
     object Logout: MyPageEvents()
+    data class ShowSnackMessage(val msg: String): MyPageEvents()
 }
 
 @HiltViewModel
@@ -42,30 +44,35 @@ class MyPageViewModel @Inject constructor(
 
     fun getMyInfo(){
         viewModelScope.launch {
-            val response = userRepository.getMyInfo()
-
-            if(response.isSuccessful){
-                response.body()?.let{
-                    _uiState.update { state ->
-                        state.copy(
-                            myInfo = it.toUiMyPageData()
-                        )
+            userRepository.getMyInfo().let{
+                when(it){
+                    is BaseState.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                myInfo = it.body.toUiMyPageData()
+                            )
+                        }
+                    }
+                    is BaseState.Error -> {
+                        _events.emit(MyPageEvents.ShowSnackMessage(it.msg))
                     }
                 }
-            } else {
-
             }
         }
     }
 
     fun withdrawal(){
         viewModelScope.launch {
-            val response = userRepository.withdrawal()
+            userRepository.withdrawal().let{
+                when(it){
+                    is BaseState.Success -> {
+                        logout()
+                    }
 
-            if(response.isSuccessful){
-                logout()
-            } else {
-
+                    is BaseState.Error -> {
+                        _events.emit(MyPageEvents.ShowSnackMessage(it.msg))
+                    }
+                }
             }
         }
     }

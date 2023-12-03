@@ -26,6 +26,7 @@ class MyFriendFragment : BaseFragment<FragmentMyFriendBinding>(R.layout.fragment
         binding.vm = viewModel
         binding.rvFriends.adapter = MyFriendAdapter()
         initStateObserver()
+        initEventObserver()
         viewModel.getFollowerList()
     }
 
@@ -46,6 +47,16 @@ class MyFriendFragment : BaseFragment<FragmentMyFriendBinding>(R.layout.fragment
                     }
 
                     else -> {}
+                }
+            }
+        }
+    }
+
+    private fun initEventObserver(){
+        repeatOnStarted {
+            viewModel.events.collect{
+                when(it){
+                    is MyFriendEvents.ShowSnackMessage -> showCustomSnack(binding.btnFollower, it.msg)
                 }
             }
         }

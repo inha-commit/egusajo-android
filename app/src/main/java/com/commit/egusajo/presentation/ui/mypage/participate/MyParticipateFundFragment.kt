@@ -36,7 +36,7 @@ class MyParticipateFundFragment: BaseFragment<FragmentMyParticipateFundBinding>(
             viewModel.events.collect {
                 when (it) {
                     is MyParticipateEvents.NavigateToFundDetail -> findNavController().toFundDetail(it.fundId)
-                    else -> {}
+                    is MyParticipateEvents.ShowSnackMessage -> showCustomSnack(binding.rvFund, it.msg)
                 }
             }
         }

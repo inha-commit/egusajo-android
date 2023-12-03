@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.mypage.participate
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.ui.home.mapper.toFundList
 import com.commit.egusajo.presentation.ui.mypage.fund.MyFundEvents
@@ -26,6 +27,7 @@ data class MyParticipateUiState(
 
 sealed class MyParticipateEvents {
     data class NavigateToFundDetail(val fundId: Int) : MyParticipateEvents()
+    data class ShowSnackMessage(val msg: String) : MyParticipateEvents()
 }
 
 
@@ -42,27 +44,23 @@ class MyParticipateFundViewModel @Inject constructor(
 
     fun getMyParticipateList() {
         viewModelScope.launch {
-            val response = userRepository.getMyParticipate(_uiState.value.page)
-
-            if (response.isSuccessful) {
-                response.body()?.let { body ->
-                    _uiState.update { state ->
-                        state.copy(
-                            participateList = _uiState.value.participateList + body.toUiParticipateDataList(
-                                ::navigateToFundDetail,
-                                if(_uiState.value.participateList.isEmpty()) "" else (_uiState.value.participateList.last().participateDate)
+            userRepository.getMyParticipate(_uiState.value.page).let{
+                when(it){
+                    is BaseState.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                participateList = _uiState.value.participateList + it.body.toUiParticipateDataList(
+                                    ::navigateToFundDetail,
+                                    if(_uiState.value.participateList.isEmpty()) "" else (_uiState.value.participateList.last().participateDate)
+                                ),
+                                page = _uiState.value.page + 1
                             )
-                        )
+                        }
+                    }
+                    is BaseState.Error -> {
+                        _events.emit(MyParticipateEvents.ShowSnackMessage(it.msg))
                     }
                 }
-            } else {
-
-            }
-
-            _uiState.update { state ->
-                state.copy(
-                    page = _uiState.value.page + 1
-                )
             }
         }
     }

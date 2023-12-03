@@ -54,7 +54,7 @@ class EditProfileFragment :
                 when (it) {
                     is EditProfileEvents.NavigateToBack -> findNavController().navigateUp()
                     is EditProfileEvents.ShowToastMessage -> showCustomToast(it.msg)
-                    else -> {}
+                    is EditProfileEvents.ShowSnackMessage -> showCustomSnack(binding.ivProfile,it.msg)
                 }
             }
         }

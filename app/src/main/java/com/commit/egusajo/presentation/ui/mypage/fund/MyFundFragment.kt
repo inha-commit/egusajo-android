@@ -34,7 +34,8 @@ class MyFundFragment : BaseFragment<FragmentMyFundBinding>(R.layout.fragment_my_
             viewModel.events.collect {
                 when (it) {
                     is MyFundEvents.NavigateToFundDetail -> findNavController().toFundDetail(it.fundId)
-                    else -> {}
+                    is MyFundEvents.ShowSnackMessage -> showCustomSnack(binding.rvFund, it.msg)
+                    is MyFundEvents.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }
         }

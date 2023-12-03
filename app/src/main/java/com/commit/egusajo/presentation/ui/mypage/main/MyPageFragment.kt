@@ -39,6 +39,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                     is MyPageEvents.NavigateToMyFund -> findNavController().toMyFund()
                     is MyPageEvents.NavigateToEditProfile -> findNavController().toEditProfile()
                     is MyPageEvents.Logout -> kakaoUnlink()
+                    is MyPageEvents.ShowSnackMessage -> showCustomSnack(binding.ivProfile, it.msg)
                 }
             }
         }

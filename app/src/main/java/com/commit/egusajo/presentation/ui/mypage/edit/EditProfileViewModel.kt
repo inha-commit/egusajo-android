@@ -2,13 +2,13 @@ package com.commit.egusajo.presentation.ui.mypage.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.model.request.NickCheckRequest
 import com.commit.egusajo.data.model.request.PatchMyInfoRequest
 import com.commit.egusajo.data.repository.IntroRepository
 import com.commit.egusajo.data.repository.UserRepository
 import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.util.Validation
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +31,7 @@ data class EditProfileUiState(
 sealed class EditProfileEvents {
     object NavigateToBack : EditProfileEvents()
     data class ShowToastMessage(val msg: String) : EditProfileEvents()
+    data class ShowSnackMessage(val msg: String) : EditProfileEvents()
 }
 
 @HiltViewModel
@@ -75,36 +76,37 @@ class EditProfileViewModel @Inject constructor(
                         )
                     }
                 } else {
-                    val response = introRepository.checkNick(NickCheckRequest(it))
-                    if (response.isSuccessful) {
-                        _uiState.update { state ->
-                            state.copy(
-                                nickState = InputState.Success("사용 가능한 닉네임 입니다"),
-                                isDataChange = true
-                            )
-                        }
-                    } else {
-                        val error =
-                            Gson().fromJson(
-                                response.errorBody()?.string(),
-                                ErrorResponse::class.java
-                            )
-                        when (error.code) {
-                            1100, 1101 -> {
+                    introRepository.checkNick(NickCheckRequest(it)).let { response ->
+                        when (response) {
+                            is BaseState.Success -> {
                                 _uiState.update { state ->
                                     state.copy(
-                                        nickState = InputState.Error(error.description),
-                                        isDataChange = false
+                                        nickState = InputState.Success("사용 가능한 닉네임 입니다"),
+                                        isDataChange = true
                                     )
                                 }
                             }
 
-                            else -> {
-                                _uiState.update { state ->
-                                    state.copy(
-                                        nickState = InputState.Error("닉네임 검사 실패"),
-                                        isDataChange = false
-                                    )
+                            is BaseState.Error -> {
+                                when(response.code){
+                                    1100, 1101 -> {
+                                        _uiState.update { state ->
+                                            state.copy(
+                                                nickState = InputState.Error(response.msg),
+                                                isDataChange = false
+                                            )
+                                        }
+                                    }
+
+                                    else -> {
+                                        _uiState.update { state ->
+                                            state.copy(
+                                                nickState = InputState.Error("닉네임 검사 실패"),
+                                                isDataChange = false
+                                            )
+                                        }
+                                        _events.emit(EditProfileEvents.ShowSnackMessage(response.msg))
+                                    }
                                 }
                             }
                         }
@@ -199,23 +201,25 @@ class EditProfileViewModel @Inject constructor(
 
     fun getOriginInfo() {
         viewModelScope.launch {
-            val response = userRepository.getMyInfo()
+            userRepository.getMyInfo().let{
+                when(it){
+                    is BaseState.Success -> {
+                        originNick = it.body.nickname
+                        originName = it.body.name
+                        originBirth = it.body.birthday
+                        originAlarm = it.body.alarm
+                        originProfile = it.body.profileImgSrc
+                        nickName.value = it.body.nickname
+                        name.value = it.body.name
+                        birthDay.value = it.body.birthday
+                        alarm.value = it.body.alarm
+                        profileImg.value = it.body.profileImgSrc
+                    }
 
-            if (response.isSuccessful) {
-                response.body()?.let { body ->
-                    originNick = body.nickname
-                    originName = body.name
-                    originBirth = body.birthday
-                    originAlarm = body.alarm
-                    originProfile = body.profileImgSrc
-                    nickName.value = body.nickname
-                    name.value = body.name
-                    birthDay.value = body.birthday
-                    alarm.value = body.alarm
-                    profileImg.value = body.profileImgSrc
+                    is BaseState.Error -> {
+                        _events.emit(EditProfileEvents.ShowSnackMessage(it.msg))
+                    }
                 }
-            } else {
-
             }
         }
     }
@@ -237,7 +241,7 @@ class EditProfileViewModel @Inject constructor(
 
     fun patchProfile() {
         viewModelScope.launch {
-            val response = userRepository.patchMyInfo(
+            userRepository.patchMyInfo(
                 PatchMyInfoRequest(
                     name = name.value,
                     nickname = nickName.value,
@@ -245,17 +249,19 @@ class EditProfileViewModel @Inject constructor(
                     birthday = birthDay.value,
                     alarm = alarm.value
                 )
-            )
+            ).let{
+                when(it){
+                    is BaseState.Success -> {
+                        _events.emit(EditProfileEvents.ShowToastMessage("프로필 변경 성공"))
+                        _events.emit(EditProfileEvents.NavigateToBack)
+                    }
 
-            if (response.isSuccessful) {
-                _events.emit(EditProfileEvents.NavigateToBack)
-            } else {
-                val error =
-                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-
-                _events.emit(EditProfileEvents.ShowToastMessage(error.message))
-
+                    is BaseState.Error -> {
+                        _events.emit(EditProfileEvents.ShowSnackMessage(it.msg))
+                    }
+                }
             }
+
         }
     }
 
