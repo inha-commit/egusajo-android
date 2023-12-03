@@ -24,8 +24,8 @@ android {
         applicationId "com.commit.egusajo"
         minSdk 27
         targetSdk 33
-        versionCode 6
-        versionName "1.0.4"
+        versionCode 8
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "KAKAO_API_KEY", properties['kakaoApiKey']

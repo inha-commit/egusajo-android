@@ -28,6 +28,7 @@ data class AddFriendUiState(
 
 sealed class AddFriendEvents{
     data class ShowSnackMessage(val msg: String): AddFriendEvents()
+    data class ShowToastMessage(val msg: String): AddFriendEvents()
 }
 
 @HiltViewModel
@@ -84,6 +85,7 @@ class AddFriendViewModel @Inject constructor(
                 followRepository.unFollow(id).let{
                     when(it){
                         is BaseState.Success -> {
+                            _events.emit(AddFriendEvents.ShowToastMessage("언팔로우 성공"))
                         }
 
                         is BaseState.Error -> {
@@ -97,6 +99,7 @@ class AddFriendViewModel @Inject constructor(
                 followRepository.follow(id).let{
                     when(it){
                         is BaseState.Success -> {
+                            _events.emit(AddFriendEvents.ShowToastMessage("팔로우 성공"))
                         }
 
                         is BaseState.Error -> {

@@ -185,16 +185,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/TextMediumBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="원"
-                app:layout_constraintBottom_toBottomOf="@id/til_goal"
-                app:layout_constraintEnd_toEndOf="@id/til_goal"
-                app:layout_constraintTop_toTopOf="@id/til_goal" />
-
-            <TextView
                 android:id="@+id/tv_deadline"
                 style="@style/TextMediumBlack"
                 android:layout_width="0dp"

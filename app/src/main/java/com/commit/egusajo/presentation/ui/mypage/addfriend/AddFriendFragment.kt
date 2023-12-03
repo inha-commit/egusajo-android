@@ -28,6 +28,7 @@ class AddFriendFragment: BaseFragment<FragmentAddFriendBinding>(R.layout.fragmen
             viewModel.events.collect{
                 when(it){
                     is AddFriendEvents.ShowSnackMessage -> showCustomSnack(binding.etSearch, it.msg)
+                    is AddFriendEvents.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }
         }
