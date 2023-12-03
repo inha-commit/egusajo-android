@@ -2,6 +2,7 @@ package com.commit.egusajo.presentation.ui.global.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commit.egusajo.data.model.BaseState
 import com.commit.egusajo.data.repository.FundRepository
 import com.commit.egusajo.presentation.ui.global.detail.mapper.toUiFundDetailData
 import com.commit.egusajo.presentation.ui.global.detail.model.UiFundDetailData
@@ -24,6 +25,8 @@ data class FundDetailUiState(
 sealed class FundDetailEvents {
     data class NavigateToFundPayment(val fundId: Int) : FundDetailEvents()
     data class GoToProductLink(val link: String) : FundDetailEvents()
+    data class ShowSnackMessage(val msg: String) : FundDetailEvents()
+    data class ShowToastMessage(val msg: String) : FundDetailEvents()
 }
 
 @HiltViewModel
@@ -41,19 +44,19 @@ class FundDetailViewModel @Inject constructor(
 
     fun getFundDetail(fundId: Int) {
         viewModelScope.launch {
-            val response = fundRepository.getFundDetail(fundId)
-
-            if (response.isSuccessful) {
-                response.body()?.let { body ->
-                    _uiState.update { state ->
-                        state.copy(
-                            fundDetail = body.toUiFundDetailData()
-                        )
+            fundRepository.getFundDetail(fundId).let{
+                when(it){
+                    is BaseState.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                fundDetail = it.body.toUiFundDetailData()
+                            )
+                        }
+                    }
+                    is BaseState.Error -> {
+                        _events.emit(FundDetailEvents.ShowSnackMessage(it.msg))
                     }
                 }
-            } else {
-                val error =
-                    Gson().fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
             }
         }
     }

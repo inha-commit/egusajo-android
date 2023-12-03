@@ -58,12 +58,17 @@ class FundDetailFragment : BaseFragment<FragmentFundDetailBinding>(R.layout.frag
                     )
 
                     is FundDetailEvents.GoToProductLink -> {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.link))
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        requireContext().startActivity(intent)
+                        try {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.link))
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            requireContext().startActivity(intent)
+                        } catch (e: Exception) {
+                            showCustomSnack(binding.tvDday, "올바른 링크가 아닙니다")
+                        }
                     }
 
-                    else -> {}
+                    is FundDetailEvents.ShowSnackMessage -> showCustomSnack(binding.tvDday, it.msg)
+                    is FundDetailEvents.ShowToastMessage -> showCustomToast(it.msg)
                 }
             }
         }
