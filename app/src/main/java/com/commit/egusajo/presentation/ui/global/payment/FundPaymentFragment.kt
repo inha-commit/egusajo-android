@@ -45,6 +45,8 @@ class FundPaymentFragment: BaseFragment<FragmentFundPaymentBinding>(R.layout.fra
                     is FundPaymentEvents.NavigateBack -> findNavController().navigateUp()
                     is FundPaymentEvents.ShowSnackMessage -> showCustomSnack(binding.layoutFundInfo, it.msg)
                     is FundPaymentEvents.ShowToastMessage -> showCustomToast(it.msg)
+                    is FundPaymentEvents.ShowLoading -> showLoading(requireContext())
+                    is FundPaymentEvents.DismissLoading -> dismissLoading()
                 }
             }
         }

@@ -72,13 +72,7 @@ class LoginViewModel @Inject constructor(private val introRepository: IntroRepos
 
                     is BaseState.Error -> {
                         when(it.code){
-                            401 -> _uiState.update { state ->
-                                state.copy(
-                                    loginState = LoginState.Error(it.msg)
-                                )
-                            }
-
-                            400 -> _uiState.update { state ->
+                            1002 -> _uiState.update { state ->
                                 state.copy(
                                     loginState = LoginState.NoMember
                                 )

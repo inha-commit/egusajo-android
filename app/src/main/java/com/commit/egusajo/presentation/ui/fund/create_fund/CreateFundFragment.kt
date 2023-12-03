@@ -49,6 +49,8 @@ class CreateFundFragment : BaseFragment<FragmentCreateFundBinding>(R.layout.frag
                     )
 
                     is CreateFundEvent.ShowToastMessage -> showCustomToast(it.msg)
+                    is CreateFundEvent.ShowLoading -> showLoading(requireContext())
+                    is CreateFundEvent.DismissLoading -> dismissLoading()
                 }
             }
         }

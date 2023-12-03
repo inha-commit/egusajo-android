@@ -25,31 +25,12 @@ class MyFriendFragment : BaseFragment<FragmentMyFriendBinding>(R.layout.fragment
 
         binding.vm = viewModel
         binding.rvFriends.adapter = MyFriendAdapter()
-        initStateObserver()
         initEventObserver()
-        viewModel.getFollowerList()
     }
 
-    private fun initStateObserver() {
-        repeatOnStarted {
-            viewModel.uiState.collect {
-                when (it.loading) {
-                    is LoadingState.IsLoading -> {
-                        if (it.loading.state) {
-                            if (!loadingState) {
-                                showLoading(requireContext())
-                                loadingState = true
-                            }
-                        } else {
-                            dismissLoading()
-                            loadingState = false
-                        }
-                    }
-
-                    else -> {}
-                }
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFollowerList()
     }
 
     private fun initEventObserver(){
@@ -57,6 +38,8 @@ class MyFriendFragment : BaseFragment<FragmentMyFriendBinding>(R.layout.fragment
             viewModel.events.collect{
                 when(it){
                     is MyFriendEvents.ShowSnackMessage -> showCustomSnack(binding.btnFollower, it.msg)
+                    is MyFriendEvents.ShowLoading -> showLoading(requireContext())
+                    is MyFriendEvents.DismissLoading -> dismissLoading()
                 }
             }
         }

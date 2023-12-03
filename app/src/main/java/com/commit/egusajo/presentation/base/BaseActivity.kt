@@ -40,12 +40,14 @@ abstract class BaseActivity<B : ViewDataBinding>(private val inflate: (LayoutInf
         if (!loadingState) {
             loadingDialog = LoadingDialog(context)
             loadingDialog.show()
+            loadingState = true
         }
     }
 
     fun dismissLoading() {
         if (loadingState) {
             loadingDialog.dismiss()
+            loadingState = false
         }
     }
 

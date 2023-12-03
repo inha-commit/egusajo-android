@@ -9,6 +9,7 @@ import com.commit.egusajo.presentation.InputState
 import com.commit.egusajo.util.Validation
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -35,6 +36,8 @@ sealed class CreateFundEvent{
     object NavigateToBack : CreateFundEvent()
     data class ShowToastMessage(val msg: String) : CreateFundEvent()
     data class ShowSnackMessage(val msg: String) : CreateFundEvent()
+    object ShowLoading: CreateFundEvent()
+    object DismissLoading: CreateFundEvent()
 }
 
 @HiltViewModel
@@ -125,10 +128,9 @@ class CreateFundViewModel @Inject constructor(
         productName,
         goal,
         deadLine,
-        productLink,
         longComment
-    ) { productName, goal, deadLine, productLink, longComment->
-        productName.isNotBlank() && goal.isNotBlank() && deadLine.isNotBlank() && productLink.isNotBlank() && longComment.isNotBlank()
+    ) { productName, goal, deadLine, longComment->
+        productName.isNotBlank() && goal.isNotBlank() && deadLine.isNotBlank()  && longComment.isNotBlank()
                 && _uiState.value.deadLineState is InputState.Success && _uiState.value.productLinkState is InputState.Success
     }.stateIn(
         viewModelScope,
@@ -147,6 +149,7 @@ class CreateFundViewModel @Inject constructor(
 
     fun createFund(){
         viewModelScope.launch {
+            _events.emit(CreateFundEvent.ShowLoading)
             fundRepository.createFund(
                 CreateFundRequest(
                     name = productName.value,
@@ -158,6 +161,7 @@ class CreateFundViewModel @Inject constructor(
                     longComment = longComment.value
                 )
             ).let{
+                _events.emit(CreateFundEvent.DismissLoading)
                 when(it){
                     is BaseState.Success -> {
                         _events.emit(CreateFundEvent.ShowToastMessage("펀딩 생성 성공!"))

@@ -32,6 +32,8 @@ sealed class FundPaymentEvents{
     object NavigateBack: FundPaymentEvents()
     data class ShowSnackMessage(val msg: String) : FundPaymentEvents()
     data class ShowToastMessage(val msg: String) : FundPaymentEvents()
+    object ShowLoading: FundPaymentEvents()
+    object DismissLoading: FundPaymentEvents()
 }
 
 
@@ -80,6 +82,7 @@ class FundPaymentViewModel @Inject constructor(
 
     fun participate(){
         viewModelScope.launch {
+            _events.emit(FundPaymentEvents.ShowLoading)
            fundRepository.participate(
                 fundId = fundId,
                 body = ParticipateRequest(
@@ -87,9 +90,10 @@ class FundPaymentViewModel @Inject constructor(
                     comment = comment.value
                 )
             ).let{
+               _events.emit(FundPaymentEvents.DismissLoading)
                 when(it){
                     is BaseState.Success -> {
-                        _events.emit(FundPaymentEvents.ShowToastMessage("${price}원 참여 성공"))
+                        _events.emit(FundPaymentEvents.ShowToastMessage("${price}원 펀딩 성공"))
                         _events.emit(FundPaymentEvents.NavigateBack)
                     }
                     is BaseState.Error -> {

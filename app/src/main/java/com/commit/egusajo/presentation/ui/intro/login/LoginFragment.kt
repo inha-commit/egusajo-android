@@ -35,7 +35,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         repeatOnStarted {
             viewModel.uiState.collect {
                 when (it.loginState) {
-                    is LoginState.Success -> parentViewModel.goToMainActivity()
+                    is LoginState.Success -> {
+                        showCustomToast("로그인 성공!")
+                        parentViewModel.goToMainActivity()
+                    }
                     is LoginState.NoMember -> {
                         showCustomToast("회원가입을 해주세요!")
                         findNavController().toAccountVerification()

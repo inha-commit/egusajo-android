@@ -22,11 +22,12 @@ data class MyFriendUiState(
     val friendList: List<UiFriendData> = emptyList(),
     val followerState: Boolean = true,
     val followingState: Boolean = false,
-    val loading: LoadingState = LoadingState.Empty
 )
 
 sealed class MyFriendEvents{
     data class ShowSnackMessage(val msg: String): MyFriendEvents()
+    object ShowLoading: MyFriendEvents()
+    object DismissLoading: MyFriendEvents()
 }
 
 @HiltViewModel
@@ -43,13 +44,10 @@ class MyFriendViewModel @Inject constructor(
     fun getFollowerList() {
         viewModelScope.launch {
 
-            _uiState.update { state ->
-                state.copy(
-                    loading = LoadingState.IsLoading(true)
-                )
-            }
-
+            _events.emit(MyFriendEvents.ShowLoading)
             followRepository.getFollowers().let{
+
+                _events.emit(MyFriendEvents.DismissLoading)
                 when(it){
                     is BaseState.Success -> {
                         _uiState.update { state ->
@@ -57,7 +55,6 @@ class MyFriendViewModel @Inject constructor(
                                 friendList = it.body.toUiFriendData(::followOrUnFollow),
                                 followerState = true,
                                 followingState = false,
-                                loading = LoadingState.IsLoading(false)
                             )
                         }
                     }
@@ -66,19 +63,17 @@ class MyFriendViewModel @Inject constructor(
                         _events.emit(MyFriendEvents.ShowSnackMessage(it.msg))
                     }
                 }
+
             }
         }
     }
 
     fun getFollowingList() {
         viewModelScope.launch {
-            _uiState.update { state ->
-                state.copy(
-                    loading = LoadingState.IsLoading(true)
-                )
-            }
 
+            _events.emit(MyFriendEvents.ShowLoading)
             followRepository.getFollowings().let{
+                _events.emit(MyFriendEvents.DismissLoading)
                 when(it){
                     is BaseState.Success -> {
                         _uiState.update { state ->
@@ -86,7 +81,6 @@ class MyFriendViewModel @Inject constructor(
                                 friendList = it.body.toUiFriendData(::followOrUnFollow),
                                 followerState = false,
                                 followingState = true,
-                                loading = LoadingState.IsLoading(false)
                             )
                         }
                     }
@@ -102,7 +96,9 @@ class MyFriendViewModel @Inject constructor(
     private fun followOrUnFollow(isFollowing: Boolean, id: Int) {
         if (isFollowing) {
             viewModelScope.launch {
+                _events.emit(MyFriendEvents.ShowLoading)
                 followRepository.unFollow(id).let{
+                    _events.emit(MyFriendEvents.DismissLoading)
                     when(it){
                         is BaseState.Success -> {
                             if (_uiState.value.followerState) {
@@ -120,7 +116,9 @@ class MyFriendViewModel @Inject constructor(
             }
         } else {
             viewModelScope.launch {
+                _events.emit(MyFriendEvents.ShowLoading)
                 followRepository.follow(id).let{
+                    _events.emit(MyFriendEvents.DismissLoading)
                     when(it){
                         is BaseState.Success -> {
                             if (_uiState.value.followerState) {

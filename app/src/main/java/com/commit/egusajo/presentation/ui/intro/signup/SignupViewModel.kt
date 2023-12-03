@@ -38,6 +38,8 @@ sealed class SignupEvents {
    object NavigateToMainActivity: SignupEvents()
     data class ShowToastMessage(val msg: String): SignupEvents()
     data class ShowSnackMessage(val msg: String): SignupEvents()
+    object ShowLoading: SignupEvents()
+    object DismissLoading: SignupEvents()
 }
 
 @HiltViewModel
@@ -145,6 +147,7 @@ class SignupViewModel @Inject constructor(
     fun signup() {
 
         viewModelScope.launch {
+            _events.emit(SignupEvents.ShowLoading)
             introRepository.signup(
                 SignupRequest(
                     snsId = SnsId.snsId,
@@ -156,13 +159,14 @@ class SignupViewModel @Inject constructor(
                     birthday = birthDay.value,
                     profileImgSrc = profileImg.value.ifBlank { null })
             ).let{
+                _events.emit(SignupEvents.DismissLoading)
                 when(it){
                     is BaseState.Success -> {
                         sharedPreferences.edit()
                             .putString(X_ACCESS_TOKEN, it.body.accessToken)
                             .putString(X_REFRESH_TOKEN, it.body.refreshToken)
                             .apply()
-
+                        _events.emit(SignupEvents.ShowToastMessage("회원가입 성공!"))
                         _events.emit(
                             SignupEvents.NavigateToMainActivity
                         )
